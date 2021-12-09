@@ -1,14 +1,15 @@
 import math
-from typing import Optional
+# from typing import Optional
 
-import gym
-from gym import spaces, logger
-from gym.utils import seeding
-import numpy as np
+# import gym
+# from gym import spaces, logger
+# from gym.utils import seeding
+# import numpy as np
 
 import rospy
+import intera_interface
 
-class SawyerEnv(gym.Env):
+class SawyerEnv():
 
     '''
     Description:
