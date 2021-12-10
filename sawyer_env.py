@@ -30,8 +30,13 @@ class Sawyer():
         # create an instance of intera_interface's Limb class
         self.limb = intera_interface.Limb('right')
 
+        # TODO: Find a way to make this update and easily callable in the form S.angles()
+        # Not sure how it interfaces with rostopics, leave for now
         # get the right limb's current joint angles
         self.angles = self.limb.joint_angles()
+
+        # initialize endpoint position
+        self.endpoint = self.limb.endpoint_pose()['position']
 
         # print the current joint angles
         print("Initialized at {}".format(str(self.angles)))
@@ -47,7 +52,6 @@ class Sawyer():
         }
         print("Commanding move to {}".format(str(angular_array)))
         self.limb.move_to_joint_positions(angles)
-        angles = self.limb.joint_angles()
-        print("Move complete to {}".format(str(angles)))
-
-    
+        # self.angles = self.limb.joint_angles()
+        # self.endpoint = self.limb.endpoint_pose()['position']
+        print("Move complete to {}".format(str(self.limb.joint_angles())))

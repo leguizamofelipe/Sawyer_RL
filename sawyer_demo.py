@@ -1,9 +1,20 @@
-import pfrl
-import torch
-import torch.nn
-import gym
-import numpy
+from sawyer_env import *
+from intera_interface.limb import Point
+import math
 
-#################### ENVIRONMENT DEFINITION ##########################
+S = Sawyer()
 
-env = gym.make()
+endpoint_target = Point(1,1,1)
+
+def distance_from_target(sawyer, target):
+    # Current
+    c = sawyer.limb.endpoint_pose()['position']
+
+    # Target
+    t = target
+
+    distance = math.sqrt((c.x-t.x)**2 + (c.y-t.y)**2 + (c.z-t.z)**2)
+    
+    return distance
+    
+print(str(distance_from_target(S, endpoint_target)))
