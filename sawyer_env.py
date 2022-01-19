@@ -17,9 +17,27 @@ class SawyerEnv():
     Robotic arm with seven joint angles.
     Range of motion for each: 
 
-    Key rostopics:
-    - 
+    Observation:
+        #TODO: Include current state of joints, and inst. vel? in obs space
+        Type: float
+        Num     Observation               Min                     Max
+        0       Distance from target      0                       inf
+    
+    Actions:
+        #TODO: Could restrict motion to subset of joints
+        Type: Discrete(2)
+        Num   Action
+        0     Increase joint 0 pose by +set movement factor
+        1     Increase joint 0 pose by -set movement factor
+        2     Increase joint 1 pose by +set movement factor
+        3     Increase joint 1 pose by -set movement factor
+        4     Increase joint 2 pose by +set movement factor
+        5     Increase joint 2 pose by -set movement factor
 
+    Reward:
+        +1 for every step taken where distance is less than previous distance
+        Function of magnitude of distance delta: getting much closer = higher reward
+    Episode Termination:
     '''
 
 class Sawyer():
