@@ -7,10 +7,10 @@ S = Sawyer()
 endpoint_target = Point(1,1,1)
 
 def distance_from_target(sawyer, target):
-    # Current
+    # Current position
     c = sawyer.limb.endpoint_pose()['position']
 
-    # Target
+    # Target position
     t = target
 
     distance = math.sqrt((c.x-t.x)**2 + (c.y-t.y)**2 + (c.z-t.z)**2)
