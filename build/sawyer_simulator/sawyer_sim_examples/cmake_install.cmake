@@ -1,8 +1,8 @@
-# Install script for directory: /home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_examples
+# Install script for directory: /home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws_noetic/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,30 +32,35 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sawyer/ros_ws/build/sawyer_simulator/sawyer_sim_examples/catkin_generated/installspace/sawyer_sim_examples.pc")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/build/sawyer_simulator/sawyer_sim_examples/catkin_generated/installspace/sawyer_sim_examples.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples/cmake" TYPE FILE FILES
-    "/home/sawyer/ros_ws/build/sawyer_simulator/sawyer_sim_examples/catkin_generated/installspace/sawyer_sim_examplesConfig.cmake"
-    "/home/sawyer/ros_ws/build/sawyer_simulator/sawyer_sim_examples/catkin_generated/installspace/sawyer_sim_examplesConfig-version.cmake"
+    "/home/sawyer/ros_ws_noetic/build/sawyer_simulator/sawyer_sim_examples/catkin_generated/installspace/sawyer_sim_examplesConfig.cmake"
+    "/home/sawyer/ros_ws_noetic/build/sawyer_simulator/sawyer_sim_examples/catkin_generated/installspace/sawyer_sim_examplesConfig-version.cmake"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples" TYPE FILE FILES "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_examples/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_examples/package.xml")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/sawyer_sim_examples" TYPE PROGRAM FILES "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_examples/scripts/ik_pick_and_place_demo.py")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/sawyer_sim_examples" TYPE PROGRAM FILES "/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_examples/scripts/ik_pick_and_place_demo.py")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples/launch" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_examples/launch/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples/launch" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_examples/launch/")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples/models" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_examples/models/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_sim_examples/models" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_examples/models/")
 endif()
 

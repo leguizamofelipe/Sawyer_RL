@@ -77,6 +77,23 @@ ros::message_operations::Printer< ::intera_core_msgs::IOComponentCommandSrvRespo
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator1> & lhs, const ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator2> & rhs)
+{
+  return lhs.time == rhs.time &&
+    lhs.op == rhs.op &&
+    lhs.status == rhs.status &&
+    lhs.response == rhs.response;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator1> & lhs, const ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -86,23 +103,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator> >
@@ -112,6 +113,16 @@ struct IsMessage< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAl
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -154,33 +165,33 @@ struct Definition< ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerA
 {
   static const char* value()
   {
-    return "time time\n\
-string op\n\
-IOStatus status\n\
-string response\n\
-\n\
-\n\
-================================================================================\n\
-MSG: intera_core_msgs/IOStatus\n\
-## IO status data\n\
-#\n\
-string tag             # one of the values listed below\n\
-#   down     Inoperative, not fully instantiated\n\
-#   ready    OK, fully operational\n\
-#   busy     OK, not ready to output data; input data value may be stale\n\
-#   unready  OK, not operational; data is invalid\n\
-#   error    Error, not operational\n\
-string DOWN      = down\n\
-string READY     = ready\n\
-string BUSY      = busy\n\
-string UNREADY   = unready\n\
-string ERROR     = error\n\
-#\n\
-string id             # message id, for internationalization\n\
-#\n\
-string detail         # optional additional status detail\n\
-#\n\
-";
+    return "time time               # time the request was handled, serves as a sequence number\n"
+"string op               # operation performed\n"
+"IOStatus status         # status response\n"
+"string response         # (OPTIONAL) command-specific response JSON data (e.g. resulting config)\n"
+"\n"
+"\n"
+"================================================================================\n"
+"MSG: intera_core_msgs/IOStatus\n"
+"## IO status data\n"
+"#\n"
+"string tag             # one of the values listed below\n"
+"#   down     Inoperative, not fully instantiated\n"
+"#   ready    OK, fully operational\n"
+"#   busy     OK, not ready to output data; input data value may be stale\n"
+"#   unready  OK, not operational; data is invalid\n"
+"#   error    Error, not operational\n"
+"string DOWN      = down\n"
+"string READY     = ready\n"
+"string BUSY      = busy\n"
+"string UNREADY   = unready\n"
+"string ERROR     = error\n"
+"#\n"
+"string id             # message id, for internationalization\n"
+"#\n"
+"string detail         # optional additional status detail\n"
+"#\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::IOComponentCommandSrvResponse_<ContainerAllocator>&) { return value(); }

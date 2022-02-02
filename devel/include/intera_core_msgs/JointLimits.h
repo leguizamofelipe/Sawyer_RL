@@ -86,6 +86,25 @@ ros::message_operations::Printer< ::intera_core_msgs::JointLimits_<ContainerAllo
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::JointLimits_<ContainerAllocator1> & lhs, const ::intera_core_msgs::JointLimits_<ContainerAllocator2> & rhs)
+{
+  return lhs.joint_names == rhs.joint_names &&
+    lhs.position_lower == rhs.position_lower &&
+    lhs.position_upper == rhs.position_upper &&
+    lhs.velocity == rhs.velocity &&
+    lhs.accel == rhs.accel &&
+    lhs.effort == rhs.effort;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::JointLimits_<ContainerAllocator1> & lhs, const ::intera_core_msgs::JointLimits_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -95,23 +114,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::JointLimits_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::JointLimits_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::JointLimits_<ContainerAllocator> >
@@ -121,6 +124,16 @@ struct IsMessage< ::intera_core_msgs::JointLimits_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::JointLimits_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::JointLimits_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::JointLimits_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -163,24 +176,24 @@ struct Definition< ::intera_core_msgs::JointLimits_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# names of the joints\n\
-string[] joint_names\n\
-\n\
-# lower bound on the angular position in radians\n\
-float64[] position_lower\n\
-\n\
-# upper bound on the angular position in radians\n\
-float64[] position_upper\n\
-\n\
-# symmetric maximum joint velocity in radians/second\n\
-float64[] velocity\n\
-\n\
-# symmetric maximum joint acceleration in radians/second^2\n\
-float64[] accel\n\
-\n\
-# symmetric maximum joint torque in Newton-meters\n\
-float64[] effort\n\
-";
+    return "# names of the joints\n"
+"string[] joint_names\n"
+"\n"
+"# lower bound on the angular position in radians\n"
+"float64[] position_lower\n"
+"\n"
+"# upper bound on the angular position in radians\n"
+"float64[] position_upper\n"
+"\n"
+"# symmetric maximum joint velocity in radians/second\n"
+"float64[] velocity\n"
+"\n"
+"# symmetric maximum joint acceleration in radians/second^2\n"
+"float64[] accel\n"
+"\n"
+"# symmetric maximum joint torque in Newton-meters\n"
+"float64[] effort\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::JointLimits_<ContainerAllocator>&) { return value(); }

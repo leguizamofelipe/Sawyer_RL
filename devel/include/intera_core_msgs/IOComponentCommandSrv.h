@@ -57,8 +57,8 @@ struct DataType< ::intera_core_msgs::IOComponentCommandSrv > {
 };
 
 
-// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrvRequest> should match 
-// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrv > 
+// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrvRequest> should match
+// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrv >
 template<>
 struct MD5Sum< ::intera_core_msgs::IOComponentCommandSrvRequest>
 {
@@ -72,8 +72,8 @@ struct MD5Sum< ::intera_core_msgs::IOComponentCommandSrvRequest>
   }
 };
 
-// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrvRequest> should match 
-// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrv > 
+// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrvRequest> should match
+// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrv >
 template<>
 struct DataType< ::intera_core_msgs::IOComponentCommandSrvRequest>
 {
@@ -87,8 +87,8 @@ struct DataType< ::intera_core_msgs::IOComponentCommandSrvRequest>
   }
 };
 
-// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrvResponse> should match 
-// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrv > 
+// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrvResponse> should match
+// service_traits::MD5Sum< ::intera_core_msgs::IOComponentCommandSrv >
 template<>
 struct MD5Sum< ::intera_core_msgs::IOComponentCommandSrvResponse>
 {
@@ -102,8 +102,8 @@ struct MD5Sum< ::intera_core_msgs::IOComponentCommandSrvResponse>
   }
 };
 
-// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrvResponse> should match 
-// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrv > 
+// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrvResponse> should match
+// service_traits::DataType< ::intera_core_msgs::IOComponentCommandSrv >
 template<>
 struct DataType< ::intera_core_msgs::IOComponentCommandSrvResponse>
 {

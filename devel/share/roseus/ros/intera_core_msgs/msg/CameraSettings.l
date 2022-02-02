@@ -22,7 +22,7 @@
     ((:width __width) 0)
     ((:height __height) 0)
     ((:fps __fps) 0.0)
-    ((:controls __controls) (let (r) (dotimes (i 0) (push (instance intera_core_msgs::CameraControl :init) r)) r))
+    ((:controls __controls) ())
     )
    (send-super :init)
    (setq _width (round __width))

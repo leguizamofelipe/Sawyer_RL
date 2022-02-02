@@ -79,6 +79,23 @@ ros::message_operations::Printer< ::intera_core_msgs::IONodeConfiguration_<Conta
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator1> & lhs, const ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator2> & rhs)
+{
+  return lhs.time == rhs.time &&
+    lhs.node == rhs.node &&
+    lhs.devices == rhs.devices &&
+    lhs.plugins == rhs.plugins;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator1> & lhs, const ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -88,23 +105,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> >
@@ -114,6 +115,16 @@ struct IsMessage< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -156,18 +167,18 @@ struct Definition< ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator> 
 {
   static const char* value()
   {
-    return "# IO Node Configuration\n\
-time time                           # configuration command timestamp\n\
-IOComponentConfiguration node       # IO Node configuration\n\
-IOComponentConfiguration[] devices  # configuration of IO Devices in this node\n\
-IOComponentConfiguration[] plugins  # configuration of IO Device Plugins in this node\n\
-\n\
-================================================================================\n\
-MSG: intera_core_msgs/IOComponentConfiguration\n\
-## IO Component configuration data\n\
-string name                           # component name\n\
-string config                         # component configuration JSON\n\
-";
+    return "# IO Node Configuration\n"
+"time time                           # configuration command timestamp\n"
+"IOComponentConfiguration node       # IO Node configuration\n"
+"IOComponentConfiguration[] devices  # configuration of IO Devices in this node\n"
+"IOComponentConfiguration[] plugins  # configuration of IO Device Plugins in this node\n"
+"\n"
+"================================================================================\n"
+"MSG: intera_core_msgs/IOComponentConfiguration\n"
+"## IO Component configuration data\n"
+"string name                           # component name\n"
+"string config                         # component configuration JSON\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::IONodeConfiguration_<ContainerAllocator>&) { return value(); }

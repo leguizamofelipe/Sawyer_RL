@@ -52,8 +52,8 @@
        (if __header (setq _header (car __header)))
        _header)))
   (:interaction_control_active
-   (&optional __interaction_control_active)
-   (if __interaction_control_active (setq _interaction_control_active __interaction_control_active)) _interaction_control_active)
+   (&optional (__interaction_control_active :null))
+   (if (not (eq __interaction_control_active :null)) (setq _interaction_control_active __interaction_control_active)) _interaction_control_active)
   (:K_impedance
    (&optional __K_impedance)
    (if __K_impedance (setq _K_impedance __K_impedance)) _K_impedance)
@@ -67,17 +67,17 @@
    (&optional __endpoint_name)
    (if __endpoint_name (setq _endpoint_name __endpoint_name)) _endpoint_name)
   (:in_endpoint_frame
-   (&optional __in_endpoint_frame)
-   (if __in_endpoint_frame (setq _in_endpoint_frame __in_endpoint_frame)) _in_endpoint_frame)
+   (&optional (__in_endpoint_frame :null))
+   (if (not (eq __in_endpoint_frame :null)) (setq _in_endpoint_frame __in_endpoint_frame)) _in_endpoint_frame)
   (:disable_damping_in_force_control
-   (&optional __disable_damping_in_force_control)
-   (if __disable_damping_in_force_control (setq _disable_damping_in_force_control __disable_damping_in_force_control)) _disable_damping_in_force_control)
+   (&optional (__disable_damping_in_force_control :null))
+   (if (not (eq __disable_damping_in_force_control :null)) (setq _disable_damping_in_force_control __disable_damping_in_force_control)) _disable_damping_in_force_control)
   (:disable_reference_resetting
-   (&optional __disable_reference_resetting)
-   (if __disable_reference_resetting (setq _disable_reference_resetting __disable_reference_resetting)) _disable_reference_resetting)
+   (&optional (__disable_reference_resetting :null))
+   (if (not (eq __disable_reference_resetting :null)) (setq _disable_reference_resetting __disable_reference_resetting)) _disable_reference_resetting)
   (:rotations_for_constrained_zeroG
-   (&optional __rotations_for_constrained_zeroG)
-   (if __rotations_for_constrained_zeroG (setq _rotations_for_constrained_zeroG __rotations_for_constrained_zeroG)) _rotations_for_constrained_zeroG)
+   (&optional (__rotations_for_constrained_zeroG :null))
+   (if (not (eq __rotations_for_constrained_zeroG :null)) (setq _rotations_for_constrained_zeroG __rotations_for_constrained_zeroG)) _rotations_for_constrained_zeroG)
   (:serialization-length
    ()
    (+
@@ -221,8 +221,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ")

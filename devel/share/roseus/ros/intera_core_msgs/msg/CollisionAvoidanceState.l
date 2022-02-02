@@ -38,8 +38,8 @@
        (if __header (setq _header (car __header)))
        _header)))
   (:other_arm
-   (&optional __other_arm)
-   (if __other_arm (setq _other_arm __other_arm)) _other_arm)
+   (&optional (__other_arm :null))
+   (if (not (eq __other_arm :null)) (setq _other_arm __other_arm)) _other_arm)
   (:collision_object
    (&optional __collision_object)
    (if __collision_object (setq _collision_object __collision_object)) _collision_object)
@@ -105,8 +105,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ")

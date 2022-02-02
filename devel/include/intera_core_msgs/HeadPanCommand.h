@@ -48,6 +48,26 @@ struct HeadPanCommand_
 
 
 
+// reducing the odds to have name collisions with Windows.h 
+#if defined(_WIN32) && defined(MAX_SPEED_RATIO)
+  #undef MAX_SPEED_RATIO
+#endif
+#if defined(_WIN32) && defined(MIN_SPEED_RATIO)
+  #undef MIN_SPEED_RATIO
+#endif
+#if defined(_WIN32) && defined(SET_PASSIVE_MODE)
+  #undef SET_PASSIVE_MODE
+#endif
+#if defined(_WIN32) && defined(SET_ACTIVE_MODE)
+  #undef SET_ACTIVE_MODE
+#endif
+#if defined(_WIN32) && defined(SET_ACTIVE_CANCELLATION_MODE)
+  #undef SET_ACTIVE_CANCELLATION_MODE
+#endif
+#if defined(_WIN32) && defined(NO_MODE_CHANGE)
+  #undef NO_MODE_CHANGE
+#endif
+
   enum {
     SET_PASSIVE_MODE = 0u,
     SET_ACTIVE_MODE = 1u,
@@ -105,6 +125,22 @@ ros::message_operations::Printer< ::intera_core_msgs::HeadPanCommand_<ContainerA
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::HeadPanCommand_<ContainerAllocator1> & lhs, const ::intera_core_msgs::HeadPanCommand_<ContainerAllocator2> & rhs)
+{
+  return lhs.target == rhs.target &&
+    lhs.speed_ratio == rhs.speed_ratio &&
+    lhs.pan_mode == rhs.pan_mode;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::HeadPanCommand_<ContainerAllocator1> & lhs, const ::intera_core_msgs::HeadPanCommand_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -114,23 +150,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> >
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> const>
-  : TrueType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> >
@@ -139,6 +159,16 @@ struct IsMessage< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> >
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> const>
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> >
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> const>
   : TrueType
   { };
 
@@ -182,20 +212,20 @@ struct Definition< ::intera_core_msgs::HeadPanCommand_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32 target              # radians for target, 0 str\n\
-float32 speed_ratio         # Percentage of max speed [0-1]\n\
-#\n\
-  float32 MAX_SPEED_RATIO = 1.0\n\
-  float32 MIN_SPEED_RATIO = 0.0\n\
-#\n\
-uint8   pan_mode  # set to one of constants below to change pan mode\n\
-# pan_mode possible states\n\
-  uint8   SET_PASSIVE_MODE = 0\n\
-  uint8   SET_ACTIVE_MODE = 1\n\
-  uint8   SET_ACTIVE_CANCELLATION_MODE = 2\n\
-  uint8   NO_MODE_CHANGE = 3\n\
-#\n\
-";
+    return "float32 target              # radians for target, 0 str\n"
+"float32 speed_ratio         # Percentage of max speed [0-1]\n"
+"#\n"
+"  float32 MAX_SPEED_RATIO = 1.0\n"
+"  float32 MIN_SPEED_RATIO = 0.0\n"
+"#\n"
+"uint8   pan_mode  # set to one of constants below to change pan mode\n"
+"# pan_mode possible states\n"
+"  uint8   SET_PASSIVE_MODE = 0\n"
+"  uint8   SET_ACTIVE_MODE = 1\n"
+"  uint8   SET_ACTIVE_CANCELLATION_MODE = 2\n"
+"  uint8   NO_MODE_CHANGE = 3\n"
+"#\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::HeadPanCommand_<ContainerAllocator>&) { return value(); }

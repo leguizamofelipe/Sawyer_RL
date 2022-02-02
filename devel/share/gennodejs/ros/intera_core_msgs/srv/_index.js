@@ -1,12 +1,12 @@
 
 "use strict";
 
-let SolvePositionFK = require('./SolvePositionFK.js')
-let SolvePositionIK = require('./SolvePositionIK.js')
 let IOComponentCommandSrv = require('./IOComponentCommandSrv.js')
+let SolvePositionIK = require('./SolvePositionIK.js')
+let SolvePositionFK = require('./SolvePositionFK.js')
 
 module.exports = {
-  SolvePositionFK: SolvePositionFK,
-  SolvePositionIK: SolvePositionIK,
   IOComponentCommandSrv: IOComponentCommandSrv,
+  SolvePositionIK: SolvePositionIK,
+  SolvePositionFK: SolvePositionFK,
 };

@@ -36,8 +36,8 @@
        (if __header (setq _header (car __header)))
        _header)))
   (:collision_state
-   (&optional __collision_state)
-   (if __collision_state (setq _collision_state __collision_state)) _collision_state)
+   (&optional (__collision_state :null))
+   (if (not (eq __collision_state :null)) (setq _collision_state __collision_state)) _collision_state)
   (:serialization-length
    ()
    (+
@@ -86,8 +86,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ")

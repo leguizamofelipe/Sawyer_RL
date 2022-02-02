@@ -159,9 +159,9 @@
 (setf (get intera_core_msgs::IOComponentCommandSrvRequest :md5sum-) "bcb324504e5e34d907a1b6d881f436cd")
 (setf (get intera_core_msgs::IOComponentCommandSrvRequest :datatype-) "intera_core_msgs/IOComponentCommandSrvRequest")
 (setf (get intera_core_msgs::IOComponentCommandSrvRequest :definition-)
-      "
+      "## IO Component Command service call
 IOComponentCommand command
-float32 timeout
+float32 timeout  # max seconds to handle the request, default used if 0.0
 
 ================================================================================
 MSG: intera_core_msgs/IOComponentCommand
@@ -170,10 +170,10 @@ time time      # time the message was created, serves as a sequence number
 string op      # operation to perform
 string args    # JSON arguments
 ---
-time time
-string op
-IOStatus status
-string response
+time time               # time the request was handled, serves as a sequence number
+string op               # operation performed
+IOStatus status         # status response
+string response         # (OPTIONAL) command-specific response JSON data (e.g. resulting config)
 
 
 ================================================================================
@@ -201,9 +201,9 @@ string detail         # optional additional status detail
 (setf (get intera_core_msgs::IOComponentCommandSrvResponse :md5sum-) "bcb324504e5e34d907a1b6d881f436cd")
 (setf (get intera_core_msgs::IOComponentCommandSrvResponse :datatype-) "intera_core_msgs/IOComponentCommandSrvResponse")
 (setf (get intera_core_msgs::IOComponentCommandSrvResponse :definition-)
-      "
+      "## IO Component Command service call
 IOComponentCommand command
-float32 timeout
+float32 timeout  # max seconds to handle the request, default used if 0.0
 
 ================================================================================
 MSG: intera_core_msgs/IOComponentCommand
@@ -212,10 +212,10 @@ time time      # time the message was created, serves as a sequence number
 string op      # operation to perform
 string args    # JSON arguments
 ---
-time time
-string op
-IOStatus status
-string response
+time time               # time the request was handled, serves as a sequence number
+string op               # operation performed
+IOStatus status         # status response
+string response         # (OPTIONAL) command-specific response JSON data (e.g. resulting config)
 
 
 ================================================================================

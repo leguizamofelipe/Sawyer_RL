@@ -1,4 +1,4 @@
-prefix=/home/sawyer/ros_ws/install
+prefix=/home/sawyer/ros_ws_noetic/install
 
 Name: sawyer_description
 Description: Description of sawyer_description

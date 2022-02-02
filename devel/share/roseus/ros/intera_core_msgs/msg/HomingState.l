@@ -21,6 +21,14 @@
 (intern "*NOT_HOMED*" (find-package "INTERA_CORE_MSGS::HOMINGSTATE"))
 (shadow '*NOT_HOMED* (find-package "INTERA_CORE_MSGS::HOMINGSTATE"))
 (defconstant intera_core_msgs::HomingState::*NOT_HOMED* 2)
+
+(defun intera_core_msgs::HomingState-to-symbol (const)
+  (cond
+        ((= const 0) 'intera_core_msgs::HomingState::*HOMED*)
+        ((= const 1) 'intera_core_msgs::HomingState::*HOMING*)
+        ((= const 2) 'intera_core_msgs::HomingState::*NOT_HOMED*)
+        (t nil)))
+
 (defclass intera_core_msgs::HomingState
   :super ros::object
   :slots (_name _state ))

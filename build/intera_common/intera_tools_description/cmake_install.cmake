@@ -1,8 +1,8 @@
-# Install script for directory: /home/sawyer/ros_ws/src/intera_common/intera_tools_description
+# Install script for directory: /home/sawyer/ros_ws_noetic/src/intera_common/intera_tools_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws_noetic/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,26 +32,31 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sawyer/ros_ws/build/intera_common/intera_tools_description/catkin_generated/installspace/intera_tools_description.pc")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/build/intera_common/intera_tools_description/catkin_generated/installspace/intera_tools_description.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description/cmake" TYPE FILE FILES
-    "/home/sawyer/ros_ws/build/intera_common/intera_tools_description/catkin_generated/installspace/intera_tools_descriptionConfig.cmake"
-    "/home/sawyer/ros_ws/build/intera_common/intera_tools_description/catkin_generated/installspace/intera_tools_descriptionConfig-version.cmake"
+    "/home/sawyer/ros_ws_noetic/build/intera_common/intera_tools_description/catkin_generated/installspace/intera_tools_descriptionConfig.cmake"
+    "/home/sawyer/ros_ws_noetic/build/intera_common/intera_tools_description/catkin_generated/installspace/intera_tools_descriptionConfig-version.cmake"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description" TYPE FILE FILES "/home/sawyer/ros_ws/src/intera_common/intera_tools_description/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/src/intera_common/intera_tools_description/package.xml")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description/meshes" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/intera_common/intera_tools_description/meshes/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description/meshes" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/intera_common/intera_tools_description/meshes/")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description/urdf" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/intera_common/intera_tools_description/urdf/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_tools_description/urdf" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/intera_common/intera_tools_description/urdf/")
 endif()
 

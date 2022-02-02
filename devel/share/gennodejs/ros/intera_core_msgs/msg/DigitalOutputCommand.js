@@ -59,7 +59,7 @@ class DigitalOutputCommand {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.name.length;
+    length += _getByteLength(object.name);
     return length + 5;
   }
 

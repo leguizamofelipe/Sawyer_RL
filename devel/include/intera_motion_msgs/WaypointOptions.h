@@ -101,6 +101,28 @@ ros::message_operations::Printer< ::intera_motion_msgs::WaypointOptions_<Contain
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_motion_msgs::WaypointOptions_<ContainerAllocator1> & lhs, const ::intera_motion_msgs::WaypointOptions_<ContainerAllocator2> & rhs)
+{
+  return lhs.label == rhs.label &&
+    lhs.max_joint_speed_ratio == rhs.max_joint_speed_ratio &&
+    lhs.joint_tolerances == rhs.joint_tolerances &&
+    lhs.max_joint_accel == rhs.max_joint_accel &&
+    lhs.max_linear_speed == rhs.max_linear_speed &&
+    lhs.max_linear_accel == rhs.max_linear_accel &&
+    lhs.max_rotational_speed == rhs.max_rotational_speed &&
+    lhs.max_rotational_accel == rhs.max_rotational_accel &&
+    lhs.corner_distance == rhs.corner_distance;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_motion_msgs::WaypointOptions_<ContainerAllocator1> & lhs, const ::intera_motion_msgs::WaypointOptions_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_motion_msgs
 
 namespace ros
@@ -110,23 +132,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'intera_motion_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_motion_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_motion_msgs/msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> >
@@ -136,6 +142,16 @@ struct IsMessage< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -178,42 +194,42 @@ struct Definition< ::intera_motion_msgs::WaypointOptions_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# Optional waypoint label\n\
-string label\n\
-\n\
-# Ratio of max allowed joint speed : max planned joint speed (from 0.0 to 1.0)\n\
-float64 max_joint_speed_ratio\n\
-\n\
-# Slowdown heuristic is triggered if tracking error exceeds tolerances - radians\n\
-float64[] joint_tolerances\n\
-\n\
-# Maximum accelerations for each joint (only for joint paths) - rad/s^2.\n\
-float64[] max_joint_accel\n\
-\n\
-\n\
-###########################################################\n\
-# The remaining parameters only apply to Cartesian paths\n\
-\n\
-# Maximum linear speed of endpoint - m/s\n\
-float64 max_linear_speed\n\
-\n\
-# Maximum linear acceleration of endpoint - m/s^2\n\
-float64 max_linear_accel\n\
-\n\
-# Maximum rotational speed of endpoint - rad/s\n\
-float64 max_rotational_speed\n\
-\n\
-# Maximum rotational acceleration of endpoint - rad/s^2\n\
-float64 max_rotational_accel\n\
-\n\
-# Used for smoothing corners for continuous motion - m\n\
-# The distance from the waypoint to where the curve starts while blending from\n\
-# one straight line segment to the next.\n\
-# Larger distance:  trajectory passes farther from the waypoint at a higher speed\n\
-# Smaller distance:  trajectory passes closer to the waypoint at a lower speed\n\
-# Zero distance:  trajectory passes through the waypoint at zero speed\n\
-float64 corner_distance\n\
-";
+    return "# Optional waypoint label\n"
+"string label\n"
+"\n"
+"# Ratio of max allowed joint speed : max planned joint speed (from 0.0 to 1.0)\n"
+"float64 max_joint_speed_ratio\n"
+"\n"
+"# Slowdown heuristic is triggered if tracking error exceeds tolerances - radians\n"
+"float64[] joint_tolerances\n"
+"\n"
+"# Maximum accelerations for each joint (only for joint paths) - rad/s^2.\n"
+"float64[] max_joint_accel\n"
+"\n"
+"\n"
+"###########################################################\n"
+"# The remaining parameters only apply to Cartesian paths\n"
+"\n"
+"# Maximum linear speed of endpoint - m/s\n"
+"float64 max_linear_speed\n"
+"\n"
+"# Maximum linear acceleration of endpoint - m/s^2\n"
+"float64 max_linear_accel\n"
+"\n"
+"# Maximum rotational speed of endpoint - rad/s\n"
+"float64 max_rotational_speed\n"
+"\n"
+"# Maximum rotational acceleration of endpoint - rad/s^2\n"
+"float64 max_rotational_accel\n"
+"\n"
+"# Used for smoothing corners for continuous motion - m\n"
+"# The distance from the waypoint to where the curve starts while blending from\n"
+"# one straight line segment to the next.\n"
+"# Larger distance:  trajectory passes farther from the waypoint at a higher speed\n"
+"# Smaller distance:  trajectory passes closer to the waypoint at a lower speed\n"
+"# Zero distance:  trajectory passes through the waypoint at zero speed\n"
+"float64 corner_distance\n"
+;
   }
 
   static const char* value(const ::intera_motion_msgs::WaypointOptions_<ContainerAllocator>&) { return value(); }

@@ -59,7 +59,7 @@ class CalibrationCommandResult {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.statusId.length;
+    length += _getByteLength(object.statusId);
     return length + 5;
   }
 

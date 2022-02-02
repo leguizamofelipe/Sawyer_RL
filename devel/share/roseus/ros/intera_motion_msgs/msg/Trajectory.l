@@ -21,7 +21,7 @@
    (&key
     ((:label __label) "")
     ((:joint_names __joint_names) (let (r) (dotimes (i 0) (push "" r)) r))
-    ((:waypoints __waypoints) (let (r) (dotimes (i 0) (push (instance intera_motion_msgs::Waypoint :init) r)) r))
+    ((:waypoints __waypoints) ())
     ((:trajectory_options __trajectory_options) (instance intera_motion_msgs::TrajectoryOptions :init))
     )
    (send-super :init)
@@ -162,8 +162,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================

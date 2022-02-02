@@ -11,8 +11,8 @@ const _deserializer = _ros_msg_utils.Deserialize;
 const _arrayDeserializer = _deserializer.Array;
 const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
-let sensor_msgs = _finder('sensor_msgs');
 let geometry_msgs = _finder('geometry_msgs');
+let sensor_msgs = _finder('sensor_msgs');
 
 //-----------------------------------------------------------
 
@@ -158,7 +158,7 @@ class SolvePositionIKRequest {
     });
     length += 8 * object.nullspace_gain.length;
     object.tip_names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     return length + 25;
   }
@@ -176,18 +176,18 @@ class SolvePositionIKRequest {
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    
+    # Endpoint Pose(s) to request Inverse-Kinematics joint solutions for.
     geometry_msgs/PoseStamped[] pose_stamp
     
-    
-    
-    
+    # (optional) Joint Angle Seed(s) for IK solver.
+    # * specify a JointState seed for each pose_stamp, using name[] and position[]
+    # * empty arrays or a non-default seed_mode will cause user seed to not be used
     sensor_msgs/JointState[] seed_angles
     
-    
-    
-    
-    
+    # Seed Type Mode
+    # * default (SEED_AUTO) mode: iterate through seed types until first valid
+    #                             solution is found
+    # * setting any other mode:   try only that seed type
     int8 SEED_AUTO    = 0
     int8 SEED_USER    = 1
     int8 SEED_CURRENT = 2
@@ -195,17 +195,17 @@ class SolvePositionIKRequest {
     
     int8 seed_mode
     
-    
+    # For each IK request, tells whether it should use the nullspace goal
     bool[] use_nullspace_goal
     
-    
+    # The nullspace goal can either be the full set or subset of joint angles
     sensor_msgs/JointState[] nullspace_goal
     
-    
-    
+    # The gain used to bias toward the nullspace goal. Must be [0.0, 1.0]
+    # If empty, the default gain of 0.4 will be used
     float64[] nullspace_gain
     
-    
+    # Tip name for each pose IK
     string[] tip_names
     
     
@@ -229,8 +229,6 @@ class SolvePositionIKRequest {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================
@@ -438,13 +436,13 @@ class SolvePositionIKResponse {
     // Returns full string definition for message
     return `
     
-    
+    # joints[i]      == joint angle solution for each pose_state[i]
     sensor_msgs/JointState[] joints
     
-    
-    
-    
-    
+    # result_type[i] == seed type used to find valid solution, joints[i];
+    # otherwise,     == IK_FAILED (no valid IK solution found)
+    # or             == IK_IN_COLLISION (if IK solution is in self collision)
+    # or             == IK_ENDPOINT_DOES_NOT_EXIST
     int8 IK_FAILED = -1
     int8 IK_IN_COLLISION = -2
     int8 IK_ENDPOINT_DOES_NOT_EXIST = -3
@@ -494,8 +492,6 @@ class SolvePositionIKResponse {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     `;

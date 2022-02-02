@@ -77,6 +77,23 @@ ros::message_operations::Printer< ::intera_core_msgs::IODataStatus_<ContainerAll
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::IODataStatus_<ContainerAllocator1> & lhs, const ::intera_core_msgs::IODataStatus_<ContainerAllocator2> & rhs)
+{
+  return lhs.name == rhs.name &&
+    lhs.format == rhs.format &&
+    lhs.data == rhs.data &&
+    lhs.status == rhs.status;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::IODataStatus_<ContainerAllocator1> & lhs, const ::intera_core_msgs::IODataStatus_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -86,23 +103,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::IODataStatus_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::IODataStatus_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::IODataStatus_<ContainerAllocator> >
@@ -112,6 +113,16 @@ struct IsMessage< ::intera_core_msgs::IODataStatus_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::IODataStatus_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::IODataStatus_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::IODataStatus_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -154,44 +165,44 @@ struct Definition< ::intera_core_msgs::IODataStatus_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "## IO Data Status\n\
-string name       # IO Data Component name\n\
-string format     # data format:\n\
-                  # A JSON object containing one or more of the following fields:\n\
-                  # Required:\n\
-                  #   \"type\" : \"<type>\"  JSON Type, one of:\n\
-                  #                      \"bool\", \"int\", \"float\", \"string\", \"object\", \"array\"\n\
-                  #\n\
-                  # Optional:\n\
-                  #   \"dimensions\" : [ N,...] if absent, [ 1 ] is assumed.\n\
-                  #   \"role\"       : Signal: \"input\", \"output\"; Port:  \"sink\", \"source\"\n\
-                  #   \"data_type\"  : qualifier for the JSON type, may be device-specific\n\
-                  #                  int data_types:  \"uN\", \"sN\", \"NqM\"\n\
-                  #   other device-specific qualifiers may be used and will be passed through.\n\
-string data       # JSON data value.  An Array is expected, for example \"[ 0 ]\"\n\
-IOStatus status   # Data Component status\n\
-\n\
-================================================================================\n\
-MSG: intera_core_msgs/IOStatus\n\
-## IO status data\n\
-#\n\
-string tag             # one of the values listed below\n\
-#   down     Inoperative, not fully instantiated\n\
-#   ready    OK, fully operational\n\
-#   busy     OK, not ready to output data; input data value may be stale\n\
-#   unready  OK, not operational; data is invalid\n\
-#   error    Error, not operational\n\
-string DOWN      = down\n\
-string READY     = ready\n\
-string BUSY      = busy\n\
-string UNREADY   = unready\n\
-string ERROR     = error\n\
-#\n\
-string id             # message id, for internationalization\n\
-#\n\
-string detail         # optional additional status detail\n\
-#\n\
-";
+    return "## IO Data Status\n"
+"string name       # IO Data Component name\n"
+"string format     # data format:\n"
+"                  # A JSON object containing one or more of the following fields:\n"
+"                  # Required:\n"
+"                  #   \"type\" : \"<type>\"  JSON Type, one of:\n"
+"                  #                      \"bool\", \"int\", \"float\", \"string\", \"object\", \"array\"\n"
+"                  #\n"
+"                  # Optional:\n"
+"                  #   \"dimensions\" : [ N,...] if absent, [ 1 ] is assumed.\n"
+"                  #   \"role\"       : Signal: \"input\", \"output\"; Port:  \"sink\", \"source\"\n"
+"                  #   \"data_type\"  : qualifier for the JSON type, may be device-specific\n"
+"                  #                  int data_types:  \"uN\", \"sN\", \"NqM\"\n"
+"                  #   other device-specific qualifiers may be used and will be passed through.\n"
+"string data       # JSON data value.  An Array is expected, for example \"[ 0 ]\"\n"
+"IOStatus status   # Data Component status\n"
+"\n"
+"================================================================================\n"
+"MSG: intera_core_msgs/IOStatus\n"
+"## IO status data\n"
+"#\n"
+"string tag             # one of the values listed below\n"
+"#   down     Inoperative, not fully instantiated\n"
+"#   ready    OK, fully operational\n"
+"#   busy     OK, not ready to output data; input data value may be stale\n"
+"#   unready  OK, not operational; data is invalid\n"
+"#   error    Error, not operational\n"
+"string DOWN      = down\n"
+"string READY     = ready\n"
+"string BUSY      = busy\n"
+"string UNREADY   = unready\n"
+"string ERROR     = error\n"
+"#\n"
+"string id             # message id, for internationalization\n"
+"#\n"
+"string detail         # optional additional status detail\n"
+"#\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::IODataStatus_<ContainerAllocator>&) { return value(); }

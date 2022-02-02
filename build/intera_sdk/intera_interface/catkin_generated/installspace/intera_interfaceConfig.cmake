@@ -67,14 +67,14 @@ set(intera_interface_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(intera_interface_SOURCE_PREFIX /home/sawyer/ros_ws/src/intera_sdk/intera_interface)
-  set(intera_interface_DEVEL_PREFIX /home/sawyer/ros_ws/devel)
+  set(intera_interface_SOURCE_PREFIX /home/sawyer/ros_ws_noetic/src/intera_sdk/intera_interface)
+  set(intera_interface_DEVEL_PREFIX /home/sawyer/ros_ws_noetic/devel)
   set(intera_interface_INSTALL_PREFIX "")
   set(intera_interface_PREFIX ${intera_interface_DEVEL_PREFIX})
 else()
   set(intera_interface_SOURCE_PREFIX "")
   set(intera_interface_DEVEL_PREFIX "")
-  set(intera_interface_INSTALL_PREFIX /home/sawyer/ros_ws/install)
+  set(intera_interface_INSTALL_PREFIX /home/sawyer/ros_ws_noetic/install)
   set(intera_interface_PREFIX ${intera_interface_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/sawyer/ros_ws/install/lib;/home/sawyer/ros_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/sawyer/ros_ws_noetic/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -211,7 +211,7 @@ foreach(depend ${depends})
   _unpack_libraries_with_build_configuration(intera_interface_LIBRARIES ${intera_interface_LIBRARIES})
 
   _list_append_unique(intera_interface_LIBRARY_DIRS ${${intera_interface_dep}_LIBRARY_DIRS})
-  list(APPEND intera_interface_EXPORTED_TARGETS ${${intera_interface_dep}_EXPORTED_TARGETS})
+  _list_append_deduplicate(intera_interface_EXPORTED_TARGETS ${${intera_interface_dep}_EXPORTED_TARGETS})
 endforeach()
 
 set(pkg_cfg_extras "")

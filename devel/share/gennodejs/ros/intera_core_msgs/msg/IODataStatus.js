@@ -82,9 +82,9 @@ class IODataStatus {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.name.length;
-    length += object.format.length;
-    length += object.data.length;
+    length += _getByteLength(object.name);
+    length += _getByteLength(object.format);
+    length += _getByteLength(object.data);
     length += IOStatus.getMessageSize(object.status);
     return length + 12;
   }

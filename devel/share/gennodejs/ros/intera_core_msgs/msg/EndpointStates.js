@@ -83,7 +83,7 @@ class EndpointStates {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
     object.names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     object.states.forEach((val) => {
       length += EndpointState.getMessageSize(val);
@@ -122,8 +122,6 @@ class EndpointStates {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

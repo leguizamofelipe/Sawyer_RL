@@ -81,9 +81,9 @@ class IOComponentCommandSrvRequest {
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    
+    ## IO Component Command service call
     IOComponentCommand command
-    float32 timeout
+    float32 timeout  # max seconds to handle the request, default used if 0.0
     
     ================================================================================
     MSG: intera_core_msgs/IOComponentCommand
@@ -186,9 +186,9 @@ class IOComponentCommandSrvResponse {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.op.length;
+    length += _getByteLength(object.op);
     length += IOStatus.getMessageSize(object.status);
-    length += object.response.length;
+    length += _getByteLength(object.response);
     return length + 16;
   }
 
@@ -205,10 +205,10 @@ class IOComponentCommandSrvResponse {
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    time time
-    string op
-    IOStatus status
-    string response
+    time time               # time the request was handled, serves as a sequence number
+    string op               # operation performed
+    IOStatus status         # status response
+    string response         # (OPTIONAL) command-specific response JSON data (e.g. resulting config)
     
     
     ================================================================================

@@ -21,6 +21,14 @@
 (intern "*NONE*" (find-package "INTERA_CORE_MSGS::HOMINGCOMMAND"))
 (shadow '*NONE* (find-package "INTERA_CORE_MSGS::HOMINGCOMMAND"))
 (defconstant intera_core_msgs::HomingCommand::*NONE* 0)
+
+(defun intera_core_msgs::HomingCommand-to-symbol (const)
+  (cond
+        ((= const 1) 'intera_core_msgs::HomingCommand::*MANUAL*)
+        ((= const 2) 'intera_core_msgs::HomingCommand::*AUTO*)
+        ((= const 0) 'intera_core_msgs::HomingCommand::*NONE*)
+        (t nil)))
+
 (defclass intera_core_msgs::HomingCommand
   :super ros::object
   :slots (_name _command ))

@@ -30,8 +30,8 @@
    (&optional __name)
    (if __name (setq _name __name)) _name)
   (:value
-   (&optional __value)
-   (if __value (setq _value __value)) _value)
+   (&optional (__value :null))
+   (if (not (eq __value :null)) (setq _value __value)) _value)
   (:serialization-length
    ()
    (+

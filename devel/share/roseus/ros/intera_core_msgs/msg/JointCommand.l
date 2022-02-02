@@ -26,6 +26,15 @@
 (intern "*TRAJECTORY_MODE*" (find-package "INTERA_CORE_MSGS::JOINTCOMMAND"))
 (shadow '*TRAJECTORY_MODE* (find-package "INTERA_CORE_MSGS::JOINTCOMMAND"))
 (defconstant intera_core_msgs::JointCommand::*TRAJECTORY_MODE* 4)
+
+(defun intera_core_msgs::JointCommand-to-symbol (const)
+  (cond
+        ((= const 1) 'intera_core_msgs::JointCommand::*POSITION_MODE*)
+        ((= const 2) 'intera_core_msgs::JointCommand::*VELOCITY_MODE*)
+        ((= const 3) 'intera_core_msgs::JointCommand::*TORQUE_MODE*)
+        ((= const 4) 'intera_core_msgs::JointCommand::*TRAJECTORY_MODE*)
+        (t nil)))
+
 (defclass intera_core_msgs::JointCommand
   :super ros::object
   :slots (_header _mode _names _position _velocity _acceleration _effort ))
@@ -209,8 +218,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ")

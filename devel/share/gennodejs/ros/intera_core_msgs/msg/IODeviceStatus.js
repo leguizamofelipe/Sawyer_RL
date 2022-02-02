@@ -132,7 +132,7 @@ class IODeviceStatus {
     });
     length += 8 * object.commands.length;
     object.responses.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     return length + 24;
   }

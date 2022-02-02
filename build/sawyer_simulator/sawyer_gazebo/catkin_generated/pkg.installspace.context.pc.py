@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "${prefix}/include".split(';') if "${prefix}/i
 PROJECT_CATKIN_DEPENDS = "sawyer_hardware_interface;gazebo_ros_control;image_transport;intera_core_msgs;realtime_tools;roscpp;kdl_parser;tf_conversions;sns_ik_lib".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "-lsawyer_robot_hw_sim".split(';') if "-lsawyer_robot_hw_sim" != "" else []
 PROJECT_NAME = "sawyer_gazebo"
-PROJECT_SPACE_DIR = "/home/sawyer/ros_ws/install"
+PROJECT_SPACE_DIR = "/home/sawyer/ros_ws_noetic/install"
 PROJECT_VERSION = "5.3.0"

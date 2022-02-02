@@ -128,7 +128,7 @@ class JointTrackingError {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
     object.joint_names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     length += 8 * object.position_error.length;
     length += 8 * object.velocity_error.length;
@@ -191,8 +191,6 @@ class JointTrackingError {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     `;

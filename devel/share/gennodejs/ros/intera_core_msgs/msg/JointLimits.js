@@ -104,7 +104,7 @@ class JointLimits {
   static getMessageSize(object) {
     let length = 0;
     object.joint_names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     length += 8 * object.position_lower.length;
     length += 8 * object.position_upper.length;

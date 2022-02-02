@@ -132,6 +132,34 @@ ros::message_operations::Printer< ::intera_core_msgs::SEAJointState_<ContainerAl
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::SEAJointState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::SEAJointState_<ContainerAllocator2> & rhs)
+{
+  return lhs.header == rhs.header &&
+    lhs.name == rhs.name &&
+    lhs.commanded_position == rhs.commanded_position &&
+    lhs.commanded_velocity == rhs.commanded_velocity &&
+    lhs.commanded_acceleration == rhs.commanded_acceleration &&
+    lhs.commanded_effort == rhs.commanded_effort &&
+    lhs.actual_position == rhs.actual_position &&
+    lhs.actual_velocity == rhs.actual_velocity &&
+    lhs.actual_effort == rhs.actual_effort &&
+    lhs.gravity_model_effort == rhs.gravity_model_effort &&
+    lhs.gravity_only == rhs.gravity_only &&
+    lhs.interaction_torque == rhs.interaction_torque &&
+    lhs.hysteresis_model_effort == rhs.hysteresis_model_effort &&
+    lhs.crosstalk_model_effort == rhs.crosstalk_model_effort &&
+    lhs.hystState == rhs.hystState;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::SEAJointState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::SEAJointState_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -141,23 +169,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': True}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::SEAJointState_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::SEAJointState_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::SEAJointState_<ContainerAllocator> >
@@ -167,6 +179,16 @@ struct IsMessage< ::intera_core_msgs::SEAJointState_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::SEAJointState_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::SEAJointState_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::SEAJointState_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -209,67 +231,65 @@ struct Definition< ::intera_core_msgs::SEAJointState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# This is a message that holds data to describe the state of a set of torque controlled joints.\n\
-#\n\
-# The state of each joint (revolute or prismatic) is defined by:\n\
-#  * the position of the joint (rad or m),\n\
-#  * the velocity of the joint (rad/s or m/s) and\n\
-#  * the effort that is applied in the joint (Nm or N).\n\
-#\n\
-# Each joint is uniquely identified by its name\n\
-# The header specifies the time at which the joint states were recorded. All the joint states\n\
-# in one message have to be recorded at the same time.\n\
-#\n\
-# This message consists of a multiple arrays, one for each part of the joint state.\n\
-# The goal is to make each of the fields optional. When e.g. your joints have no\n\
-# effort associated with them, you can leave the effort array empty.\n\
-#\n\
-# All arrays in this message should have the same size, or be empty.\n\
-# This is the only way to uniquely associate the joint name with the correct\n\
-# states.\n\
-\n\
-\n\
-Header header\n\
-\n\
-string[]  name\n\
-float64[] commanded_position\n\
-float64[] commanded_velocity\n\
-float64[] commanded_acceleration\n\
-float64[] commanded_effort\n\
-float64[] actual_position\n\
-float64[] actual_velocity\n\
-float64[] actual_effort\n\
-# This includes the inertial feed forward torques when applicable.\n\
-float64[] gravity_model_effort\n\
-# This is the torque required to hold the arm against gravity returned by KDL\n\
-# if the arm was stationary.  This does not include inertial feed forward\n\
-# torques (even when we have them) or any of the corrections (i.e. spring\n\
-# hysteresis, crosstalk, etc) we make to the KDL model.\n\
-float64[] gravity_only\n\
-# This is the torque produced by the interactionController plugin. When interaction\n\
-# control is on, this will be added to torque_bias in VelocityController7DOF.\n\
-float64[] interaction_torque\n\
-float64[] hysteresis_model_effort\n\
-float64[] crosstalk_model_effort\n\
-float64   hystState\n\
-================================================================================\n\
-MSG: std_msgs/Header\n\
-# Standard metadata for higher-level stamped data types.\n\
-# This is generally used to communicate timestamped data \n\
-# in a particular coordinate frame.\n\
-# \n\
-# sequence ID: consecutively increasing ID \n\
-uint32 seq\n\
-#Two-integer timestamp that is expressed as:\n\
-# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n\
-# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n\
-# time-handling sugar is provided by the client library\n\
-time stamp\n\
-#Frame this data is associated with\n\
-# 0: no frame\n\
-# 1: global frame\n\
-string frame_id\n\
-";
+    return "# This is a message that holds data to describe the state of a set of torque controlled joints.\n"
+"#\n"
+"# The state of each joint (revolute or prismatic) is defined by:\n"
+"#  * the position of the joint (rad or m),\n"
+"#  * the velocity of the joint (rad/s or m/s) and\n"
+"#  * the effort that is applied in the joint (Nm or N).\n"
+"#\n"
+"# Each joint is uniquely identified by its name\n"
+"# The header specifies the time at which the joint states were recorded. All the joint states\n"
+"# in one message have to be recorded at the same time.\n"
+"#\n"
+"# This message consists of a multiple arrays, one for each part of the joint state.\n"
+"# The goal is to make each of the fields optional. When e.g. your joints have no\n"
+"# effort associated with them, you can leave the effort array empty.\n"
+"#\n"
+"# All arrays in this message should have the same size, or be empty.\n"
+"# This is the only way to uniquely associate the joint name with the correct\n"
+"# states.\n"
+"\n"
+"\n"
+"Header header\n"
+"\n"
+"string[]  name\n"
+"float64[] commanded_position\n"
+"float64[] commanded_velocity\n"
+"float64[] commanded_acceleration\n"
+"float64[] commanded_effort\n"
+"float64[] actual_position\n"
+"float64[] actual_velocity\n"
+"float64[] actual_effort\n"
+"# This includes the inertial feed forward torques when applicable.\n"
+"float64[] gravity_model_effort\n"
+"# This is the torque required to hold the arm against gravity returned by KDL\n"
+"# if the arm was stationary.  This does not include inertial feed forward\n"
+"# torques (even when we have them) or any of the corrections (i.e. spring\n"
+"# hysteresis, crosstalk, etc) we make to the KDL model.\n"
+"float64[] gravity_only\n"
+"# This is the torque produced by the interactionController plugin. When interaction\n"
+"# control is on, this will be added to torque_bias in VelocityController7DOF.\n"
+"float64[] interaction_torque\n"
+"float64[] hysteresis_model_effort\n"
+"float64[] crosstalk_model_effort\n"
+"float64   hystState\n"
+"================================================================================\n"
+"MSG: std_msgs/Header\n"
+"# Standard metadata for higher-level stamped data types.\n"
+"# This is generally used to communicate timestamped data \n"
+"# in a particular coordinate frame.\n"
+"# \n"
+"# sequence ID: consecutively increasing ID \n"
+"uint32 seq\n"
+"#Two-integer timestamp that is expressed as:\n"
+"# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n"
+"# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n"
+"# time-handling sugar is provided by the client library\n"
+"time stamp\n"
+"#Frame this data is associated with\n"
+"string frame_id\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::SEAJointState_<ContainerAllocator>&) { return value(); }

@@ -70,7 +70,7 @@ class CalibrationCommandFeedback {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.currentState.length;
+    length += _getByteLength(object.currentState);
     return length + 12;
   }
 

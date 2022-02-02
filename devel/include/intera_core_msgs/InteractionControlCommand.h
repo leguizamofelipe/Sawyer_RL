@@ -105,6 +105,20 @@ struct InteractionControlCommand_
 
 
 
+// reducing the odds to have name collisions with Windows.h 
+#if defined(_WIN32) && defined(IMPEDANCE_MODE)
+  #undef IMPEDANCE_MODE
+#endif
+#if defined(_WIN32) && defined(FORCE_MODE)
+  #undef FORCE_MODE
+#endif
+#if defined(_WIN32) && defined(IMPEDANCE_WITH_FORCE_LIMIT_MODE)
+  #undef IMPEDANCE_WITH_FORCE_LIMIT_MODE
+#endif
+#if defined(_WIN32) && defined(FORCE_WITH_MOTION_LIMIT_MODE)
+  #undef FORCE_WITH_MOTION_LIMIT_MODE
+#endif
+
   enum {
     IMPEDANCE_MODE = 1u,
     FORCE_MODE = 2u,
@@ -142,6 +156,33 @@ ros::message_operations::Printer< ::intera_core_msgs::InteractionControlCommand_
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator1> & lhs, const ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator2> & rhs)
+{
+  return lhs.header == rhs.header &&
+    lhs.interaction_control_active == rhs.interaction_control_active &&
+    lhs.K_impedance == rhs.K_impedance &&
+    lhs.max_impedance == rhs.max_impedance &&
+    lhs.D_impedance == rhs.D_impedance &&
+    lhs.K_nullspace == rhs.K_nullspace &&
+    lhs.force_command == rhs.force_command &&
+    lhs.interaction_frame == rhs.interaction_frame &&
+    lhs.endpoint_name == rhs.endpoint_name &&
+    lhs.in_endpoint_frame == rhs.in_endpoint_frame &&
+    lhs.disable_damping_in_force_control == rhs.disable_damping_in_force_control &&
+    lhs.disable_reference_resetting == rhs.disable_reference_resetting &&
+    lhs.interaction_control_mode == rhs.interaction_control_mode &&
+    lhs.rotations_for_constrained_zeroG == rhs.rotations_for_constrained_zeroG;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator1> & lhs, const ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -151,23 +192,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': True}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator> >
@@ -177,6 +202,16 @@ struct IsMessage< ::intera_core_msgs::InteractionControlCommand_<ContainerAlloca
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -219,114 +254,112 @@ struct Definition< ::intera_core_msgs::InteractionControlCommand_<ContainerAlloc
 {
   static const char* value()
   {
-    return "# Message sets the interaction (impedance/force) control on or off\n\
-# It also contains desired cartesian stiffness K, damping D, and force values\n\
-\n\
-Header header\n\
-bool      interaction_control_active\n\
-\n\
-## Cartesian Impedance Control Parameters\n\
-# Stiffness units are (N/m) for first 3 and (Nm/rad) for second 3 values\n\
-float64[] K_impedance\n\
-# Force certain directions to have maximum possible impedance for a given pose\n\
-bool[] max_impedance\n\
-# Damping units are (Ns/m) for first 3 and (Nms/rad) for the second 3 values\n\
-float64[] D_impedance\n\
-# Joint Nullspace stiffness units are in (Nm/rad) (length == number of joints)\n\
-float64[] K_nullspace\n\
-\n\
-## Parameters for force control or impedance control with force limit\n\
-# If in force mode, this is the vector of desired forces/torques\n\
-# to be regulated in (N) and (Nm)\n\
-# If in impedance with force limit mode, this vector specifies the\n\
-# magnitude of forces/torques (N and Nm) that the command will not exceed.\n\
-float64[] force_command\n\
-\n\
-## Desired frame\n\
-geometry_msgs/Pose interaction_frame\n\
-string endpoint_name\n\
-# True if impedance and force commands are defined in endpoint frame\n\
-bool in_endpoint_frame\n\
-\n\
-# Set to true to disable damping during force control. Damping is used\n\
-# to slow down robot motion during force control in free space.\n\
-# Option included for SDK users to disable damping in force control\n\
-bool disable_damping_in_force_control\n\
-\n\
-# Set to true to disable reference resetting. Reference resetting is\n\
-# used when interaction parameters change, in order to avoid jumps/jerks.\n\
-# Option included for SDK users to disable reference resetting if the\n\
-# intention is to change interaction parameters.\n\
-bool disable_reference_resetting\n\
-\n\
-## Mode Selection Parameters\n\
-# The possible interaction control modes are:\n\
-# Impedance mode: implements desired endpoint stiffness and damping.\n\
-uint8 IMPEDANCE_MODE=1\n\
-# Force mode: applies force/torque in the specified dimensions.\n\
-uint8 FORCE_MODE=2\n\
-# Impedance with force limit: impedance control while ensuring the commanded\n\
-# forces/torques do not exceed force_command.\n\
-uint8 IMPEDANCE_WITH_FORCE_LIMIT_MODE=3\n\
-# Force with motion bounds: force control while ensuring the current\n\
-# pose/velocities do not exceed forceMotionThreshold (currenetly defined in yaml)\n\
-uint8 FORCE_WITH_MOTION_LIMIT_MODE=4\n\
-\n\
-# Specifies the interaction control mode for each Cartesian dimension (6)\n\
-uint8[] interaction_control_mode\n\
-\n\
-# All 6 values in force and impedance parameter vectors have to be filled,\n\
-# If a control mode is not used in a Cartesian dimension,\n\
-# the corresponding parameters will be ignored.\n\
-\n\
-## Parameters for Constrained Zero-G Behaviors\n\
-# Allow for arbitrary rotational displacements from the current orientation\n\
-# for constrained zero-G. Setting 'rotations_for_constrained_zeroG = True'\n\
-# will disable the rotational stiffness field which limits rotational\n\
-# displacements to +/- 82.5 degree.\n\
-# NOTE: it will be only enabled for a stationary reference orientation\n\
-bool rotations_for_constrained_zeroG\n\
-\n\
-================================================================================\n\
-MSG: std_msgs/Header\n\
-# Standard metadata for higher-level stamped data types.\n\
-# This is generally used to communicate timestamped data \n\
-# in a particular coordinate frame.\n\
-# \n\
-# sequence ID: consecutively increasing ID \n\
-uint32 seq\n\
-#Two-integer timestamp that is expressed as:\n\
-# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n\
-# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n\
-# time-handling sugar is provided by the client library\n\
-time stamp\n\
-#Frame this data is associated with\n\
-# 0: no frame\n\
-# 1: global frame\n\
-string frame_id\n\
-\n\
-================================================================================\n\
-MSG: geometry_msgs/Pose\n\
-# A representation of pose in free space, composed of position and orientation. \n\
-Point position\n\
-Quaternion orientation\n\
-\n\
-================================================================================\n\
-MSG: geometry_msgs/Point\n\
-# This contains the position of a point in free space\n\
-float64 x\n\
-float64 y\n\
-float64 z\n\
-\n\
-================================================================================\n\
-MSG: geometry_msgs/Quaternion\n\
-# This represents an orientation in free space in quaternion form.\n\
-\n\
-float64 x\n\
-float64 y\n\
-float64 z\n\
-float64 w\n\
-";
+    return "# Message sets the interaction (impedance/force) control on or off\n"
+"# It also contains desired cartesian stiffness K, damping D, and force values\n"
+"\n"
+"Header header\n"
+"bool      interaction_control_active\n"
+"\n"
+"## Cartesian Impedance Control Parameters\n"
+"# Stiffness units are (N/m) for first 3 and (Nm/rad) for second 3 values\n"
+"float64[] K_impedance\n"
+"# Force certain directions to have maximum possible impedance for a given pose\n"
+"bool[] max_impedance\n"
+"# Damping units are (Ns/m) for first 3 and (Nms/rad) for the second 3 values\n"
+"float64[] D_impedance\n"
+"# Joint Nullspace stiffness units are in (Nm/rad) (length == number of joints)\n"
+"float64[] K_nullspace\n"
+"\n"
+"## Parameters for force control or impedance control with force limit\n"
+"# If in force mode, this is the vector of desired forces/torques\n"
+"# to be regulated in (N) and (Nm)\n"
+"# If in impedance with force limit mode, this vector specifies the\n"
+"# magnitude of forces/torques (N and Nm) that the command will not exceed.\n"
+"float64[] force_command\n"
+"\n"
+"## Desired frame\n"
+"geometry_msgs/Pose interaction_frame\n"
+"string endpoint_name\n"
+"# True if impedance and force commands are defined in endpoint frame\n"
+"bool in_endpoint_frame\n"
+"\n"
+"# Set to true to disable damping during force control. Damping is used\n"
+"# to slow down robot motion during force control in free space.\n"
+"# Option included for SDK users to disable damping in force control\n"
+"bool disable_damping_in_force_control\n"
+"\n"
+"# Set to true to disable reference resetting. Reference resetting is\n"
+"# used when interaction parameters change, in order to avoid jumps/jerks.\n"
+"# Option included for SDK users to disable reference resetting if the\n"
+"# intention is to change interaction parameters.\n"
+"bool disable_reference_resetting\n"
+"\n"
+"## Mode Selection Parameters\n"
+"# The possible interaction control modes are:\n"
+"# Impedance mode: implements desired endpoint stiffness and damping.\n"
+"uint8 IMPEDANCE_MODE=1\n"
+"# Force mode: applies force/torque in the specified dimensions.\n"
+"uint8 FORCE_MODE=2\n"
+"# Impedance with force limit: impedance control while ensuring the commanded\n"
+"# forces/torques do not exceed force_command.\n"
+"uint8 IMPEDANCE_WITH_FORCE_LIMIT_MODE=3\n"
+"# Force with motion bounds: force control while ensuring the current\n"
+"# pose/velocities do not exceed forceMotionThreshold (currenetly defined in yaml)\n"
+"uint8 FORCE_WITH_MOTION_LIMIT_MODE=4\n"
+"\n"
+"# Specifies the interaction control mode for each Cartesian dimension (6)\n"
+"uint8[] interaction_control_mode\n"
+"\n"
+"# All 6 values in force and impedance parameter vectors have to be filled,\n"
+"# If a control mode is not used in a Cartesian dimension,\n"
+"# the corresponding parameters will be ignored.\n"
+"\n"
+"## Parameters for Constrained Zero-G Behaviors\n"
+"# Allow for arbitrary rotational displacements from the current orientation\n"
+"# for constrained zero-G. Setting 'rotations_for_constrained_zeroG = True'\n"
+"# will disable the rotational stiffness field which limits rotational\n"
+"# displacements to +/- 82.5 degree.\n"
+"# NOTE: it will be only enabled for a stationary reference orientation\n"
+"bool rotations_for_constrained_zeroG\n"
+"\n"
+"================================================================================\n"
+"MSG: std_msgs/Header\n"
+"# Standard metadata for higher-level stamped data types.\n"
+"# This is generally used to communicate timestamped data \n"
+"# in a particular coordinate frame.\n"
+"# \n"
+"# sequence ID: consecutively increasing ID \n"
+"uint32 seq\n"
+"#Two-integer timestamp that is expressed as:\n"
+"# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n"
+"# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n"
+"# time-handling sugar is provided by the client library\n"
+"time stamp\n"
+"#Frame this data is associated with\n"
+"string frame_id\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Pose\n"
+"# A representation of pose in free space, composed of position and orientation. \n"
+"Point position\n"
+"Quaternion orientation\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Point\n"
+"# This contains the position of a point in free space\n"
+"float64 x\n"
+"float64 y\n"
+"float64 z\n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Quaternion\n"
+"# This represents an orientation in free space in quaternion form.\n"
+"\n"
+"float64 x\n"
+"float64 y\n"
+"float64 z\n"
+"float64 w\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::InteractionControlCommand_<ContainerAllocator>&) { return value(); }

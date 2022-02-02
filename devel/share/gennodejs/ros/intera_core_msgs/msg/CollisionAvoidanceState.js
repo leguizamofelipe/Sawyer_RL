@@ -73,7 +73,7 @@ class CollisionAvoidanceState {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
     object.collision_object.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     return length + 5;
   }
@@ -108,8 +108,6 @@ class CollisionAvoidanceState {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     `;

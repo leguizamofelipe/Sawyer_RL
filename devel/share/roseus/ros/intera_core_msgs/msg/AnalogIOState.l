@@ -35,8 +35,8 @@
    (&optional __value)
    (if __value (setq _value __value)) _value)
   (:isInputOnly
-   (&optional __isInputOnly)
-   (if __isInputOnly (setq _isInputOnly __isInputOnly)) _isInputOnly)
+   (&optional (__isInputOnly :null))
+   (if (not (eq __isInputOnly :null)) (setq _isInputOnly __isInputOnly)) _isInputOnly)
   (:serialization-length
    ()
    (+

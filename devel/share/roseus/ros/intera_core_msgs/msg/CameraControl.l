@@ -42,6 +42,21 @@
 (intern "*CAMERA_CONTROL_RESOLUTION_HALF*" (find-package "INTERA_CORE_MSGS::CAMERACONTROL"))
 (shadow '*CAMERA_CONTROL_RESOLUTION_HALF* (find-package "INTERA_CORE_MSGS::CAMERACONTROL"))
 (defconstant intera_core_msgs::CameraControl::*CAMERA_CONTROL_RESOLUTION_HALF* 109)
+
+(defun intera_core_msgs::CameraControl-to-symbol (const)
+  (cond
+        ((= const 100) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_EXPOSURE*)
+        ((= const 101) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_GAIN*)
+        ((= const 102) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_WHITE_BALANCE_R*)
+        ((= const 103) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_WHITE_BALANCE_G*)
+        ((= const 104) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_WHITE_BALANCE_B*)
+        ((= const 105) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_WINDOW_X*)
+        ((= const 106) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_WINDOW_Y*)
+        ((= const 107) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_FLIP*)
+        ((= const 108) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_MIRROR*)
+        ((= const 109) 'intera_core_msgs::CameraControl::*CAMERA_CONTROL_RESOLUTION_HALF*)
+        (t nil)))
+
 (defclass intera_core_msgs::CameraControl
   :super ros::object
   :slots (_id _value ))

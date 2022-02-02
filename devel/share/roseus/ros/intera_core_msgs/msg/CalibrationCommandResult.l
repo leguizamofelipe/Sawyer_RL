@@ -33,6 +33,11 @@
 (intern "*PLANNER_FAILURE*" (find-package "INTERA_CORE_MSGS::CALIBRATIONCOMMANDRESULT"))
 (shadow '*PLANNER_FAILURE* (find-package "INTERA_CORE_MSGS::CALIBRATIONCOMMANDRESULT"))
 (defconstant intera_core_msgs::CalibrationCommandResult::*PLANNER_FAILURE* "plannerFailure")
+
+(defun intera_core_msgs::CalibrationCommandResult-to-symbol (const)
+  (cond
+        (t nil)))
+
 (defclass intera_core_msgs::CalibrationCommandResult
   :super ros::object
   :slots (_result _statusId ))
@@ -48,8 +53,8 @@
    (setq _statusId (string __statusId))
    self)
   (:result
-   (&optional __result)
-   (if __result (setq _result __result)) _result)
+   (&optional (__result :null))
+   (if (not (eq __result :null)) (setq _result __result)) _result)
   (:statusId
    (&optional __statusId)
    (if __statusId (setq _statusId __statusId)) _statusId)

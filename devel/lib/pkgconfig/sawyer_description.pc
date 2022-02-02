@@ -1,4 +1,4 @@
-prefix=/home/sawyer/ros_ws/devel
+prefix=/home/sawyer/ros_ws_noetic/devel
 
 Name: sawyer_description
 Description: Description of sawyer_description

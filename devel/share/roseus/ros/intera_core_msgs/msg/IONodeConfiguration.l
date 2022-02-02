@@ -21,8 +21,8 @@
    (&key
     ((:time __time) (instance ros::time :init))
     ((:node __node) (instance intera_core_msgs::IOComponentConfiguration :init))
-    ((:devices __devices) (let (r) (dotimes (i 0) (push (instance intera_core_msgs::IOComponentConfiguration :init) r)) r))
-    ((:plugins __plugins) (let (r) (dotimes (i 0) (push (instance intera_core_msgs::IOComponentConfiguration :init) r)) r))
+    ((:devices __devices) ())
+    ((:plugins __plugins) ())
     )
    (send-super :init)
    (setq _time __time)

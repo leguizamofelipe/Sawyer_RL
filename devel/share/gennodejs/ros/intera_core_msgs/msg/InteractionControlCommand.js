@@ -199,7 +199,7 @@ class InteractionControlCommand {
     length += 8 * object.D_impedance.length;
     length += 8 * object.K_nullspace.length;
     length += 8 * object.force_command.length;
-    length += object.endpoint_name.length;
+    length += _getByteLength(object.endpoint_name);
     length += object.interaction_control_mode.length;
     return length + 89;
   }
@@ -299,8 +299,6 @@ class InteractionControlCommand {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

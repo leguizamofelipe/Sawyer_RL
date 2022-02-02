@@ -21,6 +21,11 @@
 (intern "*MOTION_GENERATE*" (find-package "INTERA_MOTION_MSGS::MOTIONCOMMANDGOAL"))
 (shadow '*MOTION_GENERATE* (find-package "INTERA_MOTION_MSGS::MOTIONCOMMANDGOAL"))
 (defconstant intera_motion_msgs::MotionCommandGoal::*MOTION_GENERATE* "generate  # Generate path, but do not run")
+
+(defun intera_motion_msgs::MotionCommandGoal-to-symbol (const)
+  (cond
+        (t nil)))
+
 (defclass intera_motion_msgs::MotionCommandGoal
   :super ros::object
   :slots (_command _trajectory ))
@@ -141,8 +146,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================

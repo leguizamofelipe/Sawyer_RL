@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "/home/sawyer/ros_ws_noetic/devel/lib/libsawyer_robot_hw_sim.pdb"
+  "/home/sawyer/ros_ws_noetic/devel/lib/libsawyer_robot_hw_sim.so"
   "CMakeFiles/sawyer_robot_hw_sim.dir/src/sawyer_robot_hw_sim.cpp.o"
-  "/home/sawyer/ros_ws/devel/lib/libsawyer_robot_hw_sim.pdb"
-  "/home/sawyer/ros_ws/devel/lib/libsawyer_robot_hw_sim.so"
 )
 
 # Per-language clean rules from dependency scanning.

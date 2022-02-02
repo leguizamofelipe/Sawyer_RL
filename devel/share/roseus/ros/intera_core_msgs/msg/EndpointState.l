@@ -65,8 +65,8 @@
        (if __wrench (setq _wrench (car __wrench)))
        _wrench)))
   (:valid
-   (&optional __valid)
-   (if __valid (setq _valid __valid)) _valid)
+   (&optional (__valid :null))
+   (if (not (eq __valid :null)) (setq _valid __valid)) _valid)
   (:serialization-length
    ()
    (+
@@ -136,8 +136,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================

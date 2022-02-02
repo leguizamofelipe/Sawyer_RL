@@ -21,6 +21,14 @@
 (intern "*ACTIVE_CANCELLATION_MODE*" (find-package "INTERA_CORE_MSGS::HEADSTATE"))
 (shadow '*ACTIVE_CANCELLATION_MODE* (find-package "INTERA_CORE_MSGS::HEADSTATE"))
 (defconstant intera_core_msgs::HeadState::*ACTIVE_CANCELLATION_MODE* 2)
+
+(defun intera_core_msgs::HeadState-to-symbol (const)
+  (cond
+        ((= const 0) 'intera_core_msgs::HeadState::*PASSIVE_MODE*)
+        ((= const 1) 'intera_core_msgs::HeadState::*ACTIVE_MODE*)
+        ((= const 2) 'intera_core_msgs::HeadState::*ACTIVE_CANCELLATION_MODE*)
+        (t nil)))
+
 (defclass intera_core_msgs::HeadState
   :super ros::object
   :slots (_pan _isTurning _isBlocked _panMode ))
@@ -43,11 +51,11 @@
    (&optional __pan)
    (if __pan (setq _pan __pan)) _pan)
   (:isTurning
-   (&optional __isTurning)
-   (if __isTurning (setq _isTurning __isTurning)) _isTurning)
+   (&optional (__isTurning :null))
+   (if (not (eq __isTurning :null)) (setq _isTurning __isTurning)) _isTurning)
   (:isBlocked
-   (&optional __isBlocked)
-   (if __isBlocked (setq _isBlocked __isBlocked)) _isBlocked)
+   (&optional (__isBlocked :null))
+   (if (not (eq __isBlocked :null)) (setq _isBlocked __isBlocked)) _isBlocked)
   (:panMode
    (&optional __panMode)
    (if __panMode (setq _panMode __panMode)) _panMode)

@@ -84,7 +84,7 @@ class Waypoint {
   static getMessageSize(object) {
     let length = 0;
     length += 8 * object.joint_positions.length;
-    length += object.active_endpoint.length;
+    length += _getByteLength(object.active_endpoint);
     length += geometry_msgs.msg.PoseStamped.getMessageSize(object.pose);
     length += WaypointOptions.getMessageSize(object.options);
     return length + 8;
@@ -141,8 +141,6 @@ class Waypoint {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

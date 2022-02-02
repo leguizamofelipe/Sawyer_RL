@@ -152,7 +152,7 @@ class InteractionControlState {
     length += 8 * object.K_impedance.length;
     length += 8 * object.D_impedance.length;
     length += 8 * object.endpoint_force_command.length;
-    length += object.endpoint_name.length;
+    length += _getByteLength(object.endpoint_name);
     return length + 21;
   }
 
@@ -209,8 +209,6 @@ class InteractionControlState {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     `;

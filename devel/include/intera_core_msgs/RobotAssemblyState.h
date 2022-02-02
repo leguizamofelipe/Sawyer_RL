@@ -73,6 +73,35 @@ struct RobotAssemblyState_
 
 
 
+// reducing the odds to have name collisions with Windows.h 
+#if defined(_WIN32) && defined(ESTOP_BUTTON_UNPRESSED)
+  #undef ESTOP_BUTTON_UNPRESSED
+#endif
+#if defined(_WIN32) && defined(ESTOP_BUTTON_PRESSED)
+  #undef ESTOP_BUTTON_PRESSED
+#endif
+#if defined(_WIN32) && defined(ESTOP_BUTTON_UNKNOWN)
+  #undef ESTOP_BUTTON_UNKNOWN
+#endif
+#if defined(_WIN32) && defined(ESTOP_BUTTON_RELEASED)
+  #undef ESTOP_BUTTON_RELEASED
+#endif
+#if defined(_WIN32) && defined(ESTOP_SOURCE_NONE)
+  #undef ESTOP_SOURCE_NONE
+#endif
+#if defined(_WIN32) && defined(ESTOP_SOURCE_USER)
+  #undef ESTOP_SOURCE_USER
+#endif
+#if defined(_WIN32) && defined(ESTOP_SOURCE_UNKNOWN)
+  #undef ESTOP_SOURCE_UNKNOWN
+#endif
+#if defined(_WIN32) && defined(ESTOP_SOURCE_FAULT)
+  #undef ESTOP_SOURCE_FAULT
+#endif
+#if defined(_WIN32) && defined(ESTOP_SOURCE_ENGINE)
+  #undef ESTOP_SOURCE_ENGINE
+#endif
+
   enum {
     ESTOP_BUTTON_UNPRESSED = 0u,
     ESTOP_BUTTON_PRESSED = 1u,
@@ -125,6 +154,27 @@ ros::message_operations::Printer< ::intera_core_msgs::RobotAssemblyState_<Contai
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator2> & rhs)
+{
+  return lhs.homed == rhs.homed &&
+    lhs.ready == rhs.ready &&
+    lhs.enabled == rhs.enabled &&
+    lhs.stopped == rhs.stopped &&
+    lhs.error == rhs.error &&
+    lhs.lowVoltage == rhs.lowVoltage &&
+    lhs.estop_button == rhs.estop_button &&
+    lhs.estop_source == rhs.estop_source;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -134,23 +184,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> >
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> const>
-  : TrueType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> >
@@ -159,6 +193,16 @@ struct IsMessage< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> >
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> const>
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> >
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> const>
   : TrueType
   { };
 
@@ -202,27 +246,27 @@ struct Definition< ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "bool homed               # true if all joints are homed\n\
-bool ready               # true if enabled and ready to operate, e.g., not homing\n\
-bool enabled             # true if enabled\n\
-bool stopped             # true if stopped -- e-stop asserted\n\
-bool error               # true if a component of the assembly has an error\n\
-bool lowVoltage          # true when the robot is in low voltage mode\n\
-\n\
-# The following are specific to the robot top-level assembly:\n\
-uint8  estop_button      # One of the following:\n\
-  uint8   ESTOP_BUTTON_UNPRESSED = 0   # Robot is not stopped and button is not pressed\n\
-  uint8   ESTOP_BUTTON_PRESSED   = 1\n\
-  uint8   ESTOP_BUTTON_UNKNOWN   = 2   # STATE_UNKNOWN when estop was asserted by a non-user source\n\
-  uint8   ESTOP_BUTTON_RELEASED  = 3   # Was pressed, is now known to be released, but robot is still stopped.\n\
-#\n\
-uint8  estop_source      # If stopped is true, the source of the e-stop.  One of the following:\n\
-  uint8  ESTOP_SOURCE_NONE      = 0   # e-stop is not asserted\n\
-  uint8  ESTOP_SOURCE_USER      = 1   # e-stop source is user input (the red button)\n\
-  uint8  ESTOP_SOURCE_UNKNOWN   = 2   # e-stop source is unknown\n\
-  uint8  ESTOP_SOURCE_FAULT     = 3   # MotorController asserted e-stop in response to a joint fault\n\
-  uint8  ESTOP_SOURCE_ENGINE    = 4   # MotorController asserted e-stop in response to engine request\n\
-";
+    return "bool homed               # true if all joints are homed\n"
+"bool ready               # true if enabled and ready to operate, e.g., not homing\n"
+"bool enabled             # true if enabled\n"
+"bool stopped             # true if stopped -- e-stop asserted\n"
+"bool error               # true if a component of the assembly has an error\n"
+"bool lowVoltage          # true when the robot is in low voltage mode\n"
+"\n"
+"# The following are specific to the robot top-level assembly:\n"
+"uint8  estop_button      # One of the following:\n"
+"  uint8   ESTOP_BUTTON_UNPRESSED = 0   # Robot is not stopped and button is not pressed\n"
+"  uint8   ESTOP_BUTTON_PRESSED   = 1\n"
+"  uint8   ESTOP_BUTTON_UNKNOWN   = 2   # STATE_UNKNOWN when estop was asserted by a non-user source\n"
+"  uint8   ESTOP_BUTTON_RELEASED  = 3   # Was pressed, is now known to be released, but robot is still stopped.\n"
+"#\n"
+"uint8  estop_source      # If stopped is true, the source of the e-stop.  One of the following:\n"
+"  uint8  ESTOP_SOURCE_NONE      = 0   # e-stop is not asserted\n"
+"  uint8  ESTOP_SOURCE_USER      = 1   # e-stop source is user input (the red button)\n"
+"  uint8  ESTOP_SOURCE_UNKNOWN   = 2   # e-stop source is unknown\n"
+"  uint8  ESTOP_SOURCE_FAULT     = 3   # MotorController asserted e-stop in response to a joint fault\n"
+"  uint8  ESTOP_SOURCE_ENGINE    = 4   # MotorController asserted e-stop in response to engine request\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::RobotAssemblyState_<ContainerAllocator>&) { return value(); }

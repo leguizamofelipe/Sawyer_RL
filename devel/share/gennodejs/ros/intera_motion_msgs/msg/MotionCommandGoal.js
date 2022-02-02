@@ -60,7 +60,7 @@ class MotionCommandGoal {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.command.length;
+    length += _getByteLength(object.command);
     length += Trajectory.getMessageSize(object.trajectory);
     return length + 4;
   }
@@ -143,8 +143,6 @@ class MotionCommandGoal {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

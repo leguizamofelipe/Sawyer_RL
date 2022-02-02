@@ -59,8 +59,8 @@ class IOComponentConfiguration {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.name.length;
-    length += object.config.length;
+    length += _getByteLength(object.name);
+    length += _getByteLength(object.config);
     return length + 8;
   }
 

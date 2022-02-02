@@ -1,8 +1,8 @@
-prefix=/home/sawyer/ros_ws/devel
+prefix=/home/sawyer/ros_ws_noetic/devel
 
 Name: sawyer_sim_controllers
 Description: Description of sawyer_sim_controllers
 Version: 5.3.0
-Cflags: -I/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_controllers/include
+Cflags: -I/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_controllers/include
 Libs: -L${prefix}/lib -lsawyer_sim_controllers
 Requires: sawyer_hardware_interface roscpp

@@ -30,6 +30,15 @@
 (intern "*NO_MODE_CHANGE*" (find-package "INTERA_CORE_MSGS::HEADPANCOMMAND"))
 (shadow '*NO_MODE_CHANGE* (find-package "INTERA_CORE_MSGS::HEADPANCOMMAND"))
 (defconstant intera_core_msgs::HeadPanCommand::*NO_MODE_CHANGE* 3)
+
+(defun intera_core_msgs::HeadPanCommand-to-symbol (const)
+  (cond
+        ((= const 0) 'intera_core_msgs::HeadPanCommand::*SET_PASSIVE_MODE*)
+        ((= const 1) 'intera_core_msgs::HeadPanCommand::*SET_ACTIVE_MODE*)
+        ((= const 2) 'intera_core_msgs::HeadPanCommand::*SET_ACTIVE_CANCELLATION_MODE*)
+        ((= const 3) 'intera_core_msgs::HeadPanCommand::*NO_MODE_CHANGE*)
+        (t nil)))
+
 (defclass intera_core_msgs::HeadPanCommand
   :super ros::object
   :slots (_target _speed_ratio _pan_mode ))

@@ -53,6 +53,17 @@ struct HeadState_
 
 
 
+// reducing the odds to have name collisions with Windows.h 
+#if defined(_WIN32) && defined(PASSIVE_MODE)
+  #undef PASSIVE_MODE
+#endif
+#if defined(_WIN32) && defined(ACTIVE_MODE)
+  #undef ACTIVE_MODE
+#endif
+#if defined(_WIN32) && defined(ACTIVE_CANCELLATION_MODE)
+  #undef ACTIVE_CANCELLATION_MODE
+#endif
+
   enum {
     PASSIVE_MODE = 0u,
     ACTIVE_MODE = 1u,
@@ -87,6 +98,23 @@ ros::message_operations::Printer< ::intera_core_msgs::HeadState_<ContainerAlloca
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::HeadState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::HeadState_<ContainerAllocator2> & rhs)
+{
+  return lhs.pan == rhs.pan &&
+    lhs.isTurning == rhs.isTurning &&
+    lhs.isBlocked == rhs.isBlocked &&
+    lhs.panMode == rhs.panMode;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::HeadState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::HeadState_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -96,23 +124,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::HeadState_<ContainerAllocator> >
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::HeadState_<ContainerAllocator> const>
-  : TrueType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::HeadState_<ContainerAllocator> >
@@ -121,6 +133,16 @@ struct IsMessage< ::intera_core_msgs::HeadState_<ContainerAllocator> >
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::HeadState_<ContainerAllocator> const>
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::HeadState_<ContainerAllocator> >
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::HeadState_<ContainerAllocator> const>
   : TrueType
   { };
 
@@ -164,22 +186,22 @@ struct Definition< ::intera_core_msgs::HeadState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32 pan\n\
-bool isTurning\n\
-\n\
-# isBlocked will be true during active cancellation when the desired head position\n\
-# can not be reached because of j0's current position\n\
-bool isBlocked\n\
-\n\
-# panMode will be one of\n\
-uint8 PASSIVE_MODE             = 0\n\
-uint8 ACTIVE_MODE              = 1\n\
-uint8 ACTIVE_CANCELLATION_MODE = 2\n\
-#\n\
-uint8 panMode\n\
-\n\
-\n\
-";
+    return "float32 pan\n"
+"bool isTurning\n"
+"\n"
+"# isBlocked will be true during active cancellation when the desired head position\n"
+"# can not be reached because of j0's current position\n"
+"bool isBlocked\n"
+"\n"
+"# panMode will be one of\n"
+"uint8 PASSIVE_MODE             = 0\n"
+"uint8 ACTIVE_MODE              = 1\n"
+"uint8 ACTIVE_CANCELLATION_MODE = 2\n"
+"#\n"
+"uint8 panMode\n"
+"\n"
+"\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::HeadState_<ContainerAllocator>&) { return value(); }

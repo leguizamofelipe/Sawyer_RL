@@ -94,7 +94,7 @@ class WaypointSimple {
   static getMessageSize(object) {
     let length = 0;
     length += 8 * object.joint_positions.length;
-    length += object.active_endpoint.length;
+    length += _getByteLength(object.active_endpoint);
     return length + 76;
   }
 

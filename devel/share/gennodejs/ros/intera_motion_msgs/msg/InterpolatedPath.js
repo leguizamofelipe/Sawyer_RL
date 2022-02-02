@@ -93,9 +93,9 @@ class InterpolatedPath {
   static getMessageSize(object) {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
-    length += object.label.length;
+    length += _getByteLength(object.label);
     object.joint_names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     object.interpolated_path.forEach((val) => {
       length += WaypointSimple.getMessageSize(val);
@@ -143,8 +143,6 @@ class InterpolatedPath {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

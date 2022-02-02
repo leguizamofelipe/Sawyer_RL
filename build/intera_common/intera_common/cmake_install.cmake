@@ -1,8 +1,8 @@
-# Install script for directory: /home/sawyer/ros_ws/src/intera_common/intera_common
+# Install script for directory: /home/sawyer/ros_ws_noetic/src/intera_common/intera_common
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws_noetic/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,7 +32,12 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_common" TYPE FILE FILES "/home/sawyer/ros_ws/src/intera_common/intera_common/package.xml")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/intera_common" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/src/intera_common/intera_common/package.xml")
 endif()
 

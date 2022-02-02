@@ -67,14 +67,14 @@ set(sawyer_sim_controllers_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(sawyer_sim_controllers_SOURCE_PREFIX /home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_controllers)
-  set(sawyer_sim_controllers_DEVEL_PREFIX /home/sawyer/ros_ws/devel)
+  set(sawyer_sim_controllers_SOURCE_PREFIX /home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_controllers)
+  set(sawyer_sim_controllers_DEVEL_PREFIX /home/sawyer/ros_ws_noetic/devel)
   set(sawyer_sim_controllers_INSTALL_PREFIX "")
   set(sawyer_sim_controllers_PREFIX ${sawyer_sim_controllers_DEVEL_PREFIX})
 else()
   set(sawyer_sim_controllers_SOURCE_PREFIX "")
   set(sawyer_sim_controllers_DEVEL_PREFIX "")
-  set(sawyer_sim_controllers_INSTALL_PREFIX /home/sawyer/ros_ws/install)
+  set(sawyer_sim_controllers_INSTALL_PREFIX /home/sawyer/ros_ws_noetic/install)
   set(sawyer_sim_controllers_PREFIX ${sawyer_sim_controllers_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(sawyer_sim_controllers_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_controllers/include " STREQUAL " ")
+if(NOT "/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_controllers/include " STREQUAL " ")
   set(sawyer_sim_controllers_INCLUDE_DIRS "")
-  set(_include_dirs "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_controllers/include")
+  set(_include_dirs "/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_controllers/include")
   if(NOT "https://github.com/RethinkRobotics/sawyer_simulator/issues " STREQUAL " ")
     set(_report "Check the issue tracker 'https://github.com/RethinkRobotics/sawyer_simulator/issues' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT "http://sdk.rethinkrobotics.com/intera/ " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_controllers/include 
         message(FATAL_ERROR "Project 'sawyer_sim_controllers' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'sawyer_sim_controllers' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/sawyer/ros_ws/src/sawyer_simulator/sawyer_sim_controllers/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'sawyer_sim_controllers' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_sim_controllers/${idir}'.  ${_report}")
     endif()
     _list_append_unique(sawyer_sim_controllers_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/sawyer/ros_ws/devel/lib;/home/sawyer/ros_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/sawyer/ros_ws_noetic/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -211,7 +211,7 @@ foreach(depend ${depends})
   _unpack_libraries_with_build_configuration(sawyer_sim_controllers_LIBRARIES ${sawyer_sim_controllers_LIBRARIES})
 
   _list_append_unique(sawyer_sim_controllers_LIBRARY_DIRS ${${sawyer_sim_controllers_dep}_LIBRARY_DIRS})
-  list(APPEND sawyer_sim_controllers_EXPORTED_TARGETS ${${sawyer_sim_controllers_dep}_EXPORTED_TARGETS})
+  _list_append_deduplicate(sawyer_sim_controllers_EXPORTED_TARGETS ${${sawyer_sim_controllers_dep}_EXPORTED_TARGETS})
 endforeach()
 
 set(pkg_cfg_extras "")

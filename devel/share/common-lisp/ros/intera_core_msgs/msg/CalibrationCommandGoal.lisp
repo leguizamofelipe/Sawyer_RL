@@ -28,13 +28,13 @@
   (command m))
 (cl:defmethod roslisp-msg-protocol:symbol-codes ((msg-type (cl:eql '<CalibrationCommandGoal>)))
     "Constants for message type '<CalibrationCommandGoal>"
-  '((:CALIBRATION_START . start)
-    (:CALIBRATION_STOP . stop))
+  '((:CALIBRATION_START . "start")
+    (:CALIBRATION_STOP . "stop"))
 )
 (cl:defmethod roslisp-msg-protocol:symbol-codes ((msg-type (cl:eql 'CalibrationCommandGoal)))
     "Constants for message type 'CalibrationCommandGoal"
-  '((:CALIBRATION_START . start)
-    (:CALIBRATION_STOP . stop))
+  '((:CALIBRATION_START . "start")
+    (:CALIBRATION_STOP . "stop"))
 )
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <CalibrationCommandGoal>) ostream)
   "Serializes a message object of type '<CalibrationCommandGoal>"

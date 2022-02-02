@@ -36,6 +36,15 @@
 (intern "*SEED_NS_MAP*" (find-package "INTERA_CORE_MSGS::SOLVEPOSITIONIKREQUEST"))
 (shadow '*SEED_NS_MAP* (find-package "INTERA_CORE_MSGS::SOLVEPOSITIONIKREQUEST"))
 (defconstant intera_core_msgs::SolvePositionIKRequest::*SEED_NS_MAP* 3)
+
+(defun intera_core_msgs::SolvePositionIKRequest-to-symbol (const)
+  (cond
+        ((= const 0) 'intera_core_msgs::SolvePositionIKRequest::*SEED_AUTO*)
+        ((= const 1) 'intera_core_msgs::SolvePositionIKRequest::*SEED_USER*)
+        ((= const 2) 'intera_core_msgs::SolvePositionIKRequest::*SEED_CURRENT*)
+        ((= const 3) 'intera_core_msgs::SolvePositionIKRequest::*SEED_NS_MAP*)
+        (t nil)))
+
 (defclass intera_core_msgs::SolvePositionIKRequest
   :super ros::object
   :slots (_pose_stamp _seed_angles _seed_mode _use_nullspace_goal _nullspace_goal _nullspace_gain _tip_names ))
@@ -43,11 +52,11 @@
 (defmethod intera_core_msgs::SolvePositionIKRequest
   (:init
    (&key
-    ((:pose_stamp __pose_stamp) (let (r) (dotimes (i 0) (push (instance geometry_msgs::PoseStamped :init) r)) r))
-    ((:seed_angles __seed_angles) (let (r) (dotimes (i 0) (push (instance sensor_msgs::JointState :init) r)) r))
+    ((:pose_stamp __pose_stamp) ())
+    ((:seed_angles __seed_angles) ())
     ((:seed_mode __seed_mode) 0)
     ((:use_nullspace_goal __use_nullspace_goal) (let (r) (dotimes (i 0) (push nil r)) r))
-    ((:nullspace_goal __nullspace_goal) (let (r) (dotimes (i 0) (push (instance sensor_msgs::JointState :init) r)) r))
+    ((:nullspace_goal __nullspace_goal) ())
     ((:nullspace_gain __nullspace_gain) (make-array 0 :initial-element 0.0 :element-type :float))
     ((:tip_names __tip_names) (let (r) (dotimes (i 0) (push "" r)) r))
     )
@@ -209,6 +218,14 @@
 (intern "*IK_ENDPOINT_DOES_NOT_EXIST*" (find-package "INTERA_CORE_MSGS::SOLVEPOSITIONIKRESPONSE"))
 (shadow '*IK_ENDPOINT_DOES_NOT_EXIST* (find-package "INTERA_CORE_MSGS::SOLVEPOSITIONIKRESPONSE"))
 (defconstant intera_core_msgs::SolvePositionIKResponse::*IK_ENDPOINT_DOES_NOT_EXIST* -3)
+
+(defun intera_core_msgs::SolvePositionIKResponse-to-symbol (const)
+  (cond
+        ((= const -1) 'intera_core_msgs::SolvePositionIKResponse::*IK_FAILED*)
+        ((= const -2) 'intera_core_msgs::SolvePositionIKResponse::*IK_IN_COLLISION*)
+        ((= const -3) 'intera_core_msgs::SolvePositionIKResponse::*IK_ENDPOINT_DOES_NOT_EXIST*)
+        (t nil)))
+
 (defclass intera_core_msgs::SolvePositionIKResponse
   :super ros::object
   :slots (_joints _result_type ))
@@ -216,7 +233,7 @@
 (defmethod intera_core_msgs::SolvePositionIKResponse
   (:init
    (&key
-    ((:joints __joints) (let (r) (dotimes (i 0) (push (instance sensor_msgs::JointState :init) r)) r))
+    ((:joints __joints) ())
     ((:result_type __result_type) (make-array 0 :initial-element 0 :element-type :integer))
     )
    (send-super :init)
@@ -293,18 +310,18 @@
 (setf (get intera_core_msgs::SolvePositionIKRequest :md5sum-) "7ae4607244c30c6c631f3693cd280e45")
 (setf (get intera_core_msgs::SolvePositionIKRequest :datatype-) "intera_core_msgs/SolvePositionIKRequest")
 (setf (get intera_core_msgs::SolvePositionIKRequest :definition-)
-      "
+      "# Endpoint Pose(s) to request Inverse-Kinematics joint solutions for.
 geometry_msgs/PoseStamped[] pose_stamp
 
-
-
-
+# (optional) Joint Angle Seed(s) for IK solver.
+# * specify a JointState seed for each pose_stamp, using name[] and position[]
+# * empty arrays or a non-default seed_mode will cause user seed to not be used
 sensor_msgs/JointState[] seed_angles
 
-
-
-
-
+# Seed Type Mode
+# * default (SEED_AUTO) mode: iterate through seed types until first valid
+#                             solution is found
+# * setting any other mode:   try only that seed type
 int8 SEED_AUTO    = 0
 int8 SEED_USER    = 1
 int8 SEED_CURRENT = 2
@@ -312,17 +329,17 @@ int8 SEED_NS_MAP  = 3
 
 int8 seed_mode
 
-
+# For each IK request, tells whether it should use the nullspace goal
 bool[] use_nullspace_goal
 
-
+# The nullspace goal can either be the full set or subset of joint angles
 sensor_msgs/JointState[] nullspace_goal
 
-
-
+# The gain used to bias toward the nullspace goal. Must be [0.0, 1.0]
+# If empty, the default gain of 0.4 will be used
 float64[] nullspace_gain
 
-
+# Tip name for each pose IK
 string[] tip_names
 
 
@@ -346,8 +363,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================
@@ -402,13 +417,13 @@ float64[] velocity
 float64[] effort
 ---
 
-
+# joints[i]      == joint angle solution for each pose_state[i]
 sensor_msgs/JointState[] joints
 
-
-
-
-
+# result_type[i] == seed type used to find valid solution, joints[i];
+# otherwise,     == IK_FAILED (no valid IK solution found)
+# or             == IK_IN_COLLISION (if IK solution is in self collision)
+# or             == IK_ENDPOINT_DOES_NOT_EXIST
 int8 IK_FAILED = -1
 int8 IK_IN_COLLISION = -2
 int8 IK_ENDPOINT_DOES_NOT_EXIST = -3
@@ -458,26 +473,24 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 ")
 
 (setf (get intera_core_msgs::SolvePositionIKResponse :md5sum-) "7ae4607244c30c6c631f3693cd280e45")
 (setf (get intera_core_msgs::SolvePositionIKResponse :datatype-) "intera_core_msgs/SolvePositionIKResponse")
 (setf (get intera_core_msgs::SolvePositionIKResponse :definition-)
-      "
+      "# Endpoint Pose(s) to request Inverse-Kinematics joint solutions for.
 geometry_msgs/PoseStamped[] pose_stamp
 
-
-
-
+# (optional) Joint Angle Seed(s) for IK solver.
+# * specify a JointState seed for each pose_stamp, using name[] and position[]
+# * empty arrays or a non-default seed_mode will cause user seed to not be used
 sensor_msgs/JointState[] seed_angles
 
-
-
-
-
+# Seed Type Mode
+# * default (SEED_AUTO) mode: iterate through seed types until first valid
+#                             solution is found
+# * setting any other mode:   try only that seed type
 int8 SEED_AUTO    = 0
 int8 SEED_USER    = 1
 int8 SEED_CURRENT = 2
@@ -485,17 +498,17 @@ int8 SEED_NS_MAP  = 3
 
 int8 seed_mode
 
-
+# For each IK request, tells whether it should use the nullspace goal
 bool[] use_nullspace_goal
 
-
+# The nullspace goal can either be the full set or subset of joint angles
 sensor_msgs/JointState[] nullspace_goal
 
-
-
+# The gain used to bias toward the nullspace goal. Must be [0.0, 1.0]
+# If empty, the default gain of 0.4 will be used
 float64[] nullspace_gain
 
-
+# Tip name for each pose IK
 string[] tip_names
 
 
@@ -519,8 +532,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================
@@ -575,13 +586,13 @@ float64[] velocity
 float64[] effort
 ---
 
-
+# joints[i]      == joint angle solution for each pose_state[i]
 sensor_msgs/JointState[] joints
 
-
-
-
-
+# result_type[i] == seed type used to find valid solution, joints[i];
+# otherwise,     == IK_FAILED (no valid IK solution found)
+# or             == IK_IN_COLLISION (if IK solution is in self collision)
+# or             == IK_ENDPOINT_DOES_NOT_EXIST
 int8 IK_FAILED = -1
 int8 IK_IN_COLLISION = -2
 int8 IK_ENDPOINT_DOES_NOT_EXIST = -3
@@ -631,8 +642,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 ")
 

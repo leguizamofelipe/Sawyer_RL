@@ -60,7 +60,7 @@ class IOComponentStatus {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.name.length;
+    length += _getByteLength(object.name);
     length += IOStatus.getMessageSize(object.status);
     return length + 4;
   }

@@ -70,8 +70,8 @@ class IOComponentCommand {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.op.length;
-    length += object.args.length;
+    length += _getByteLength(object.op);
+    length += _getByteLength(object.args);
     return length + 16;
   }
 

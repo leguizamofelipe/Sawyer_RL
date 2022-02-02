@@ -51,7 +51,7 @@ class SawyerEnv():
     Episode Termination:
 
     '''
-
+'''
 class ArmMotionEnvironment(gym.env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
@@ -77,7 +77,7 @@ class ArmMotionEnvironment(gym.env):
         # Set the current robot position randomly
         self.current_step = np.random()
         return self._next_observation()
-
+'''
 # Python Representation of Sawyer robot
 class Sawyer():
     def __init__(self):

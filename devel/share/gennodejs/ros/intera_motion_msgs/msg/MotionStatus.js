@@ -94,8 +94,8 @@ class MotionStatus {
   static getMessageSize(object) {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
-    length += object.motion_status.length;
-    length += object.current_trajectory.length;
+    length += _getByteLength(object.motion_status);
+    length += _getByteLength(object.current_trajectory);
     return length + 16;
   }
 
@@ -142,8 +142,6 @@ class MotionStatus {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     `;

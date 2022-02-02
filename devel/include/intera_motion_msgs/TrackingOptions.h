@@ -91,6 +91,26 @@ ros::message_operations::Printer< ::intera_motion_msgs::TrackingOptions_<Contain
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_motion_msgs::TrackingOptions_<ContainerAllocator1> & lhs, const ::intera_motion_msgs::TrackingOptions_<ContainerAllocator2> & rhs)
+{
+  return lhs.use_min_time_rate == rhs.use_min_time_rate &&
+    lhs.min_time_rate == rhs.min_time_rate &&
+    lhs.use_max_time_rate == rhs.use_max_time_rate &&
+    lhs.max_time_rate == rhs.max_time_rate &&
+    lhs.goal_joint_tolerance == rhs.goal_joint_tolerance &&
+    lhs.use_settling_time_at_goal == rhs.use_settling_time_at_goal &&
+    lhs.settling_time_at_goal == rhs.settling_time_at_goal;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_motion_msgs::TrackingOptions_<ContainerAllocator1> & lhs, const ::intera_motion_msgs::TrackingOptions_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_motion_msgs
 
 namespace ros
@@ -100,23 +120,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'intera_motion_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_motion_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_motion_msgs/msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> >
@@ -126,6 +130,16 @@ struct IsMessage< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -168,21 +182,21 @@ struct Definition< ::intera_motion_msgs::TrackingOptions_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# Minimum trajectory tracking time rate:  (default = less than one)\n\
-bool     use_min_time_rate\n\
-float64  min_time_rate\n\
-\n\
-# Maximum trajectory tracking time rate:  (1.0 = real-time = default)\n\
-bool     use_max_time_rate\n\
-float64  max_time_rate\n\
-\n\
-# Angular error tolerance at final point on trajectory (rad)\n\
-float64[] goal_joint_tolerance\n\
-\n\
-# Time for the controller to settle within joint tolerances at the goal (sec)\n\
-bool     use_settling_time_at_goal\n\
-float64  settling_time_at_goal\n\
-";
+    return "# Minimum trajectory tracking time rate:  (default = less than one)\n"
+"bool     use_min_time_rate\n"
+"float64  min_time_rate\n"
+"\n"
+"# Maximum trajectory tracking time rate:  (1.0 = real-time = default)\n"
+"bool     use_max_time_rate\n"
+"float64  max_time_rate\n"
+"\n"
+"# Angular error tolerance at final point on trajectory (rad)\n"
+"float64[] goal_joint_tolerance\n"
+"\n"
+"# Time for the controller to settle within joint tolerances at the goal (sec)\n"
+"bool     use_settling_time_at_goal\n"
+"float64  settling_time_at_goal\n"
+;
   }
 
   static const char* value(const ::intera_motion_msgs::TrackingOptions_<ContainerAllocator>&) { return value(); }

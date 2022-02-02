@@ -35,6 +35,11 @@
 (intern "*MOTION_ERROR*" (find-package "INTERA_MOTION_MSGS::MOTIONSTATUS"))
 (shadow '*MOTION_ERROR* (find-package "INTERA_MOTION_MSGS::MOTIONSTATUS"))
 (defconstant intera_motion_msgs::MotionStatus::*MOTION_ERROR* "error")
+
+(defun intera_motion_msgs::MotionStatus-to-symbol (const)
+  (cond
+        (t nil)))
+
 (defclass intera_motion_msgs::MotionStatus
   :super ros::object
   :slots (_header _motion_status _current_trajectory _current_waypoint _motion_request ))
@@ -153,8 +158,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ")

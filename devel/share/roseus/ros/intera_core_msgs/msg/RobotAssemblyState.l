@@ -39,6 +39,20 @@
 (intern "*ESTOP_SOURCE_ENGINE*" (find-package "INTERA_CORE_MSGS::ROBOTASSEMBLYSTATE"))
 (shadow '*ESTOP_SOURCE_ENGINE* (find-package "INTERA_CORE_MSGS::ROBOTASSEMBLYSTATE"))
 (defconstant intera_core_msgs::RobotAssemblyState::*ESTOP_SOURCE_ENGINE* 4)
+
+(defun intera_core_msgs::RobotAssemblyState-to-symbol (const)
+  (cond
+        ((= const 0) 'intera_core_msgs::RobotAssemblyState::*ESTOP_BUTTON_UNPRESSED*)
+        ((= const 1) 'intera_core_msgs::RobotAssemblyState::*ESTOP_BUTTON_PRESSED*)
+        ((= const 2) 'intera_core_msgs::RobotAssemblyState::*ESTOP_BUTTON_UNKNOWN*)
+        ((= const 3) 'intera_core_msgs::RobotAssemblyState::*ESTOP_BUTTON_RELEASED*)
+        ((= const 0) 'intera_core_msgs::RobotAssemblyState::*ESTOP_SOURCE_NONE*)
+        ((= const 1) 'intera_core_msgs::RobotAssemblyState::*ESTOP_SOURCE_USER*)
+        ((= const 2) 'intera_core_msgs::RobotAssemblyState::*ESTOP_SOURCE_UNKNOWN*)
+        ((= const 3) 'intera_core_msgs::RobotAssemblyState::*ESTOP_SOURCE_FAULT*)
+        ((= const 4) 'intera_core_msgs::RobotAssemblyState::*ESTOP_SOURCE_ENGINE*)
+        (t nil)))
+
 (defclass intera_core_msgs::RobotAssemblyState
   :super ros::object
   :slots (_homed _ready _enabled _stopped _error _lowVoltage _estop_button _estop_source ))
@@ -66,23 +80,23 @@
    (setq _estop_source (round __estop_source))
    self)
   (:homed
-   (&optional __homed)
-   (if __homed (setq _homed __homed)) _homed)
+   (&optional (__homed :null))
+   (if (not (eq __homed :null)) (setq _homed __homed)) _homed)
   (:ready
-   (&optional __ready)
-   (if __ready (setq _ready __ready)) _ready)
+   (&optional (__ready :null))
+   (if (not (eq __ready :null)) (setq _ready __ready)) _ready)
   (:enabled
-   (&optional __enabled)
-   (if __enabled (setq _enabled __enabled)) _enabled)
+   (&optional (__enabled :null))
+   (if (not (eq __enabled :null)) (setq _enabled __enabled)) _enabled)
   (:stopped
-   (&optional __stopped)
-   (if __stopped (setq _stopped __stopped)) _stopped)
+   (&optional (__stopped :null))
+   (if (not (eq __stopped :null)) (setq _stopped __stopped)) _stopped)
   (:error
-   (&optional __error)
-   (if __error (setq _error __error)) _error)
+   (&optional (__error :null))
+   (if (not (eq __error :null)) (setq _error __error)) _error)
   (:lowVoltage
-   (&optional __lowVoltage)
-   (if __lowVoltage (setq _lowVoltage __lowVoltage)) _lowVoltage)
+   (&optional (__lowVoltage :null))
+   (if (not (eq __lowVoltage :null)) (setq _lowVoltage __lowVoltage)) _lowVoltage)
   (:estop_button
    (&optional __estop_button)
    (if __estop_button (setq _estop_button __estop_button)) _estop_button)

@@ -37,14 +37,14 @@
    (setq _settling_time_at_goal (float __settling_time_at_goal))
    self)
   (:use_min_time_rate
-   (&optional __use_min_time_rate)
-   (if __use_min_time_rate (setq _use_min_time_rate __use_min_time_rate)) _use_min_time_rate)
+   (&optional (__use_min_time_rate :null))
+   (if (not (eq __use_min_time_rate :null)) (setq _use_min_time_rate __use_min_time_rate)) _use_min_time_rate)
   (:min_time_rate
    (&optional __min_time_rate)
    (if __min_time_rate (setq _min_time_rate __min_time_rate)) _min_time_rate)
   (:use_max_time_rate
-   (&optional __use_max_time_rate)
-   (if __use_max_time_rate (setq _use_max_time_rate __use_max_time_rate)) _use_max_time_rate)
+   (&optional (__use_max_time_rate :null))
+   (if (not (eq __use_max_time_rate :null)) (setq _use_max_time_rate __use_max_time_rate)) _use_max_time_rate)
   (:max_time_rate
    (&optional __max_time_rate)
    (if __max_time_rate (setq _max_time_rate __max_time_rate)) _max_time_rate)
@@ -52,8 +52,8 @@
    (&optional __goal_joint_tolerance)
    (if __goal_joint_tolerance (setq _goal_joint_tolerance __goal_joint_tolerance)) _goal_joint_tolerance)
   (:use_settling_time_at_goal
-   (&optional __use_settling_time_at_goal)
-   (if __use_settling_time_at_goal (setq _use_settling_time_at_goal __use_settling_time_at_goal)) _use_settling_time_at_goal)
+   (&optional (__use_settling_time_at_goal :null))
+   (if (not (eq __use_settling_time_at_goal :null)) (setq _use_settling_time_at_goal __use_settling_time_at_goal)) _use_settling_time_at_goal)
   (:settling_time_at_goal
    (&optional __settling_time_at_goal)
    (if __settling_time_at_goal (setq _settling_time_at_goal __settling_time_at_goal)) _settling_time_at_goal)

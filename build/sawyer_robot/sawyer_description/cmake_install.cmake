@@ -1,8 +1,8 @@
-# Install script for directory: /home/sawyer/ros_ws/src/sawyer_robot/sawyer_description
+# Install script for directory: /home/sawyer/ros_ws_noetic/src/sawyer_robot/sawyer_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/sawyer/ros_ws_noetic/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,34 +32,39 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sawyer/ros_ws/build/sawyer_robot/sawyer_description/catkin_generated/installspace/sawyer_description.pc")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/build/sawyer_robot/sawyer_description/catkin_generated/installspace/sawyer_description.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/cmake" TYPE FILE FILES
-    "/home/sawyer/ros_ws/build/sawyer_robot/sawyer_description/catkin_generated/installspace/sawyer_descriptionConfig.cmake"
-    "/home/sawyer/ros_ws/build/sawyer_robot/sawyer_description/catkin_generated/installspace/sawyer_descriptionConfig-version.cmake"
+    "/home/sawyer/ros_ws_noetic/build/sawyer_robot/sawyer_description/catkin_generated/installspace/sawyer_descriptionConfig.cmake"
+    "/home/sawyer/ros_ws_noetic/build/sawyer_robot/sawyer_description/catkin_generated/installspace/sawyer_descriptionConfig-version.cmake"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description" TYPE FILE FILES "/home/sawyer/ros_ws/src/sawyer_robot/sawyer_description/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description" TYPE FILE FILES "/home/sawyer/ros_ws_noetic/src/sawyer_robot/sawyer_description/package.xml")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/config" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/sawyer_robot/sawyer_description/config/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/config" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/sawyer_robot/sawyer_description/config/")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/meshes" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/sawyer_robot/sawyer_description/meshes/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/meshes" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/sawyer_robot/sawyer_description/meshes/")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/params" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/sawyer_robot/sawyer_description/params/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/params" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/sawyer_robot/sawyer_description/params/")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/urdf" TYPE DIRECTORY FILES "/home/sawyer/ros_ws/src/sawyer_robot/sawyer_description/urdf/")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sawyer_description/urdf" TYPE DIRECTORY FILES "/home/sawyer/ros_ws_noetic/src/sawyer_robot/sawyer_description/urdf/")
 endif()
 

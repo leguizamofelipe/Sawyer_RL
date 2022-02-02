@@ -60,7 +60,7 @@ class HomingCommand {
   static getMessageSize(object) {
     let length = 0;
     object.name.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     length += 4 * object.command.length;
     return length + 8;

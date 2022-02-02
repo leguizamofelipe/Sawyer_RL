@@ -92,9 +92,9 @@ class Trajectory {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.label.length;
+    length += _getByteLength(object.label);
     object.joint_names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     object.waypoints.forEach((val) => {
       length += Waypoint.getMessageSize(val);
@@ -169,8 +169,6 @@ class Trajectory {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

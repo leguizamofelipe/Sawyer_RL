@@ -82,7 +82,7 @@ class MotionCommandResult {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.errorId.length;
+    length += _getByteLength(object.errorId);
     length += TrajectoryAnalysis.getMessageSize(object.trajectory_analysis);
     return length + 9;
   }

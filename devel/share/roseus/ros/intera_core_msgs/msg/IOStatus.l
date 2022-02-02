@@ -27,6 +27,11 @@
 (intern "*ERROR*" (find-package "INTERA_CORE_MSGS::IOSTATUS"))
 (shadow '*ERROR* (find-package "INTERA_CORE_MSGS::IOSTATUS"))
 (defconstant intera_core_msgs::IOStatus::*ERROR* "error")
+
+(defun intera_core_msgs::IOStatus-to-symbol (const)
+  (cond
+        (t nil)))
+
 (defclass intera_core_msgs::IOStatus
   :super ros::object
   :slots (_tag _id _detail ))

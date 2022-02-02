@@ -45,6 +45,13 @@
 (intern "*GENERAL_TRAJECTORY_FAILURE*" (find-package "INTERA_MOTION_MSGS::MOTIONCOMMANDRESULT"))
 (shadow '*GENERAL_TRAJECTORY_FAILURE* (find-package "INTERA_MOTION_MSGS::MOTIONCOMMANDRESULT"))
 (defconstant intera_motion_msgs::MotionCommandResult::*GENERAL_TRAJECTORY_FAILURE* -2)
+
+(defun intera_motion_msgs::MotionCommandResult-to-symbol (const)
+  (cond
+        ((= const -1) 'intera_motion_msgs::MotionCommandResult::*HAVE_NOT_REACHED_FIRST_WAYPOINT*)
+        ((= const -2) 'intera_motion_msgs::MotionCommandResult::*GENERAL_TRAJECTORY_FAILURE*)
+        (t nil)))
+
 (defclass intera_motion_msgs::MotionCommandResult
   :super ros::object
   :slots (_result _errorId _trajectory_analysis _last_successful_waypoint ))
@@ -64,8 +71,8 @@
    (setq _last_successful_waypoint (round __last_successful_waypoint))
    self)
   (:result
-   (&optional __result)
-   (if __result (setq _result __result)) _result)
+   (&optional (__result :null))
+   (if (not (eq __result :null)) (setq _result __result)) _result)
   (:errorId
    (&optional __errorId)
    (if __errorId (setq _errorId __errorId)) _errorId)

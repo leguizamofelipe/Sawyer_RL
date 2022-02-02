@@ -66,6 +66,21 @@ ros::message_operations::Printer< ::intera_core_msgs::AnalogOutputCommand_<Conta
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator1> & lhs, const ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator2> & rhs)
+{
+  return lhs.name == rhs.name &&
+    lhs.value == rhs.value;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator1> & lhs, const ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -75,23 +90,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> >
@@ -101,6 +100,16 @@ struct IsMessage< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> >
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -143,11 +152,11 @@ struct Definition< ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator> 
 {
   static const char* value()
   {
-    return "##the name of the output\n\
-string name  \n\
-##the value to set output \n\
-uint16 value   \n\
-";
+    return "##the name of the output\n"
+"string name  \n"
+"##the value to set output \n"
+"uint16 value   \n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::AnalogOutputCommand_<ContainerAllocator>&) { return value(); }

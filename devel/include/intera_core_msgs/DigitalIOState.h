@@ -43,6 +43,20 @@ struct DigitalIOState_
 
 
 
+// reducing the odds to have name collisions with Windows.h 
+#if defined(_WIN32) && defined(OFF)
+  #undef OFF
+#endif
+#if defined(_WIN32) && defined(ON)
+  #undef ON
+#endif
+#if defined(_WIN32) && defined(PRESSED)
+  #undef PRESSED
+#endif
+#if defined(_WIN32) && defined(UNPRESSED)
+  #undef UNPRESSED
+#endif
+
   enum {
     OFF = 0,
     ON = 1,
@@ -80,6 +94,21 @@ ros::message_operations::Printer< ::intera_core_msgs::DigitalIOState_<ContainerA
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_core_msgs::DigitalIOState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::DigitalIOState_<ContainerAllocator2> & rhs)
+{
+  return lhs.state == rhs.state &&
+    lhs.isInputOnly == rhs.isInputOnly;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_core_msgs::DigitalIOState_<ContainerAllocator1> & lhs, const ::intera_core_msgs::DigitalIOState_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_core_msgs
 
 namespace ros
@@ -89,23 +118,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> >
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> const>
-  : TrueType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> >
@@ -114,6 +127,16 @@ struct IsMessage< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> >
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> const>
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> >
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> const>
   : TrueType
   { };
 
@@ -157,14 +180,14 @@ struct Definition< ::intera_core_msgs::DigitalIOState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "int8 state\n\
-bool isInputOnly\n\
-\n\
-int8 OFF = 0\n\
-int8 ON  = 1\n\
-int8 PRESSED = 1\n\
-int8 UNPRESSED = 0\n\
-";
+    return "int8 state\n"
+"bool isInputOnly\n"
+"\n"
+"int8 OFF = 0\n"
+"int8 ON  = 1\n"
+"int8 PRESSED = 1\n"
+"int8 UNPRESSED = 0\n"
+;
   }
 
   static const char* value(const ::intera_core_msgs::DigitalIOState_<ContainerAllocator>&) { return value(); }

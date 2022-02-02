@@ -70,9 +70,9 @@ class IOStatus {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.tag.length;
-    length += object.id.length;
-    length += object.detail.length;
+    length += _getByteLength(object.tag);
+    length += _getByteLength(object.id);
+    length += _getByteLength(object.detail);
     return length + 12;
   }
 

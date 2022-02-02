@@ -18,6 +18,11 @@
 (intern "*CALIBRATION_STOP*" (find-package "INTERA_CORE_MSGS::CALIBRATIONCOMMANDGOAL"))
 (shadow '*CALIBRATION_STOP* (find-package "INTERA_CORE_MSGS::CALIBRATIONCOMMANDGOAL"))
 (defconstant intera_core_msgs::CalibrationCommandGoal::*CALIBRATION_STOP* "stop")
+
+(defun intera_core_msgs::CalibrationCommandGoal-to-symbol (const)
+  (cond
+        (t nil)))
+
 (defclass intera_core_msgs::CalibrationCommandGoal
   :super ros::object
   :slots (_command ))

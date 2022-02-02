@@ -67,14 +67,14 @@ set(sawyer_gazebo_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(sawyer_gazebo_SOURCE_PREFIX /home/sawyer/ros_ws/src/sawyer_simulator/sawyer_gazebo)
-  set(sawyer_gazebo_DEVEL_PREFIX /home/sawyer/ros_ws/devel)
+  set(sawyer_gazebo_SOURCE_PREFIX /home/sawyer/ros_ws_noetic/src/sawyer_simulator/sawyer_gazebo)
+  set(sawyer_gazebo_DEVEL_PREFIX /home/sawyer/ros_ws_noetic/devel)
   set(sawyer_gazebo_INSTALL_PREFIX "")
   set(sawyer_gazebo_PREFIX ${sawyer_gazebo_DEVEL_PREFIX})
 else()
   set(sawyer_gazebo_SOURCE_PREFIX "")
   set(sawyer_gazebo_DEVEL_PREFIX "")
-  set(sawyer_gazebo_INSTALL_PREFIX /home/sawyer/ros_ws/install)
+  set(sawyer_gazebo_INSTALL_PREFIX /home/sawyer/ros_ws_noetic/install)
   set(sawyer_gazebo_PREFIX ${sawyer_gazebo_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/sawyer/ros_ws/install/lib;/home/sawyer/ros_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/sawyer/ros_ws_noetic/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -211,7 +211,7 @@ foreach(depend ${depends})
   _unpack_libraries_with_build_configuration(sawyer_gazebo_LIBRARIES ${sawyer_gazebo_LIBRARIES})
 
   _list_append_unique(sawyer_gazebo_LIBRARY_DIRS ${${sawyer_gazebo_dep}_LIBRARY_DIRS})
-  list(APPEND sawyer_gazebo_EXPORTED_TARGETS ${${sawyer_gazebo_dep}_EXPORTED_TARGETS})
+  _list_append_deduplicate(sawyer_gazebo_EXPORTED_TARGETS ${${sawyer_gazebo_dep}_EXPORTED_TARGETS})
 endforeach()
 
 set(pkg_cfg_extras "")

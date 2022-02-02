@@ -136,7 +136,7 @@ class WaypointOptions {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.label.length;
+    length += _getByteLength(object.label);
     length += 8 * object.joint_tolerances.length;
     length += 8 * object.max_joint_accel.length;
     return length + 60;

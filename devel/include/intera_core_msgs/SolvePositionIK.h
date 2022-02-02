@@ -57,8 +57,8 @@ struct DataType< ::intera_core_msgs::SolvePositionIK > {
 };
 
 
-// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIKRequest> should match 
-// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIK > 
+// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIKRequest> should match
+// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIK >
 template<>
 struct MD5Sum< ::intera_core_msgs::SolvePositionIKRequest>
 {
@@ -72,8 +72,8 @@ struct MD5Sum< ::intera_core_msgs::SolvePositionIKRequest>
   }
 };
 
-// service_traits::DataType< ::intera_core_msgs::SolvePositionIKRequest> should match 
-// service_traits::DataType< ::intera_core_msgs::SolvePositionIK > 
+// service_traits::DataType< ::intera_core_msgs::SolvePositionIKRequest> should match
+// service_traits::DataType< ::intera_core_msgs::SolvePositionIK >
 template<>
 struct DataType< ::intera_core_msgs::SolvePositionIKRequest>
 {
@@ -87,8 +87,8 @@ struct DataType< ::intera_core_msgs::SolvePositionIKRequest>
   }
 };
 
-// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIKResponse> should match 
-// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIK > 
+// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIKResponse> should match
+// service_traits::MD5Sum< ::intera_core_msgs::SolvePositionIK >
 template<>
 struct MD5Sum< ::intera_core_msgs::SolvePositionIKResponse>
 {
@@ -102,8 +102,8 @@ struct MD5Sum< ::intera_core_msgs::SolvePositionIKResponse>
   }
 };
 
-// service_traits::DataType< ::intera_core_msgs::SolvePositionIKResponse> should match 
-// service_traits::DataType< ::intera_core_msgs::SolvePositionIK > 
+// service_traits::DataType< ::intera_core_msgs::SolvePositionIKResponse> should match
+// service_traits::DataType< ::intera_core_msgs::SolvePositionIK >
 template<>
 struct DataType< ::intera_core_msgs::SolvePositionIKResponse>
 {

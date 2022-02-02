@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
+  "/home/sawyer/ros_ws_noetic/devel/include/intera_examples/SawyerJointSpringsExampleConfig.h"
+  "/home/sawyer/ros_ws_noetic/devel/lib/python3/dist-packages/intera_examples/cfg/SawyerJointSpringsExampleConfig.py"
+  "/home/sawyer/ros_ws_noetic/devel/share/intera_examples/docs/SawyerJointSpringsExampleConfig-usage.dox"
+  "/home/sawyer/ros_ws_noetic/devel/share/intera_examples/docs/SawyerJointSpringsExampleConfig.dox"
+  "/home/sawyer/ros_ws_noetic/devel/share/intera_examples/docs/SawyerJointSpringsExampleConfig.wikidoc"
   "CMakeFiles/intera_examples_gencfg"
-  "/home/sawyer/ros_ws/devel/include/intera_examples/SawyerJointSpringsExampleConfig.h"
-  "/home/sawyer/ros_ws/devel/share/intera_examples/docs/SawyerJointSpringsExampleConfig.dox"
-  "/home/sawyer/ros_ws/devel/share/intera_examples/docs/SawyerJointSpringsExampleConfig-usage.dox"
-  "/home/sawyer/ros_ws/devel/lib/python2.7/dist-packages/intera_examples/cfg/SawyerJointSpringsExampleConfig.py"
-  "/home/sawyer/ros_ws/devel/share/intera_examples/docs/SawyerJointSpringsExampleConfig.wikidoc"
 )
 
 # Per-language clean rules from dependency scanning.

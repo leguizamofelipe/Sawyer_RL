@@ -20,6 +20,11 @@
 (intern "*JOINT*" (find-package "INTERA_MOTION_MSGS::TRAJECTORYOPTIONS"))
 (shadow '*JOINT* (find-package "INTERA_MOTION_MSGS::TRAJECTORYOPTIONS"))
 (defconstant intera_motion_msgs::TrajectoryOptions::*JOINT* "JOINT")
+
+(defun intera_motion_msgs::TrajectoryOptions-to-symbol (const)
+  (cond
+        (t nil)))
+
 (defclass intera_motion_msgs::TrajectoryOptions
   :super ros::object
   :slots (_interpolation_type _interaction_control _interaction_params _nso_start_offset_allowed _nso_check_end_offset _tracking_options _end_time _path_interpolation_step ))
@@ -50,8 +55,8 @@
    (&optional __interpolation_type)
    (if __interpolation_type (setq _interpolation_type __interpolation_type)) _interpolation_type)
   (:interaction_control
-   (&optional __interaction_control)
-   (if __interaction_control (setq _interaction_control __interaction_control)) _interaction_control)
+   (&optional (__interaction_control :null))
+   (if (not (eq __interaction_control :null)) (setq _interaction_control __interaction_control)) _interaction_control)
   (:interaction_params
    (&rest __interaction_params)
    (if (keywordp (car __interaction_params))
@@ -60,11 +65,11 @@
        (if __interaction_params (setq _interaction_params (car __interaction_params)))
        _interaction_params)))
   (:nso_start_offset_allowed
-   (&optional __nso_start_offset_allowed)
-   (if __nso_start_offset_allowed (setq _nso_start_offset_allowed __nso_start_offset_allowed)) _nso_start_offset_allowed)
+   (&optional (__nso_start_offset_allowed :null))
+   (if (not (eq __nso_start_offset_allowed :null)) (setq _nso_start_offset_allowed __nso_start_offset_allowed)) _nso_start_offset_allowed)
   (:nso_check_end_offset
-   (&optional __nso_check_end_offset)
-   (if __nso_check_end_offset (setq _nso_check_end_offset __nso_check_end_offset)) _nso_check_end_offset)
+   (&optional (__nso_check_end_offset :null))
+   (if (not (eq __nso_check_end_offset :null)) (setq _nso_check_end_offset __nso_check_end_offset)) _nso_check_end_offset)
   (:tracking_options
    (&rest __tracking_options)
    (if (keywordp (car __tracking_options))
@@ -257,8 +262,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================

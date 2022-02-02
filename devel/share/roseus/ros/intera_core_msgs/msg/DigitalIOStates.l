@@ -20,7 +20,7 @@
   (:init
    (&key
     ((:names __names) (let (r) (dotimes (i 0) (push "" r)) r))
-    ((:states __states) (let (r) (dotimes (i 0) (push (instance intera_core_msgs::DigitalIOState :init) r)) r))
+    ((:states __states) ())
     )
    (send-super :init)
    (setq _names __names)

@@ -127,7 +127,7 @@ class TrajectoryOptions {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.interpolation_type.length;
+    length += _getByteLength(object.interpolation_type);
     length += intera_core_msgs.msg.InteractionControlCommand.getMessageSize(object.interaction_params);
     length += TrackingOptions.getMessageSize(object.tracking_options);
     return length + 23;
@@ -258,8 +258,6 @@ class TrajectoryOptions {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

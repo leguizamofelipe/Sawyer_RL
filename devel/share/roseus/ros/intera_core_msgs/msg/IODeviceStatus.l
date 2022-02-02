@@ -21,8 +21,8 @@
    (&key
     ((:time __time) (instance ros::time :init))
     ((:device __device) (instance intera_core_msgs::IOComponentStatus :init))
-    ((:ports __ports) (let (r) (dotimes (i 0) (push (instance intera_core_msgs::IODataStatus :init) r)) r))
-    ((:signals __signals) (let (r) (dotimes (i 0) (push (instance intera_core_msgs::IODataStatus :init) r)) r))
+    ((:ports __ports) ())
+    ((:signals __signals) ())
     ((:commands __commands) (let (r) (dotimes (i 0) (push (instance ros::time :init) r)) r))
     ((:responses __responses) (let (r) (dotimes (i 0) (push "" r)) r))
     )

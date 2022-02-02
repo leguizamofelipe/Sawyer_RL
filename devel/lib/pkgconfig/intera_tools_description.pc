@@ -1,4 +1,4 @@
-prefix=/home/sawyer/ros_ws/devel
+prefix=/home/sawyer/ros_ws_noetic/devel
 
 Name: intera_tools_description
 Description: Description of intera_tools_description

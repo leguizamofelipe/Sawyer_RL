@@ -77,7 +77,7 @@ class SolvePositionFKRequest {
       length += sensor_msgs.msg.JointState.getMessageSize(val);
     });
     object.tip_names.forEach((val) => {
-      length += 4 + val.length;
+      length += 4 + _getByteLength(val);
     });
     return length + 8;
   }
@@ -95,10 +95,10 @@ class SolvePositionFKRequest {
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    
+    # Joint positions(s) to request Forward-Kinematics joint solutions for
     sensor_msgs/JointState[] configuration
     
-    
+    # Tip name for each pose FK
     string[] tip_names
     
     
@@ -145,8 +145,6 @@ class SolvePositionFKRequest {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     `;
@@ -266,7 +264,7 @@ class SolvePositionFKResponse {
     // Returns full string definition for message
     return `
     
-    
+    # Solution(s) per FK call
     geometry_msgs/PoseStamped[] pose_stamp
     bool[] isValid
     bool[] inCollision
@@ -292,8 +290,6 @@ class SolvePositionFKResponse {
     # time-handling sugar is provided by the client library
     time stamp
     #Frame this data is associated with
-    # 0: no frame
-    # 1: global frame
     string frame_id
     
     ================================================================================

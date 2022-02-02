@@ -29,7 +29,7 @@
 (defmethod intera_core_msgs::SolvePositionFKRequest
   (:init
    (&key
-    ((:configuration __configuration) (let (r) (dotimes (i 0) (push (instance sensor_msgs::JointState :init) r)) r))
+    ((:configuration __configuration) ())
     ((:tip_names __tip_names) (let (r) (dotimes (i 0) (push "" r)) r))
     )
    (send-super :init)
@@ -97,7 +97,7 @@
 (defmethod intera_core_msgs::SolvePositionFKResponse
   (:init
    (&key
-    ((:pose_stamp __pose_stamp) (let (r) (dotimes (i 0) (push (instance geometry_msgs::PoseStamped :init) r)) r))
+    ((:pose_stamp __pose_stamp) ())
     ((:isValid __isValid) (let (r) (dotimes (i 0) (push nil r)) r))
     ((:inCollision __inCollision) (let (r) (dotimes (i 0) (push nil r)) r))
     )
@@ -192,10 +192,10 @@
 (setf (get intera_core_msgs::SolvePositionFKRequest :md5sum-) "6db8c7b904dcebec9a59022cd894ef68")
 (setf (get intera_core_msgs::SolvePositionFKRequest :datatype-) "intera_core_msgs/SolvePositionFKRequest")
 (setf (get intera_core_msgs::SolvePositionFKRequest :definition-)
-      "
+      "# Joint positions(s) to request Forward-Kinematics joint solutions for
 sensor_msgs/JointState[] configuration
 
-
+# Tip name for each pose FK
 string[] tip_names
 
 
@@ -242,12 +242,10 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 ---
 
-
+# Solution(s) per FK call
 geometry_msgs/PoseStamped[] pose_stamp
 bool[] isValid
 bool[] inCollision
@@ -273,8 +271,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================
@@ -303,10 +299,10 @@ float64 w
 (setf (get intera_core_msgs::SolvePositionFKResponse :md5sum-) "6db8c7b904dcebec9a59022cd894ef68")
 (setf (get intera_core_msgs::SolvePositionFKResponse :datatype-) "intera_core_msgs/SolvePositionFKResponse")
 (setf (get intera_core_msgs::SolvePositionFKResponse :definition-)
-      "
+      "# Joint positions(s) to request Forward-Kinematics joint solutions for
 sensor_msgs/JointState[] configuration
 
-
+# Tip name for each pose FK
 string[] tip_names
 
 
@@ -353,12 +349,10 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 ---
 
-
+# Solution(s) per FK call
 geometry_msgs/PoseStamped[] pose_stamp
 bool[] isValid
 bool[] inCollision
@@ -384,8 +378,6 @@ uint32 seq
 # time-handling sugar is provided by the client library
 time stamp
 #Frame this data is associated with
-# 0: no frame
-# 1: global frame
 string frame_id
 
 ================================================================================

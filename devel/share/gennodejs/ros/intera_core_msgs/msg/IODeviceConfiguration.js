@@ -122,8 +122,8 @@ class IODeviceConfiguration {
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.commanded.length;
-    length += object.upgraded.length;
+    length += _getByteLength(object.commanded);
+    length += _getByteLength(object.upgraded);
     length += IOComponentConfiguration.getMessageSize(object.device);
     object.ports.forEach((val) => {
       length += IOComponentConfiguration.getMessageSize(val);

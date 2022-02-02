@@ -111,6 +111,30 @@ ros::message_operations::Printer< ::intera_motion_msgs::TrajectoryAnalysis_<Cont
 return s;
 }
 
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator1> & lhs, const ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator2> & rhs)
+{
+  return lhs.planned_duration == rhs.planned_duration &&
+    lhs.measured_duration == rhs.measured_duration &&
+    lhs.min_angle_command == rhs.min_angle_command &&
+    lhs.max_angle_command == rhs.max_angle_command &&
+    lhs.peak_speed_command == rhs.peak_speed_command &&
+    lhs.peak_accel_command == rhs.peak_accel_command &&
+    lhs.peak_jerk_command == rhs.peak_jerk_command &&
+    lhs.min_time_rate == rhs.min_time_rate &&
+    lhs.max_time_rate == rhs.max_time_rate &&
+    lhs.max_position_error == rhs.max_position_error &&
+    lhs.max_velocity_error == rhs.max_velocity_error;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator1> & lhs, const ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
+}
+
+
 } // namespace intera_motion_msgs
 
 namespace ros
@@ -120,23 +144,7 @@ namespace message_traits
 
 
 
-// BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'intera_core_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_core_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_core_msgs/msg'], 'sensor_msgs': ['/opt/ros/kinetic/share/sensor_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'intera_motion_msgs': ['/home/sawyer/ros_ws/src/intera_common/intera_motion_msgs/msg', '/home/sawyer/ros_ws/devel/share/intera_motion_msgs/msg'], 'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg']}
 
-// !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
-
-
-
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> >
-  : FalseType
-  { };
-
-template <class ContainerAllocator>
-struct IsFixedSize< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> const>
-  : FalseType
-  { };
 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> >
@@ -146,6 +154,16 @@ struct IsMessage< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> 
 template <class ContainerAllocator>
 struct IsMessage< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> const>
   : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> >
+  : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsFixedSize< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator> const>
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -188,39 +206,39 @@ struct Definition< ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator>
 {
   static const char* value()
   {
-    return "# The duration of the reference trajectory, as originally planned\n\
-float64 planned_duration\n\
-\n\
-# The measured duration of the trajectory, as executed\n\
-float64 measured_duration\n\
-\n\
-# Minimum commanded angle during trajectory for each joint\n\
-float64[] min_angle_command\n\
-\n\
-# Maximum commanded angle during trajectory for each joint\n\
-float64[] max_angle_command\n\
-\n\
-# Peak speed command = max(abs(reference velocity)) for each joint\n\
-float64[] peak_speed_command\n\
-\n\
-# Peak accel command = max(abs(reference acceleration)) for each joint\n\
-float64[] peak_accel_command\n\
-\n\
-# Peak jerk command = max(abs(reference jerk)) for each joint\n\
-float64[] peak_jerk_command\n\
-\n\
-# Minimum trajectory time rate observed\n\
-float64 min_time_rate\n\
-\n\
-# Maximium trajectory time rate observed\n\
-float64 max_time_rate\n\
-\n\
-# Max joint position error = max(abs(position error)) for each joint\n\
-float64[] max_position_error\n\
-\n\
-# Max joint velocity error = max(abs(velocity error)) for each joint\n\
-float64[] max_velocity_error\n\
-";
+    return "# The duration of the reference trajectory, as originally planned\n"
+"float64 planned_duration\n"
+"\n"
+"# The measured duration of the trajectory, as executed\n"
+"float64 measured_duration\n"
+"\n"
+"# Minimum commanded angle during trajectory for each joint\n"
+"float64[] min_angle_command\n"
+"\n"
+"# Maximum commanded angle during trajectory for each joint\n"
+"float64[] max_angle_command\n"
+"\n"
+"# Peak speed command = max(abs(reference velocity)) for each joint\n"
+"float64[] peak_speed_command\n"
+"\n"
+"# Peak accel command = max(abs(reference acceleration)) for each joint\n"
+"float64[] peak_accel_command\n"
+"\n"
+"# Peak jerk command = max(abs(reference jerk)) for each joint\n"
+"float64[] peak_jerk_command\n"
+"\n"
+"# Minimum trajectory time rate observed\n"
+"float64 min_time_rate\n"
+"\n"
+"# Maximium trajectory time rate observed\n"
+"float64 max_time_rate\n"
+"\n"
+"# Max joint position error = max(abs(position error)) for each joint\n"
+"float64[] max_position_error\n"
+"\n"
+"# Max joint velocity error = max(abs(velocity error)) for each joint\n"
+"float64[] max_velocity_error\n"
+;
   }
 
   static const char* value(const ::intera_motion_msgs::TrajectoryAnalysis_<ContainerAllocator>&) { return value(); }
