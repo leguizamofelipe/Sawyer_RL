@@ -1,15 +1,15 @@
 import math
-# from typing import Optional
-
 import gym
 from gym import spaces
 import numpy as np
-# from gym import spaces, logger
-# from gym.utils import seeding
-# import numpy as np
+from gym import spaces
+import numpy as np
 
+from rospy import sleep
 import rospy
 import intera_interface
+
+from intera_interface.limb import Point
 
 class SawyerEnv():
 
@@ -51,7 +51,7 @@ class SawyerEnv():
     Episode Termination:
 
     '''
-'''
+
 class ArmMotionEnvironment(gym.env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
@@ -77,7 +77,7 @@ class ArmMotionEnvironment(gym.env):
         # Set the current robot position randomly
         self.current_step = np.random()
         return self._next_observation()
-'''
+
 # Python Representation of Sawyer robot
 class Sawyer():
     def __init__(self):
@@ -98,7 +98,7 @@ class Sawyer():
         # print the current joint angles
         print("Initialized at {}".format(str(self.angles)))
 
-    def move2angles(self, angular_array):
+    def move_to_angles(self, angular_array):
         angles = {  'right_j0': angular_array[0], 
                     'right_j1': angular_array[1], 
                     'right_j2': angular_array[2],
@@ -109,8 +109,8 @@ class Sawyer():
         }
         print("Commanding move to {}".format(str(angular_array)))
         self.limb.move_to_joint_positions(angles)
-        # self.angles = self.limb.joint_angles()
-        # self.endpoint = self.limb.endpoint_pose()['position']
+        self.angles = self.limb.joint_angles()
+        self.endpoint = self.limb.endpoint_pose()['position']
         print("Move complete to {}".format(str(self.limb.joint_angles())))
 
     def distance_from_target(self, target):

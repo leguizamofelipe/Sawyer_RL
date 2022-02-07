@@ -1,20 +1,18 @@
 from sawyer_env import *
-from intera_interface.limb import Point
 import math
 
 S = Sawyer()
 
-endpoint_target = Point(1,1,1)
+endpoint_target = S.Point(1,1,1)
 
-def distance_from_target(sawyer, target):
-    # Current position
-    c = sawyer.limb.endpoint_pose()['position']
+# store the first wave position 
+wave_1 = [-1.5126, -0.3438, 1.5126, -1.3833, 0.03726, 0.3526, -0.4259]
+# store the second wave position
+wave_2 = [-1.5101, -0.3806, 1.5103, -1.4038, -0.2609, 0.3940, -0.4281]
 
-    # Target position
-    t = target
+S.move_to_angles(wave_1)
+S.sleep(2)
+S.move_to_angles(wave_2)
+S.sleep(2)
 
-    distance = math.sqrt((c.x-t.x)**2 + (c.y-t.y)**2 + (c.z-t.z)**2)
-    
-    return distance
-    
-print(str(distance_from_target(S, endpoint_target)))
+print(S.distance_from_target(endpoint_target))
