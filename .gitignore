@@ -1,0 +1,3 @@
+# Ignore pycache and compiled files in git
+__pycache__
+*.pyc
