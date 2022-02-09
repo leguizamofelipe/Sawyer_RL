@@ -23,7 +23,7 @@ robot_hostname="sawyer.local"
 
 # Set *Either* your computers ip address or hostname. Please note if using
 # your_hostname that this must be resolvable to the Robot.
-your_ip="10.24.250.37"
+your_ip="10.24.250.100"
 #your_hostname="my_computer.local"
 
 # Specify ROS distribution (e.g. kinetic, indigo, hydro, etc.)

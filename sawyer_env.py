@@ -52,7 +52,7 @@ class SawyerEnv():
 
     '''
 
-class ArmMotionEnvironment(gym.env):
+class ArmMotionEnvironment():
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
 
@@ -90,14 +90,23 @@ class Sawyer():
         # TODO: Find a way to make this update and easily callable in the form S.angles()
         # Not sure how it interfaces with rostopics, leave for now
         # get the right limb's current joint angles
-        self.angles = self.limb.joint_angles()
+        self.angles = list(self.limb.joint_angles().values())
 
         # initialize endpoint position
         self.endpoint = self.limb.endpoint_pose()['position']
 
         # print the current joint angles
-        print("Initialized at {}".format(str(self.angles)))
-
+        print("* Initialized at {}".format(str(self.angles)))
+	
+    class Point():
+        def __init__(self, x, y, z):
+            self.x = x
+            self.y = y
+            self.z = z
+            
+    def sleep(self, time):
+        rospy.sleep(time)
+        
     def move_to_angles(self, angular_array):
         angles = {  'right_j0': angular_array[0], 
                     'right_j1': angular_array[1], 
@@ -107,15 +116,15 @@ class Sawyer():
                     'right_j5': angular_array[5],
                     'right_j6': angular_array[6],
         }
-        print("Commanding move to {}".format(str(angular_array)))
+        print("* Commanding move to {}\n".format(str(angular_array)))
         self.limb.move_to_joint_positions(angles)
-        self.angles = self.limb.joint_angles()
+        self.angles = list(self.limb.joint_angles().values())
         self.endpoint = self.limb.endpoint_pose()['position']
-        print("Move complete to {}".format(str(self.limb.joint_angles())))
+        print("* Completed move to {}\n".format(str(self.angles)))
 
     def distance_from_target(self, target):
         # Current position
-        c = self.limb.endpoint_pose()['position']
+        c = self.endpoint
 
         # Target position
         t = target
