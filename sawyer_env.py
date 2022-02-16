@@ -9,6 +9,8 @@ from rospy import sleep
 import rospy
 import intera_interface
 
+from random import randrange
+
 from intera_interface.limb import Point
 
 class SawyerEnv():
@@ -52,30 +54,64 @@ class SawyerEnv():
 
     '''
 
-class ArmMotionEnvironment():
+class ArmMotionEnvironment(gym.Env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
 
-    def __init__(self, pos_vec):
+    def __init__(self):
         # Initialize Sawyer
         super(ArmMotionEnvironment, self).__init__()
-
         self.S = Sawyer()
 
-        self.reward_range = (0, 5000) 
-        m_f = 0.01
+        # Initialize target position (random Cartesian coordinate from 0-5 in x/y/z)
+        self.target_pos = self.S.Point(randrange(5),randrange(5),randrange(5))
+        print(f'* Targeting {self.target_pos}')
+        self.prev_dist = self.S.distance_from_target(self.target_pos)
+
+        self.reward_range = (0, 5000)
+        m_f = 0.1
 
         # Actions: move any of the 7 joints in a +/- movement factor direction
-        self.action_space = spaces.Box(low=m_f*np.ones(6), high=m_f*np.ones(6), dtype=int)
+        self.action_space = spaces.Box(low=-m_f*np.ones(7), high=m_f*np.ones(7), dtype=float)
         
-        # Observations: distance from target; previous distance and current distance
-        self.observation_space = spaces.Discrete(2)
-    def reset(self):
-        # Reset the state of the environment to an initial state (all joints at zero)
-        self.angles = np.zeros(6)
+        # Observations: distance from target; set min 0, max 20 (infinite)
+        self.observation_space = spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
 
+    def _take_action(self, action):
+        action_array = action
+
+        self.S.move_to_angles(action_array, printout=False)
+
+    def step(self, action):
         # Set the current robot position randomly
-        self.current_step = np.random()
+        self._take_action(action)
+
+        # Calculate reward
+
+        if self.S.distance_from_target(self.target_pos) < self.prev_dist:
+            reward = 1
+        else:
+            reward = 0
+
+        done = self.S.distance_from_target(self.target_pos) < 0.25
+
+        obs = self._next_observation()
+
+        self.prev_dist = self.S.distance_from_target(self.target_pos)
+
+        return obs, reward, done, {}
+
+    def _next_observation(self):
+        return self.S.angles
+
+    def reset(self):
+        # Reset the state of the environment to an initial state (ie all joints at zero)
+        self.angles = np.zeros(7)
+        self.S.move_to_angles(self.angles, printout=False)
+
+        self.target_pos = self.S.Point(randrange(5),randrange(5),randrange(5))
+        print(f'* Targeting {self.target_pos}')
+
         return self._next_observation()
 
 # Python Representation of Sawyer robot
@@ -103,11 +139,13 @@ class Sawyer():
             self.x = x
             self.y = y
             self.z = z
-            
+        def __repr__(self):
+            return str(f'{self.x},{self.y},{self.z}')
+
     def sleep(self, time):
         rospy.sleep(time)
         
-    def move_to_angles(self, angular_array):
+    def move_to_angles(self, angular_array, printout = True):
         angles = {  'right_j0': angular_array[0], 
                     'right_j1': angular_array[1], 
                     'right_j2': angular_array[2],
@@ -116,11 +154,11 @@ class Sawyer():
                     'right_j5': angular_array[5],
                     'right_j6': angular_array[6],
         }
-        print("* Commanding move to {}\n".format(str(angular_array)))
+        if printout: print("* Commanding move to {}\n".format(str(angular_array)))
         self.limb.move_to_joint_positions(angles)
         self.angles = list(self.limb.joint_angles().values())
         self.endpoint = self.limb.endpoint_pose()['position']
-        print("* Completed move to {}\n".format(str(self.angles)))
+        if printout: print("* Completed move to {}\n".format(str(self.angles)))
 
     def distance_from_target(self, target):
         # Current position
