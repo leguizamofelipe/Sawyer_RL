@@ -1,0 +1,8 @@
+name: sawyer_env
+dependencies:
+  - python==3.8
+  - pip:
+    - numpy==1.22.2
+    - gym==0.21.0
+    - pandas==1.4.0
+    - pfrl==0.3.0

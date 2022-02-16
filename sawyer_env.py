@@ -2,15 +2,16 @@ import math
 import gym
 from gym import spaces
 import numpy as np
+from gym import spaces
+import numpy as np
+import torch
+import pfrl
 
 from rospy import sleep
 import rospy
 import intera_interface
 
-import argparse
-
-import cv2
-from cv_bridge import CvBridge, CvBridgeError
+from random import randrange
 
 from intera_interface.limb import Point
 
@@ -77,6 +78,33 @@ class ArmMotionEnvironment(gym.Env):
         
         # Observations: distance from target; set min 0, max 20 (infinite)
         self.observation_space = spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
+
+        # Initialize P matrix
+        num_actions = 49
+        self.P = {
+            state: {action: [] for action in range(num_actions)}
+            for state in range(num_states)
+        }
+
+        # Initialize Q function
+        class QFunction(torch.nn.Module):
+            def __init__(self, obs_size, n_actions):
+                super().__init__()
+                self.l1 = torch.nn.Linear(obs_size, 50)
+                self.l2 = torch.nn.Linear(50, 50)
+                self.l3 = torch.nn.Linear(50, n_actions)
+
+            def forward(self, x):
+                h = x
+                h = torch.nn.functional.relu(self.l1(h))
+                h = torch.nn.functional.relu(self.l2(h))
+                h = self.l3(h)
+                return pfrl.action_value.DiscreteActionValue(h)
+
+        obs_size = self.observation_space.low.size
+        # n_actions = self.action_spac
+        # q_func = QFunction(obs_size, n_actions)
+
 
     def _take_action(self, action):
         action_array = action
@@ -145,80 +173,8 @@ class Sawyer():
 
     def sleep(self, time):
         rospy.sleep(time)
-
-    def start_camera(self, use_canny = False, camera = "right_hand_camera", gain = None, exposure = None):
-        """Camera Display Example
-
-        Cognex Hand Camera Ranges
-            - exposure: [0.01-100]
-            - gain: [0-255]
-        Head Camera Ranges:
-            - exposure: [0-100], -1 for auto-exposure
-            - gain: [0-79], -1 for auto-gain
-        """
-        rp = intera_interface.RobotParams()
-        valid_cameras = rp.get_camera_names()
-        if not valid_cameras:
-            rp.log_message(("Cannot detect any camera_config"
-                " parameters on this robot. Exiting."), "ERROR")
-            return
         
-        
-        def show_image_callback(img_data, xxx_todo_changeme):
-            """The callback function to show image by using CvBridge and cv
-            """
-            (edge_detection, window_name) = xxx_todo_changeme
-            bridge = CvBridge()
-            try:
-                cv_image = bridge.imgmsg_to_cv2(img_data, "bgr8")
-            except CvBridgeError as err:
-                rospy.logerr(err)
-                return
-            if edge_detection == True:
-                gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
-                blurred = cv2.GaussianBlur(gray, (3, 3), 0)
-                # customize the second and the third argument, minVal and maxVal
-                # in function cv2.Canny if needed
-                get_edge = cv2.Canny(blurred, 10, 100)
-                cv_image = np.hstack([get_edge])
-            edge_str = "(Edge Detection)" if edge_detection else ''
-            cv_win_name = ' '.join([window_name, edge_str])
-            cv2.namedWindow(cv_win_name, 0)
-            # refresh the image on the screen
-            cv2.imshow(cv_win_name, cv_image)
-            cv2.waitKey(3)
-
-        print("Initializing node... ")
-        #rospy.init_node('camera_display', anonymous=True)
-        cameras = intera_interface.Cameras()
-        if not cameras.verify_camera_exists(camera):
-            rospy.logerr("Could not detect the specified camera, exiting the example.")
-            return
-        rospy.loginfo("Opening camera...")
-        cameras.start_streaming(camera)
-        rectify_image = True
-        use_canny_edge = use_canny
-        cameras.set_callback(camera, show_image_callback,
-            rectify_image=rectify_image, callback_args=(use_canny_edge, camera))
-
-        # optionally set gain and exposure parameters
-        if gain is not None:
-            if cameras.set_gain(camera, gain):
-                rospy.loginfo("Gain set to: {0}".format(cameras.get_gain(camera)))
-
-        if exposure is not None:
-            if cameras.set_exposure(camera, exposure):
-                rospy.loginfo("Exposure set to: {0}".format(cameras.get_exposure(camera)))
-
-        def clean_shutdown():
-            print("Shutting down camera_display node.")
-            cv2.destroyAllWindows()
-
-        rospy.on_shutdown(clean_shutdown)
-        rospy.loginfo("Camera_display node running. Ctrl-c to quit")
-        rospy.spin()
-            
-    def move_to_angles(self, angular_array):
+    def move_to_angles(self, angular_array, printout = True):
         angles = {  'right_j0': angular_array[0], 
                     'right_j1': angular_array[1], 
                     'right_j2': angular_array[2],
@@ -243,5 +199,3 @@ class Sawyer():
         distance = math.sqrt((c.x-t.x)**2 + (c.y-t.y)**2 + (c.z-t.z)**2)
         
         return distance
-        
-
