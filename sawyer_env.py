@@ -1,19 +1,26 @@
-import math
-import gym
-from gym import spaces
-import numpy as np
-from gym import spaces
-import numpy as np
-import torch
-import pfrl
+try:
+    import math
+    import gym
+    from gym import spaces
+    import numpy as np
+    from gym import spaces
+    import numpy as np
+    import torch
+    import pfrl
+    import state_utilities
 
-from rospy import sleep
-import rospy
-import intera_interface
+    # ROS impoera
+    from rospy import sleep
+    import rospy
+    import intera_interface
 
-from random import randrange
+    from random import randrange
 
-from intera_interface.limb import Point
+    from intera_interface.limb import Point
+except:
+    print("Error in imports")
+
+m_f = 2
 
 class SawyerEnv():
 
@@ -61,18 +68,6 @@ class ArmMotionEnvironment(gym.Env):
     metadata = {'render.modes': ['human']} # TODO understand what this does
 
     def __init__(self):
-        # Initialize Sawyer
-        super(ArmMotionEnvironment, self).__init__()
-        self.S = Sawyer()
-
-        # Initialize target position (random Cartesian coordinate from 0-5 in x/y/z)
-        self.target_pos = self.S.Point(randrange(5),randrange(5),randrange(5))
-        print(f'* Targeting {self.target_pos}')
-        self.prev_dist = self.S.distance_from_target(self.target_pos)
-
-        self.reward_range = (0, 5000)
-        m_f = 0.1
-
         # Actions: move any of the 7 joints in a +/- movement factor direction
         self.action_space = spaces.Box(low=-m_f*np.ones(7), high=m_f*np.ones(7), dtype=float)
         
@@ -81,6 +76,7 @@ class ArmMotionEnvironment(gym.Env):
 
         # Initialize P matrix
         num_actions = 49
+        num_states = state_utilities.find_num_states(m_f)
         self.P = {
             state: {action: [] for action in range(num_actions)}
             for state in range(num_states)
@@ -102,6 +98,18 @@ class ArmMotionEnvironment(gym.Env):
                 return pfrl.action_value.DiscreteActionValue(h)
 
         obs_size = self.observation_space.low.size
+
+        # Initialize Sawyer
+        super(ArmMotionEnvironment, self).__init__()
+        self.S = Sawyer()
+
+        # Initialize target position (random Cartesian coordinate from 0-5 in x/y/z)
+        self.target_pos = self.S.Point(randrange(5),randrange(5),randrange(5))
+        print(f'* Targeting {self.target_pos}')
+        self.prev_dist = self.S.distance_from_target(self.target_pos)
+
+        self.reward_range = (0, 5000)
+
         # n_actions = self.action_spac
         # q_func = QFunction(obs_size, n_actions)
 
