@@ -1,29 +1,32 @@
 from sawyer_env import *
 import math
 import gym
-'''
-from stable_baselines.common.policies import MlpPolicy
-from stable_baselines.common.vec_env import make_vec_env
-from stable_baselines import PPO2
-'''
+import matplotlib.pyplot as plt
 
-env = ArmMotionEnvironment()
+# Governing parameters for learning
+alpha = 0.1
+gamma = 0.6
+epsilon = 0.1
+
+env = ArmMotionEnvironment(alpha, gamma, epsilon)
 
 ep_reward_list = []
 
-# model = PPO2(MlpPolicy, env, verbose=1)
-# model.learn(total_timesteps=10000)
-
 for episode in range(400):
+    ep_state_history = []
     ep_reward = 0
     observation = env.reset()
     for step in range(80):
         action = env.action_space.sample()
         observation, reward, done, info = env.step(action)
         # print(done)
+        env.update_q(env.current_state, action)
         ep_reward += reward
+        ep_state_history.append(env.current_state)
+
+    print(f"    *Done with episode {episode}, reward was {ep_reward}")
     ep_reward_list.append(ep_reward)
 
 for count, eprwd in enumerate(ep_reward_list): print(f'Episode {count} Reward: {eprwd}')
 
-print('done')
+
