@@ -9,16 +9,10 @@ import numpy as np
 import torch
 import pfrl
 
-from rospy import sleep
-import rospy
-import intera_interface
-
 import state_utilities
 import itertools
 import random
 from random import randrange
-
-from intera_interface.limb import Point
 
 class SawyerEnv():
 
@@ -267,6 +261,10 @@ class ArmMotionEnvironment(gym.Env):
 # Python Representation of Sawyer robot
 class Sawyer():
     def __init__(self):
+        from rospy import sleep
+        import rospy
+        import intera_interface
+
         # initialize our ROS node, registering it with the Master
         rospy.init_node('Hello_Sawyer')
 
