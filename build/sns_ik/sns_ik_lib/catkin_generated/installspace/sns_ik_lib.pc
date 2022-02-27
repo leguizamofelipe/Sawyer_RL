@@ -1,8 +1,0 @@
-prefix=/home/sawyer/ros_ws_noetic/install
-
-Name: sns_ik_lib
-Description: Description of sns_ik_lib
-Version: 0.2.3
-Cflags: -I${prefix}/include -I/usr/include/eigen3 -I/usr/share/orocos_kdl/cmake/../../../include
-Libs: -L${prefix}/lib -lsns_ik -lorocos-kdl
-Requires: roscpp std_msgs

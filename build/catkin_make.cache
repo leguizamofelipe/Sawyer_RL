@@ -1,2 +1,0 @@
-sns_ik/sns_ik:sns_ik/sns_ik_examples:sns_ik/sns_ik_lib
--DCATKIN_DEVEL_PREFIX=/home/sawyer/Sawyer_RL/devel -DCMAKE_INSTALL_PREFIX=/home/sawyer/Sawyer_RL/install -G Unix Makefiles
