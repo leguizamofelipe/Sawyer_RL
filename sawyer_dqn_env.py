@@ -5,6 +5,46 @@ from gym import spaces
 import numpy as np
 import random
 
+import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
+
+class EpisodeHistory():
+    def __init__(self, ep_no, init, target) -> None:
+        self.ep_no = ep_no
+        self.endpoint_history = []
+        self.reward_history = []
+        self.cumulative_reward_history = []
+        self.first_timestep = True
+        self.target = target
+        self.init = init
+    def record_endpoint(self, endpoint):
+        self.endpoint_history.append(endpoint)
+    def record_reward(self, reward):
+        self.reward_history.append(reward)
+        if self.first_timestep:
+            self.prev_reward = 0
+            self.first_timestep = False
+        else:
+            self.prev_reward = self.cumulative_reward_history[-1]
+        self.cumulative_reward_history.append(reward + self.prev_reward)
+    def total_reward(self):
+        return sum(self.reward_history)
+    def record_steps(self, steps):
+        self.final_steps = steps
+    def plot_episode_3D(self):
+        ax = plt.axes(projection = '3d')
+        ax.set_xlim([0.5,1])
+        ax.set_ylim([0.5,1])
+        ax.set_zlim([0,1])
+        x_list = [point.x for point in self.endpoint_history]
+        y_list = [point.y for point in self.endpoint_history]
+        z_list = [point.z for point in self.endpoint_history]
+        ax.plot3D(x_list, y_list, z_list, 'blue')
+        ax.scatter3D(self.init.x, self.init.y, self.init.z, color = 'r')
+        ax.scatter3D(self.target.x, self.target.y, self.target.z, color = 'g')
+        ax.set_title(f'n_steps: {len(self.endpoint_history)} | reward: {self.cumulative_reward_history[-1]}')
+        plt.tight_layout()
+
 class DQNArmMotionEnvironment(gym.Env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
@@ -91,7 +131,7 @@ class DQNArmMotionEnvironment(gym.Env):
             else:
                 reward = 0
 
-            done = self.S.distance_from_target(self.target_pos) < 0.25
+            done = self.S.distance_from_target(self.target_pos) < 0.1
 
             obs = self._next_observation()
 
@@ -104,11 +144,14 @@ class DQNArmMotionEnvironment(gym.Env):
 
     def reset(self):
         # Reset the state of the environment to an initial state
-        init_pose = np.array([0.75, 0, 0, 0, 0, 0, 0])
+        init_angles = np.array([0.75, 0, 0, 0, 0, 0, 0])
 
-        self.S.move_to_angles(init_pose, printout=False)
+        self.S.move_to_angles(init_angles, printout=False)
+        self.S.sleep(0.2)
 
-        self.target_pos = self.S.Point(random.uniform(0,1),random.uniform(0,1),random.uniform(0,1))
+        self.init_pos = self.S.endpoint
+
+        self.target_pos = self.S.Point(random.uniform(0.5,1),random.uniform(0.5,1),random.uniform(0,1))
 
         self.prev_dist = self.S.distance_from_target(self.target_pos)
 
@@ -144,7 +187,7 @@ class Sawyer():
             self.y = y
             self.z = z
         def __repr__(self):
-            return str(f'{self.x},{self.y},{self.z}')
+            return str(f'{round(self.x,3)},{round(self.y, 3)},{round(self.z, 3)}')
 
     def sleep(self, time):
         import rospy

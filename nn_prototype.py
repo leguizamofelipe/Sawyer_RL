@@ -15,9 +15,9 @@ class QFunction(torch.nn.Module):
 
     def __init__(self, obs_size, n_actions):
         super().__init__()
-        self.l1 = torch.nn.Linear(obs_size, 50)
-        self.l2 = torch.nn.Linear(50, 50)
-        self.l3 = torch.nn.Linear(50, n_actions)
+        self.l1 = torch.nn.Linear(obs_size, 200)
+        self.l2 = torch.nn.Linear(200, 200)
+        self.l3 = torch.nn.Linear(200, n_actions)
 
     def forward(self, x):
         h = x
@@ -56,25 +56,31 @@ agent = pfrl.agents.DoubleDQN(
 
 ep_reward_list = []
 
-n_episodes = 300
-max_ep_len = 100
+n_episodes = 1000000
+max_ep_len = 50
+ep_hist_list = []
+
 for episode in range(n_episodes):
-    ep_state_history = []
-    ep_reward = 0
     observation = env.reset()
+    ep_hist = EpisodeHistory(episode, env.init_pos, env.target_pos)
     step = 0
     while True:
         action = agent.act(observation)
         observation, reward, done = env.step(action)
-        reset = step == max_ep_len
+        reset = step == max_ep_len-1
         agent.observe(observation, reward, done, reset)
-        ep_reward += reward
-        step+=1
+        ep_hist.record_reward(reward)
+        ep_hist.record_endpoint(env.S.endpoint)
         if done or reset:
+            ep_hist.record_steps(step)
             break
-    ep_reward_list.append(ep_reward)
+        step+=1
+    ep_hist_list.append(ep_hist)
+    print(f"    *Episode {episode}: reward {ep_hist.total_reward()}, target {env.target_pos} reached? {done}")
 
-    print(f"    *Episode {episode}: reward {ep_reward}, target {env.target_pos} reached? {done}")
+rewards_list = [episode.total_reward() for episode in ep_hist_list]
 
+ax = plt.axes()
+ax.plot(rewards_list)
 
 print('done')
