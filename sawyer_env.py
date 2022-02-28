@@ -6,8 +6,7 @@ from gym import spaces
 import numpy as np
 from gym import spaces
 import numpy as np
-import torch
-import pfrl
+import rospy
 
 import state_utilities
 import itertools
