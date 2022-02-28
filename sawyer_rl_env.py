@@ -1,58 +1,14 @@
-from csv import reader
 import math
-from sre_parse import State
 import gym
 from gym import spaces
 import numpy as np
-from gym import spaces
-import numpy as np
 import rospy
+from sawyer import *
 
 import state_utilities
 import itertools
 import random
 from random import randrange
-
-class SawyerEnv():
-
-    '''
-    Description:
-
-    Robotic arm with seven joint angles.
-    Range of motion for each: 
-
-    Observation:
-        #TODO: Include current state of joints, and inst. vel? in obs space
-        Type: float
-        Num     Observation               Min                     Max
-        0       Distance from target      0                       5000 (infinity)
-    
-    Actions:
-        #TODO: Could restrict motion to subset of joints
-        Type: Discrete(2)
-        Num   Action
-        0     Increase joint 0 pose by +set movement factor
-        1     Increase joint 0 pose by -set movement factor
-        2     Increase joint 1 pose by +set movement factor
-        3     Increase joint 1 pose by -set movement factor
-        4     Increase joint 2 pose by +set movement factor
-        5     Increase joint 2 pose by -set movement factor
-        6     Increase joint 3 pose by +set movement factor
-        7     Increase joint 3 pose by -set movement factor
-        8     Increase joint 4 pose by +set movement factor
-        9     Increase joint 4 pose by -set movement factor
-        10    Increase joint 5 pose by +set movement factor
-        11    Increase joint 5 pose by -set movement factor
-        12    Increase joint 6 pose by +set movement factor
-        13    Increase joint 6 pose by -set movement factor
-
-    Reward:
-        +1 for every step taken where distance is less than previous distance
-        TODO: Function of magnitude of distance delta: getting much closer = higher reward
-
-    Episode Termination:
-
-    '''
 
 class ArmMotionEnvironment(gym.Env):
     """A robot arm motion environment for OpenAI gym"""
@@ -254,66 +210,3 @@ class ArmMotionEnvironment(gym.Env):
         print(f'* Targeting {self.target_pos}')
 
         return self._next_observation()
-
-    # def ():
-
-# Python Representation of Sawyer robot
-class Sawyer():
-    def __init__(self):
-        from rospy import sleep
-        import rospy
-        import intera_interface
-
-        # initialize our ROS node, registering it with the Master
-        rospy.init_node('Hello_Sawyer')
-
-        # create an instance of intera_interface's Limb class
-        self.limb = intera_interface.Limb('right')
-
-        # TODO: Find a way to make this update and easily callable in the form S.angles()
-        # Not sure how it interfaces with rostopics, leave for now
-        # get the right limb's current joint angles
-        self.angles = list(self.limb.joint_angles().values())
-
-        # initialize endpoint position
-        self.endpoint = self.limb.endpoint_pose()['position']
-
-        # print the current joint angles
-        print("* Initialized at {}".format(str(self.angles)))
-	
-    class Point():
-        def __init__(self, x, y, z):
-            self.x = x
-            self.y = y
-            self.z = z
-        def __repr__(self):
-            return str(f'{self.x},{self.y},{self.z}')
-
-    def sleep(self, time):
-        rospy.sleep(time)
-        
-    def move_to_angles(self, angular_array, printout = True):
-        angles = {  'right_j0': angular_array[0], 
-                    'right_j1': angular_array[1], 
-                    'right_j2': angular_array[2],
-                    'right_j3': angular_array[3], 
-                    'right_j4': angular_array[4], 
-                    'right_j5': angular_array[5],
-                    'right_j6': angular_array[6],
-        }
-        if printout: print("* Commanding move to {}\n".format(str(angular_array)))
-        self.limb.move_to_joint_positions(angles)
-        self.angles = list(self.limb.joint_angles().values())
-        self.endpoint = self.limb.endpoint_pose()['position']
-        if printout: print("* Completed move to {}\n".format(str(self.angles)))
-
-    def distance_from_target(self, target):
-        # Current position
-        c = self.endpoint
-
-        # Target position
-        t = target
-
-        distance = math.sqrt((c.x-t.x)**2 + (c.y-t.y)**2 + (c.z-t.z)**2)
-        
-        return distance
