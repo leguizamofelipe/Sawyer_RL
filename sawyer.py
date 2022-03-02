@@ -1,3 +1,4 @@
+import math
 
 # Python Representation of Sawyer robot
 class Sawyer():
