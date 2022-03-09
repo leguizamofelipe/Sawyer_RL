@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
+import time
 
 class EpisodeHistory():
     def __init__(self, ep_no, init, target) -> None:
@@ -10,6 +11,7 @@ class EpisodeHistory():
         self.first_timestep = True
         self.target = target
         self.init = init
+        self.start_time = time.time()
     def record_endpoint(self, endpoint):
         self.endpoint_history.append(endpoint)
     def record_reward(self, reward):
