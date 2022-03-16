@@ -36,23 +36,26 @@ class DQNArmMotionEnvironment(gym.Env):
         }
 
         self.m_f = 0.01 # Was 0.02
+        self.max_mf = 0.05
 
         # Actions: move any of the active joints joints in a +/- movement factor direction
         # self.action_space = spaces.Box(low=np.ones(len(self.active_joints)), high=2*np.ones(len(self.active_joints)), dtype=int)
-        self.action_space = spaces.Discrete(16)
-        actions_list = list(itertools.product([-1,1], repeat=len(self.active_joints)))
-        self.actions_dict = {count: np.array(action) for count, action in enumerate(actions_list)}
-
+        self.action_space = spaces.Box(low = -1 * np.ones(len(self.active_joints)), high = np.ones(len(self.active_joints)))
+        
+        # For discrete action space. Deprecated for now
+        # actions_list = list(itertools.product([-1,1], repeat=len(self.active_joints)))
+        # self.actions_dict = {count: np.array(action) for count, action in enumerate(actions_list)}
         # Set number of actions (number of joints to move)
-        self.action_space.n = len(self.active_joints)
+        # self.action_space.n = len(self.active_joints)
 
-        low  = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        high = np.array([0, 0, 0, 0, 0, 0, 0, 1.5, 1.5, 1.5])
+        # TODO make this dynamically update depending on # of joints
+        low  = np.array([0, 0, 0, 0, 0, 0, 0])
+        high = np.array([1, 1, 1, 1, 1.5, 1.5, 1.5])
 
         # Observations: position of joints, mapped to the full range of a joint. Last three vals in array are position
         self.observation_space = spaces.Box(low = low, high=high) #spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
-        self.observation_space.n = 7
-        self.action_count = 0
+        # self.observation_space.n = 
+        # self.action_count = 0
         self.hist = None
         self.hist_list = []
 
@@ -73,11 +76,8 @@ class DQNArmMotionEnvironment(gym.Env):
 
         joint_angles = self.S.angles.copy()
 
-        active_count = 0
-        for joint, angle in enumerate(joint_angles):
-            if joint in self.active_joints:
-                joint_angles[joint] += self.m_f * self.actions_dict[action][active_count]
-                active_count += 1
+        for count, joint in enumerate(self.active_joints):
+            joint_angles[joint] += self.max_mf * action[count]
 
         return joint_angles
 
@@ -109,11 +109,11 @@ class DQNArmMotionEnvironment(gym.Env):
             # Set the current robot position
             self._take_action(action)
 
-            # Calculate reward
-            if self.S.distance_from_target(self.target_pos) < self.prev_dist:
-                reward = 1
-            else:
-                reward = 0
+            # Objective component - discourage being far away from target
+            reward = -(self.S.distance_from_target(self.target_pos)**2)
+            # reward = 0
+            # Marginal component - encourage making steps in the right direction
+            # reward += 1000 * (self.prev_dist - self.S.distance_from_target(self.target_pos))
 
             obs = self._next_observation()
 
@@ -125,7 +125,7 @@ class DQNArmMotionEnvironment(gym.Env):
                 reward = 200
                 done = True
 
-            if self.action_count == 100:
+            if self.action_count > 100:
                 reward = -20
                 done = True
 
@@ -136,9 +136,16 @@ class DQNArmMotionEnvironment(gym.Env):
 
     def _next_observation(self):
         e = self.S.endpoint
-        obs = np.zeros(10)
-        obs[0:7] = np.array(self.S.angles)
-        obs[7:10] = np.array([e.x, e.y, e.z])
+        obs = np.zeros(len(self.active_joints) + 3)
+
+        i = 0
+        for joint, angle in enumerate(self.S.angles):
+            if joint in self.active_joints:
+                obs[i] = self.S.angles[joint]
+                i+=1
+
+        # obs[0:len(self.active_joints)] = np.array(self.S.angles)
+        obs[len(self.active_joints):10] = np.array([e.x, e.y, e.z])
 
         return obs
 
