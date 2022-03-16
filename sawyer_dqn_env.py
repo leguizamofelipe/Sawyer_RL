@@ -10,6 +10,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 
+from random import randint
+
 from episode_history import EpisodeHistory
 
 class DQNArmMotionEnvironment(gym.Env):
@@ -33,7 +35,7 @@ class DQNArmMotionEnvironment(gym.Env):
                             #'6'
         }
 
-        self.m_f = 0.02
+        self.m_f = 0.01 # Was 0.02
 
         # Actions: move any of the active joints joints in a +/- movement factor direction
         # self.action_space = spaces.Box(low=np.ones(len(self.active_joints)), high=2*np.ones(len(self.active_joints)), dtype=int)
@@ -44,14 +46,26 @@ class DQNArmMotionEnvironment(gym.Env):
         # Set number of actions (number of joints to move)
         self.action_space.n = len(self.active_joints)
 
-        # Observations: position of joints, mapped to the full range of a joint
-        self.observation_space = spaces.Box(low = np.zeros(7), high=np.ones(7)) #spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
+        low  = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        high = np.array([0, 0, 0, 0, 0, 0, 0, 1.5, 1.5, 1.5])
+
+        # Observations: position of joints, mapped to the full range of a joint. Last three vals in array are position
+        self.observation_space = spaces.Box(low = low, high=high) #spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
         self.observation_space.n = 7
         self.action_count = 0
         self.hist = None
         self.hist_list = []
 
         self.fig = plt.figure()
+
+        num_targets = 1
+        self.target_dict = {}
+
+        for i in range(0, num_targets):
+            self.target_dict.update({i: self.S.Point(random.uniform(0.5,1),random.uniform(0.5,1),random.uniform(0,1))})
+
+        # self.target_pos = self.S.Point(random.uniform(0.5,1),random.uniform(0.5,1),random.uniform(0,1))
+        self.target_pos = self.target_dict[randint(0,num_targets-1)]
 
     def _action_to_angles(self, action):
         # Action space is moving joints +/- movement factor (+ is 2, - is 1)
@@ -105,7 +119,15 @@ class DQNArmMotionEnvironment(gym.Env):
 
             self.prev_dist = self.S.distance_from_target(self.target_pos)
 
-            done = self.S.distance_from_target(self.target_pos) < 0.1 or self.action_count == 50
+            done = False
+            
+            if self.S.distance_from_target(self.target_pos) < 0.1:
+                reward = 200
+                done = True
+
+            if self.action_count == 100:
+                reward = -20
+                done = True
 
         self.hist.record_endpoint(self.S.endpoint)
         self.hist.record_reward(reward)
@@ -113,7 +135,12 @@ class DQNArmMotionEnvironment(gym.Env):
         return obs, reward, done, {}
 
     def _next_observation(self):
-        return np.array(self.S.angles)
+        e = self.S.endpoint
+        obs = np.zeros(10)
+        obs[0:7] = np.array(self.S.angles)
+        obs[7:10] = np.array([e.x, e.y, e.z])
+
+        return obs
 
     def reset(self):
         # Reset the state of the environment to an initial state
@@ -127,14 +154,12 @@ class DQNArmMotionEnvironment(gym.Env):
 
         self.init_pos = self.S.endpoint
 
-        self.target_pos = self.S.Point(random.uniform(0.5,1),random.uniform(0.5,1),random.uniform(0,1))
-
         self.prev_dist = self.S.distance_from_target(self.target_pos)
         
         if self.hist is not None:
             self.hist_list.append(self.hist)
             
-            self._reward_df = pd.concat([self._reward_df, pd.DataFrame([[self.hist.total_reward(), self.hist.start_time]], columns = ['Reward', 'Time Started'])])
+            self._reward_df = pd.concat([self._reward_df, pd.DataFrame([[self.hist.total_reward(), self.hist.start_time, f'X {self.target_pos.x} Y {self.target_pos.y} Z {self.target_pos.z}', f'X {self.S.endpoint.x} Y {self.S.endpoint.y} Z {self.S.endpoint.z}']], columns = ['Reward', 'Time Started', 'Target Pos', 'Ending Pos'])])
             # plt.scatter(len(self.hist_list), self.hist.total_reward(), c = 'blue')
             # plt.show()
             self._reward_df.reset_index().to_csv('Sawyer_RL/logs/reward.csv')

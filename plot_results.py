@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-results = pd.read_csv('Sawyer_RL/logs/reward_21k_timesteps.csv')
+results = pd.read_csv('logs/reward_temp.csv')
 
 plt.plot(results.index, results['Reward'])
 plt.title(f'Rewards vs time for {len(results)} episodes')
