@@ -25,14 +25,15 @@ def find_T_i(dh_table, i, print_res = True):
 
     return T
 
-def find_T_total(dh_table, print_intermediate = False):
+def find_T_total(dh_table, print_res = True, print_intermediate = False):
     r, c = dh_table.shape
-    result = np.identity(r+1)
+    result = np.identity(4)
     for i in range(r):
         result = np.matmul(result, find_T_i(dh_table, i+1, print_intermediate))
-
-    print(f'****************************************')
-    print(f'************** {0}/{r} T = ***********')
-    print(result)
-
+    
+    if print_res:
+        print(f'****************************************')
+        print(f'************** {0}/{r} T = ***********')
+        print(result)
+    
     return result

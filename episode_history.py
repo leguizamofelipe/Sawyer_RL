@@ -28,8 +28,8 @@ class EpisodeHistory():
         self.final_steps = steps
     def plot_episode_3D(self):
         ax = plt.axes(projection = '3d')
-        ax.set_xlim([0.5,1])
-        ax.set_ylim([0.5,1])
+        ax.set_xlim([0,1]) # Was 0.5
+        ax.set_ylim([0,1]) # Was 0.5
         ax.set_zlim([0,1])
         x_list = [point.x for point in self.endpoint_history]
         y_list = [point.y for point in self.endpoint_history]
