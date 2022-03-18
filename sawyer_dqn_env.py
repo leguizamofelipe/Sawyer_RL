@@ -36,7 +36,7 @@ class DQNArmMotionEnvironment(gym.Env):
         }
 
         self.m_f = 0.01 # Was 0.02
-        self.max_mf = 0.05
+        self.max_mf = 0.02
 
         # Actions: move any of the active joints joints in a +/- movement factor direction
         # self.action_space = spaces.Box(low=np.ones(len(self.active_joints)), high=2*np.ones(len(self.active_joints)), dtype=int)
@@ -110,7 +110,7 @@ class DQNArmMotionEnvironment(gym.Env):
             self._take_action(action)
 
             # Objective component - discourage being far away from target
-            reward = -(self.S.distance_from_target(self.target_pos)**2)
+            reward = -50*(self.S.distance_from_target(self.target_pos)**2)
             # reward = 0
             # Marginal component - encourage making steps in the right direction
             # reward += 1000 * (self.prev_dist - self.S.distance_from_target(self.target_pos))
@@ -152,6 +152,8 @@ class DQNArmMotionEnvironment(gym.Env):
     def reset(self):
         # Reset the state of the environment to an initial state
 
+        prev_endpoint = self.S.endpoint
+
         self.action_count = 0
 
         init_angles = np.array([0.75, 0, 0, 0, 0, 0, 0])
@@ -166,7 +168,7 @@ class DQNArmMotionEnvironment(gym.Env):
         if self.hist is not None:
             self.hist_list.append(self.hist)
             
-            self._reward_df = pd.concat([self._reward_df, pd.DataFrame([[self.hist.total_reward(), self.hist.start_time, f'X {self.target_pos.x} Y {self.target_pos.y} Z {self.target_pos.z}', f'X {self.S.endpoint.x} Y {self.S.endpoint.y} Z {self.S.endpoint.z}']], columns = ['Reward', 'Time Started', 'Target Pos', 'Ending Pos'])])
+            self._reward_df = pd.concat([self._reward_df, pd.DataFrame([[self.hist.total_reward(), self.hist.start_time, f'X {self.target_pos.x} Y {self.target_pos.y} Z {self.target_pos.z}', f'X {prev_endpoint.x} Y {prev_endpoint.y} Z {prev_endpoint.z}']], columns = ['Reward', 'Time Started', 'Target Pos', 'Ending Pos'])])
             # plt.scatter(len(self.hist_list), self.hist.total_reward(), c = 'blue')
             # plt.show()
             self._reward_df.reset_index().to_csv('Sawyer_RL/logs/reward.csv')
