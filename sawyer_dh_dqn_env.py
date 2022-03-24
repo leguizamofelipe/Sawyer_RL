@@ -61,14 +61,16 @@ class DQNArmMotionEnvironment(gym.Env):
 
         # self.fig = plt.figure()
 
-        num_targets = 1
+        self.num_targets = 5
         self.target_dict = {}
 
-        for i in range(0, num_targets):
+        for i in range(0, self.num_targets):
             self.target_dict.update({i: self.S.Point(random.uniform(0.5,0.8),random.uniform(0.5,0.8),random.uniform(0,0.8))})
+            # self.target_dict.update({i: self.S.Point(0.602,0.681,0.317)})
+            # self.target_dict.update({i: self.S.Point(0.8,0.8,0.8)})
 
         # self.target_pos = self.S.Point(random.uniform(0.5,1),random.uniform(0.5,1),random.uniform(0,1))
-        self.target_pos = self.target_dict[randint(0,num_targets-1)]
+        self.target_pos = self.target_dict[randint(0,self.num_targets-1)]
 
     def _action_to_angles(self, action):
         # Action space is moving joints +/- movement factor (+ is 2, - is 1)
@@ -175,6 +177,8 @@ class DQNArmMotionEnvironment(gym.Env):
             self._reward_df = pd.DataFrame(columns = ['Reward', 'Time Started'])
 
         # reward_df = pd.DataFrame([f'{episode.total_reward()}, {episode.start_time}' for episode in self.hist_list])
+
+        self.target_pos = self.target_dict[randint(0,self.num_targets-1)]
 
         self.hist = EpisodeHistory(0, self.init_pos, self.target_pos)
 

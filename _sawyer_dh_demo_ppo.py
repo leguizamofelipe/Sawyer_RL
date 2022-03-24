@@ -8,7 +8,7 @@ env = DQNArmMotionEnvironment()
 
 # env = make_vec_env(env, n_envs=4)
 
-model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda:1')
+model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda:1', learning_rate=0.01)
 
 log_dir = 'logs/'
 

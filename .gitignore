@@ -1,3 +1,7 @@
 # Ignore pycache and compiled files in git
 __pycache__
 *.pyc
+logs/*
+*.zip
+.catkin_workspace
+images/*
