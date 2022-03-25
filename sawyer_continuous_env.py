@@ -203,4 +203,6 @@ class ContinuousArmMotionEnvironment(gym.Env):
 
         plt.tight_layout()
         plt.savefig(f'images/lr_experiment/lr{int(10e5*added_title)}.png')
+
+        plt.close()
         # plt.show()
