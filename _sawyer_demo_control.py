@@ -1,4 +1,4 @@
-from sawyer_rl_env import *
+from sawyer import *
 import math
 
 S = Sawyer()

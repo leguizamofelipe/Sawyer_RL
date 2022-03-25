@@ -1,4 +1,4 @@
-from sawyer_rl_env import *
+from sawyer_q_table_env import *
 import math
 import gym
 import matplotlib.pyplot as plt

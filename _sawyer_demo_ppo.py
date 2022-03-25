@@ -1,24 +1,19 @@
-from sawyer import *
-from sawyer_dqn_env import *
-from callback import SaveOnBestTrainingRewardCallback
-from stable_baselines import results_plotter
-from stable_baselines.bench import Monitor
+from sawyer_continuous_env import *
+from point import Point
 
-# from stable_baselines.common.policies import MlpPolicy
 from stable_baselines3 import PPO
 
-env = DQNArmMotionEnvironment()
+target_dict = {0: Point(0.602,0.681,0.317)}
 
-model = PPO('MlpPolicy', env, verbose = 1)
+env = ContinuousArmMotionEnvironment(target_dict=target_dict)
 
-log_dir = 'Sawyer_RL/logs/'
-# env = Monitor(env, log_dir)
+time_steps = 50000
 
-# callback = SaveOnBestTrainingRewardCallback(check_freq=500, log_dir = log_dir)
+for learning_rate in [0.001, 0.005, 0.01, 0.05]:
+    model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda:1', learning_rate=learning_rate)
 
-time_steps = 10e6
+    model.learn(total_timesteps=int(time_steps), n_eval_episodes = 30)
 
-model.learn(total_timesteps=int(time_steps), n_eval_episodes = 30)
+    env.plot_rewards(added_title = learning_rate)
 
-# results_plotter.plot_results([log_dir], time_steps, results_plotter.X_TIMESTEPS, "SawyerRL")
 print('done?')

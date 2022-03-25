@@ -1,6 +1,6 @@
 import numpy as np
 
-from dh_sawyer import *
+from sawyer import *
 
 S = DH_Sawyer()
 

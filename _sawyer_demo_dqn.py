@@ -1,15 +1,14 @@
-from sawyer_dqn_env import *
+from sawyer_continuous_env import *
 
 import pfrl
 import torch
 import torch.nn
-import gym
 import numpy
 
 gamma = 0.9
 epsilon = 0.3
 
-env = DQNArmMotionEnvironment()
+env = ContinuousArmMotionEnvironment()
 
 class QFunction(torch.nn.Module):
 
@@ -65,8 +64,8 @@ for episode in range(n_episodes):
     ep_hist = EpisodeHistory(episode, env.init_pos, env.target_pos)
     step = 0
     while True:
-        action = agent.act(observation)
-        observation, reward, done = env.step(action)
+        action = env.action_space.sample()
+        observation, reward, done, null = env.step(action)
         reset = step == max_ep_len-1
         agent.observe(observation, reward, done, reset)
         ep_hist.record_reward(reward)

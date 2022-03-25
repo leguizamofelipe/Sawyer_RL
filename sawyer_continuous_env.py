@@ -2,7 +2,7 @@ import gym
 from gym import spaces
 import numpy as np
 import random
-from dh_sawyer import *
+from sawyer import *
 import pandas as pd
 
 import matplotlib.pyplot as plt
@@ -12,15 +12,15 @@ from random import randint
 
 from episode_history import EpisodeHistory
 
-class DQNArmMotionEnvironment(gym.Env):
+class ContinuousArmMotionEnvironment(gym.Env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
 
-    def __init__(self, save_to_disk=False):
-        super(DQNArmMotionEnvironment, self).__init__()
+    def __init__(self, save_to_disk=False, target_dict = None):
+        super(ContinuousArmMotionEnvironment, self).__init__()
 
         # Initialize Sawyer
-        self.S = DH_Sawyer()
+        self.S = Sawyer()
 
         # Define which joints are used
         self.active_joints = {   
@@ -39,7 +39,8 @@ class DQNArmMotionEnvironment(gym.Env):
         # Actions: move any of the active joints joints in a +/- movement factor direction
         # self.action_space = spaces.Box(low=np.ones(len(self.active_joints)), high=2*np.ones(len(self.active_joints)), dtype=int)
         self.action_space = spaces.Box(low = -1 * np.ones(len(self.active_joints)), high = np.ones(len(self.active_joints)))
-        
+        self.action_space.n = len(self.active_joints)
+
         # For discrete action space. Deprecated for now
         # actions_list = list(itertools.product([-1,1], repeat=len(self.active_joints)))
         # self.actions_dict = {count: np.array(action) for count, action in enumerate(actions_list)}
@@ -52,7 +53,7 @@ class DQNArmMotionEnvironment(gym.Env):
 
         # Observations: position of joints, mapped to the full range of a joint. Last three vals in array are position
         self.observation_space = spaces.Box(low = low, high=high) #spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
-        # self.observation_space.n = 
+        self.observation_space.n = len(low)
         # self.action_count = 0
         self.hist = None
         self.hist_list = []
@@ -61,13 +62,15 @@ class DQNArmMotionEnvironment(gym.Env):
 
         # self.fig = plt.figure()
 
-        self.num_targets = 5
         self.target_dict = {}
 
-        for i in range(0, self.num_targets):
-            self.target_dict.update({i: self.S.Point(random.uniform(0.5,0.8),random.uniform(0.5,0.8),random.uniform(0,0.8))})
-            # self.target_dict.update({i: self.S.Point(0.602,0.681,0.317)})
-            # self.target_dict.update({i: self.S.Point(0.8,0.8,0.8)})
+        if target_dict is None:
+            self.num_targets = 5
+            for i in range(0, self.num_targets):
+                self.target_dict.update({i: self.S.Point(random.uniform(0.5,0.8),random.uniform(0.5,0.8),random.uniform(0,0.8))})
+        else:
+            self.target_dict = target_dict
+            self.num_targets = len(target_dict)
 
         # self.target_pos = self.S.Point(random.uniform(0.5,1),random.uniform(0.5,1),random.uniform(0,1))
         self.target_pos = self.target_dict[randint(0,self.num_targets-1)]
@@ -184,19 +187,20 @@ class DQNArmMotionEnvironment(gym.Env):
 
         return self._next_observation()
 
-    def plot_rewards(self):
+    def plot_rewards(self, added_title):
         reward_list = [x.total_reward() for x in self.hist_list]
         plt.plot(reward_list)
-        plt.title(f'Rewards vs time for {len(reward_list)} episodes')
+        plt.title(f'Rewards vs time for {len(reward_list)} episodes and {added_title} learning rate')
         plt.xlabel('Episode')
         plt.ylabel('Reward')
 
-        x = range(reward_list)
-        y = reward_list
+        # x = range(reward_list)
+        # y = reward_list
 
-        z = np.polyfit(x, y, 1)
-        p = np.poly1d(z)
-        plt.plot(x,p(x),"r--")
+        # z = np.polyfit(x, y, 1)
+        # p = np.poly1d(z)
+        # plt.plot(x,p(x),"r--")
 
         plt.tight_layout()
-        plt.show()
+        plt.savefig(f'images/lr_experiment/lr{int(10e5*added_title)}.png')
+        # plt.show()
