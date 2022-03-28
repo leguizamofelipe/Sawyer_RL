@@ -5,3 +5,5 @@ logs/*
 *.zip
 .catkin_workspace
 images/*
+*.json
+*.bak

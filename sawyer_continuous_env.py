@@ -38,7 +38,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
 
         # Actions: move any of the active joints joints in a +/- movement factor direction
         # self.action_space = spaces.Box(low=np.ones(len(self.active_joints)), high=2*np.ones(len(self.active_joints)), dtype=int)
-        self.action_space = spaces.Box(low = -1 * np.ones(len(self.active_joints)), high = np.ones(len(self.active_joints)))
+        self.action_space = spaces.Box(low = -1 * np.ones(len(self.active_joints)), high = np.ones(len(self.active_joints)), dtype=np.float32)
         self.action_space.n = len(self.active_joints)
 
         # For discrete action space. Deprecated for now
@@ -48,12 +48,13 @@ class ContinuousArmMotionEnvironment(gym.Env):
         # self.action_space.n = len(self.active_joints)
 
         # TODO make this dynamically update depending on # of joints
-        low  = np.array([0, 0, 0, 0, 0, 0, 0])
-        high = np.array([1, 1, 1, 1, 1.5, 1.5, 1.5])
+        self.observation_space = spaces.Box
+        self.observation_space.low  = np.array([0, 0, 0, 0, 0, 0, 0])
+        self.observation_space.high = np.array([1, 1, 1, 1, 1.5, 1.5, 1.5])
 
         # Observations: position of joints, mapped to the full range of a joint. Last three vals in array are position
-        self.observation_space = spaces.Box(low = low, high=high) #spaces.Box(low = np.zeros(1), high = np.array([20]), dtype = float)
-        self.observation_space.n = len(low)
+        self.observation_space = spaces.Box(low = self.observation_space.low, high=self.observation_space.high, dtype=np.float32) 
+        self.observation_space.n = len(self.observation_space.low)
         # self.action_count = 0
         self.hist = None
         self.hist_list = []
@@ -67,7 +68,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         if target_dict is None:
             self.num_targets = 5
             for i in range(0, self.num_targets):
-                self.target_dict.update({i: self.S.Point(random.uniform(0.5,0.8),random.uniform(0.5,0.8),random.uniform(0,0.8))})
+                self.target_dict.update({i: Point(random.uniform(0.5,0.8),random.uniform(0.5,0.8),random.uniform(0,0.8))})
         else:
             self.target_dict = target_dict
             self.num_targets = len(target_dict)
