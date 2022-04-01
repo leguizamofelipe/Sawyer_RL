@@ -16,11 +16,11 @@ class ContinuousArmMotionEnvironment(gym.Env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
 
-    def __init__(self, save_to_disk=False, target_dict = None):
+    def __init__(self, save_to_disk=False, target_dict = None, sim_type = 'DH'):
         super(ContinuousArmMotionEnvironment, self).__init__()
 
         # Initialize Sawyer
-        self.S = Sawyer()
+        self.S = Sawyer(mode =  sim_type)
 
         # Define which joints are used
         self.active_joints = {   
@@ -127,7 +127,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
 
             done = False
             
-            if self.S.distance_from_target(self.target_pos) < 0.1:
+            if self.S.distance_from_target(self.target_pos) < 0.01:
                 reward = 200
                 done = True
 
