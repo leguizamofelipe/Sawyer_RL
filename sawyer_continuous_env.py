@@ -1,10 +1,8 @@
-from cv2 import normalize
 import gym
 from gym import spaces
 import numpy as np
 import random
 
-from torch import normal
 from sawyer import *
 import pandas as pd
 import os
@@ -23,7 +21,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
     """A robot arm motion environment for OpenAI gym"""
     metadata = {'render.modes': ['human']} # TODO understand what this does
 
-    def __init__(self, save_to_disk=False, target_dict = None, env_id = int(time.time())):
+    def __init__(self, save_to_disk=False, target_dict = None, env_id = int(time.time()), sim_type = 'DH'):
         super(ContinuousArmMotionEnvironment, self).__init__()
 
         # Initialize Sawyer
@@ -120,7 +118,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         return valid_pose
     
     def step(self, action):
-        target_tolerance = 0.1
+        target_tolerance = 0.01
         # Case where we command robot to exceed its joint ranges. Establish high penalty
         self.action_count += 1
         if not self.valid_pose(self._action_to_angles(action)):
