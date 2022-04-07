@@ -44,9 +44,9 @@ class ContinuousArmMotionEnvironment(gym.Env):
         }
 
         self.box = {
-            'x' : {'Max': 0.2, 'Min': 0.8}, 
-            'y' : {'Max': 0.2, 'Min': 0.8}, 
-            'z' : {'Max': 0.2, 'Min': 0.8},  
+            'x' : {'Min': 0.2, 'Max': 0.8}, 
+            'y' : {'Min': 0.2, 'Max': 0.8}, 
+            'z' : {'Min': 0.2, 'Max': 0.8},  
         }
 
         self.m_f = 0.01 # Was 0.02
