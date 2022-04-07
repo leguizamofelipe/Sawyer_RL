@@ -211,7 +211,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         self.ep_count +=1
 
         # Save every 500 intervals
-        save_interval = 2
+        save_interval = 500
         if self.ep_count % save_interval == 0:
             pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
 
