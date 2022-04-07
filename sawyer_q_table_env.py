@@ -3,7 +3,7 @@ import gym
 from gym import spaces
 import numpy as np
 import rospy
-from sawyer_pure_controller import *
+from sawyer import *
 
 import state_utilities
 import itertools

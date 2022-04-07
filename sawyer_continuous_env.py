@@ -27,7 +27,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         super(ContinuousArmMotionEnvironment, self).__init__()
 
         # Initialize Sawyer
-        self.S = Sawyer()
+        self.S = Sawyer(mode =  sim_type)
 
         self.env_id = env_id
 

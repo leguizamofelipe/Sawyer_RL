@@ -17,15 +17,17 @@ target_dict = { 0: Point(0.7315905137589676, 0.7115280197260334, 0.1534837939548
 target_dict = { 0: Point(0.602,0.681,0.317)}
 
 # target_dict = { 0: Point(0.385,0.098,0.060)}
+# for learning_rate in 1/10*np.array([0.001, 0.005, 0.006, 0.007, 0.008, 0.009, 0.01]):
+env = ContinuousArmMotionEnvironment(target_dict=target_dict)
 
-if len(target_dict) == 1:
+time_steps = 10e6
     env_id = f'PPO-{target_dict[0].x}-{target_dict[0].y}-{target_dict[0].z}-{int(time.time())}'
 
 env = ContinuousArmMotionEnvironment(target_dict=target_dict, env_id=env_id)
 
 time_steps = 250000
 
-model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda:1')
+model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda')
 
 model.learn(total_timesteps=int(time_steps), n_eval_episodes = 30)
 
