@@ -29,7 +29,8 @@ class Sawyer():
             self.angles = list(self.limb.joint_angles().values())
 
             # initialize endpoint position
-            self.endpoint = self.limb.endpoint_pose()['position']
+            intera_point = self.limb.endpoint_pose()['position']
+            self.endpoint = Point(intera_point.x, intera_point.y, intera_point.z)
 
             # print the current joint angles
             print("* Initialized at {}".format(str(self.angles)))
@@ -88,7 +89,8 @@ class Sawyer():
             if printout: print("* Commanding move to {}\n".format(str(thetas)))
             self.limb.move_to_joint_positions(angles)
             self.angles = list(self.limb.joint_angles().values())
-            self.endpoint = self.limb.endpoint_pose()['position']
+            intera_point = self.limb.endpoint_pose()['position']
+            self.endpoint = Point(intera_point.x, intera_point.y, intera_point.z)
             if printout: print("* Completed move to {}\n".format(str(self.angles)))
 
         else:

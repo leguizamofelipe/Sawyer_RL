@@ -27,6 +27,8 @@ class ContinuousArmMotionEnvironment(gym.Env):
         # Initialize Sawyer
         self.S = Sawyer(mode =  sim_type)
 
+        self.sim_type = sim_type
+
         self.env_id = env_id
 
         self.save_dir = os.path.join('logs', str(env_id))
@@ -213,7 +215,10 @@ class ContinuousArmMotionEnvironment(gym.Env):
         # Save every 500 intervals
         save_interval = 500
         if self.ep_count % save_interval == 0:
-            pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
+            if self.sim_type == 'Gazebo':
+                pickle.dump(self.hist_list, open(os.path.join(self.save_dir, "env_hist_list_autosave.p"), "wb" ))
+            else:
+                pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
 
         return self._next_observation()
 
