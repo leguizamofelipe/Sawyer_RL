@@ -1,6 +1,9 @@
-import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib import pyplot as plt
+matplotlib.use('Agg')
 from mpl_toolkits import mplot3d
 import time
+
 
 class EpisodeHistory():
     def __init__(self, ep_no, init, target) -> None:
