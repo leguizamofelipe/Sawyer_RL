@@ -42,3 +42,5 @@ class EpisodeHistory():
         ax.scatter3D(self.target.x, self.target.y, self.target.z, color = 'g')
         ax.set_title(f'n_steps: {len(self.endpoint_history)} | reward: {self.cumulative_reward_history[-1]}')
         plt.tight_layout()
+        plt.show()
+        
