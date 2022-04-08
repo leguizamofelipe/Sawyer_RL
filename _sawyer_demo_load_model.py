@@ -7,12 +7,12 @@ time_steps = 300000
 save_rate = 10000
 
 # ****************** USER DEFINED SECTION ***************
-trained_agent = 'logs/PPO-0.707-0.712-0.719-1649381651/model_after500000.zip'
+trained_agent = 'logs/PPO-0.59-0.734-0.63-1649388342/model_after500000.zip'
 # ********************************************************
 
 # Load the trained agent
 model = PPO.load(trained_agent,  device = 'cuda')
-target_dict = { 0: Point(0.707,0.712,0.719)}
+target_dict = { 0: Point(0.590,0.734,0.630)}
 
 # Environment initialization
 env_id = f'PPO-Gazebo-{target_dict[0].x}-{target_dict[0].y}-{target_dict[0].z}-{int(time.time())}'
@@ -53,5 +53,6 @@ while not done:
     obs, rewards, done, info = env.step(action)
     final_distance = env.S.distance_from_target(target_dict[0])
 
+print(f'Init dist - {init_distance}- Final dist - {final_distance}')
 
-print(f'Init dist - {init_distance}, Final dist - {final_distance}')
+os.makedirs(os.path.join('logs', env_id, f'Init dist - {init_distance}- Final dist - {final_distance}'))
