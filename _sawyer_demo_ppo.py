@@ -3,7 +3,7 @@ from point import Point
 
 from stable_baselines3 import PPO
 
-target_dict = { 0: Point(0.797,0.762,0.719)}
+target_dict = { 0: Point(0.590,0.734,0.630)}
 
 time_steps = 500000
 
