@@ -44,9 +44,9 @@ class ContinuousArmMotionEnvironment(gym.Env):
         }
 
         self.box = {
-            'x' : {'Min': 0.2, 'Max': 0.8}, 
-            'y' : {'Min': 0.2, 'Max': 0.8}, 
-            'z' : {'Min': 0.2, 'Max': 0.8},  
+            'x' : {'Min': 0.5, 'Max': 0.8}, 
+            'y' : {'Min': 0.5, 'Max': 0.8}, 
+            'z' : {'Min': 0.5, 'Max': 0.8},  
         }
 
         self.m_f = 0.01 # Was 0.02
@@ -92,9 +92,6 @@ class ContinuousArmMotionEnvironment(gym.Env):
         self.target_pos = self.target_dict[randint(0,self.num_targets-1)]
 
     def _action_to_angles(self, action):
-        # Action space is moving joints +/- movement factor (+ is 2, - is 1)
-        # Need to map to appropriate motion
-
         joint_angles = self.S.angles.copy()
 
         for count, joint in enumerate(self.active_joints):
@@ -176,6 +173,9 @@ class ContinuousArmMotionEnvironment(gym.Env):
 
     def norm(self, x, x_max, x_min):
         return 2 * (x-x_min)/(x_max-x_min) - 1
+
+    def denorm(self, x_norm, x_max, x_min):
+        return (x_norm + x_max - x_min)/2 + x_min 
 
     def reset(self):
         # Reset the state of the environment to an initial state
