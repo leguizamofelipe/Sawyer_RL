@@ -10,3 +10,4 @@ images/*
 *.csv
 *.p
 *.orig
+packages/*
