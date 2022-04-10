@@ -2,15 +2,44 @@ from sawyer_continuous_env import *
 from point import Point
 
 from stable_baselines3 import SAC
+from stable_baselines3.common.callbacks import EvalCallback
 
-target_dict = { 0: Point(0.602,0.681,0.317)}
+'''
+target_dict_list = [
+    {0: Point(0.707, 0.712,	0.719)},
+    {0: Point(0.683, 0.722,	0.530)},
+    {0: Point(0.590, 0.734,	0.630)},
+    {0: Point(0.533, 0.792,	0.719)},
+    {0: Point(0.766, 0.525,	0.781)},
+]
+'''
+target_dict_list = [
+    {0: Point(0.683, 0.722,	0.530)},
+]
 
-env = ContinuousArmMotionEnvironment(target_dict)
 
-time_steps = 500000
+for target_dict in target_dict_list: 
+  # for ent_coef in [0.1, 0.3, 0.5]:
+    start=time.time()
 
-model = SAC('MlpPolicy', env, verbose = 1, device = 'cuda')
+    time_steps = 250000
 
-model.learn(total_timesteps=int(time_steps), n_eval_episodes = 30)
+    if len(target_dict) ==1:
+        env_id = f'SAC-{target_dict[0].x}-{target_dict[0].y}-{target_dict[0].z}-{int(time.time())}'
 
-print('done?')
+    env = ContinuousArmMotionEnvironment(target_dict=target_dict, env_id=env_id)
+
+    eval_callback = EvalCallback(env, best_model_save_path='./best_model/',
+                                log_path='./best_model/', eval_freq=200,
+                                deterministic=True, render=False)
+
+    model = SAC('MlpPolicy', env, verbose = 1, device = 'cuda')
+
+    model.learn(total_timesteps=int(time_steps), n_eval_episodes = 30, callback=eval_callback)
+
+    model.save(os.path.join('logs', env_id, f'model_after{time_steps}'))
+
+    end = time.time()
+
+    print(f'Runtime = {end-start}')
+    os.makedirs(os.path.join('logs', env_id, f'Runtime_was_{end-start}'))
