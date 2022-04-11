@@ -14,9 +14,12 @@ target_dict_list = [
 ]
 '''
 target_dict_list = [
-    {0: Point(0.683, 0.722,	0.530)},
+    {0: Point(0.683,	0.722,	0.530)},
+    {0: Point(0.712,	0.558,	0.650)},
+    {0: Point(0.590,	0.734,	0.630)},
+    # {0: Point(0.533,	0.682,	0.719)},
+    # {0: Point(0.515,	0.525,	0.721)},
 ]
-
 
 for target_dict in target_dict_list: 
   # for ent_coef in [0.1, 0.3, 0.5]:
@@ -29,8 +32,8 @@ for target_dict in target_dict_list:
 
     env = ContinuousArmMotionEnvironment(target_dict=target_dict, env_id=env_id)
 
-    eval_callback = EvalCallback(env, best_model_save_path='./best_model/',
-                                log_path='./best_model/', eval_freq=200,
+    eval_callback = EvalCallback(env, best_model_save_path=f'./best_model-{env_id}/',
+                                log_path=f'./best_model-{env_id}/', eval_freq=500,
                                 deterministic=True, render=False)
 
     model = SAC('MlpPolicy', env, verbose = 1, device = 'cuda')
