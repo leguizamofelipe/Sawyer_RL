@@ -58,6 +58,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         # self.action_space = spaces.Box(low=np.ones(len(self.active_joints)), high=2*np.ones(len(self.active_joints)), dtype=int)
         self.action_space = spaces.Box(low = -1 * np.ones(len(self.active_joints)), high = np.ones(len(self.active_joints)), dtype=np.float32)
         self.action_space.n = len(self.active_joints)
+        # self.action_space.shape = (1, len(self.active_joints))
 
         # TODO make this dynamically update depending on # of joints
         cartesian_pose_low = np.array([-1, -1, -1])
@@ -68,6 +69,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         self.observation_space = spaces.Box
         self.observation_space.low  = np.concatenate((joint_angles_low, cartesian_pose_low))
         self.observation_space.high = np.concatenate((joint_angles_high, cartesian_pose_high))
+        # self.observation_space.shape = (1, len(self.active_joints)+3)
 
         # Observations: position of joints, mapped to the full range of a joint. Last three vals in array are position
         self.observation_space = spaces.Box(low = self.observation_space.low, high=self.observation_space.high, dtype=np.float32) 

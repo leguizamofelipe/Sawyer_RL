@@ -11,3 +11,4 @@ images/*
 *.p
 *.orig
 packages/*
+results/*
