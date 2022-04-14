@@ -3,7 +3,9 @@ from point import Point
 
 from stable_baselines3 import PPO
 
-for target_dict in [{ 0: Point(0.683,0.722,0.530)}, { 0: Point(0.590, 0.734, 0.630)}, { 0: Point(0.533, 0.682, 0.719)}]: 
+import shutil
+
+for target_dict in [{ 0: Point(0.515, 0.525, 0.721)}, { 0: Point(0.712, 0.558, 0.650)}]: 
                     
     start=time.time()
 
@@ -12,7 +14,7 @@ for target_dict in [{ 0: Point(0.683,0.722,0.530)}, { 0: Point(0.590, 0.734, 0.6
     if len(target_dict) ==1:
         env_id = f'PPO-Gazebo-From-Scratch-{target_dict[0].x}-{target_dict[0].y}-{target_dict[0].z}-{int(time.time())}'
 
-    env = ContinuousArmMotionEnvironment(sim_type = 'Gazebo', target_dict=target_dict, env_id=env_id)
+    env = ContinuousArmMotionEnvironment(sim_type = 'Gazebo', save_to_disk = True, target_dict=target_dict, env_id=env_id)
 
     model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda')
 
@@ -23,7 +25,7 @@ for target_dict in [{ 0: Point(0.683,0.722,0.530)}, { 0: Point(0.590, 0.734, 0.6
     end = time.time()
 
     print(f'Runtime = {end-start}')
-    
-    os.makedirs(os.path.join('logs', env_id, f'Runtime_was_{end-start}'))
+        
+    shutil.copyfile('logs/reward.csv', os.path.join('logs', env_id, 'rewards.csv'))
 
-    
+    os.makedirs(os.path.join('logs', env_id, f'Runtime_was_{end-start}'))
