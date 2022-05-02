@@ -17,7 +17,7 @@ start=time.time()
 time_steps = 1e6
 
 if len(target_dict) ==1:
-    env_id = f'PPO-DH-Multiple-Points-{int(time.time())}'
+    env_id = f'PPO-DH-Multiple-Points-EucledianDist-{int(time.time())}'
 
 env = ContinuousArmMotionEnvironment(sim_type = 'DH', save_to_disk = False, target_dict=target_dict, env_id=env_id)
 

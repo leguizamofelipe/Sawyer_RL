@@ -3,6 +3,8 @@ from gym import spaces
 import numpy as np
 import random
 
+from torch import _euclidean_dist
+
 from sawyer import *
 import pandas as pd
 import os
@@ -63,12 +65,15 @@ class ContinuousArmMotionEnvironment(gym.Env):
         # TODO make this dynamically update depending on # of joints
         cartesian_pose_low = np.array([-1, -1, -1])
         cartesian_pose_high = np.array([1, 1, 1])
+        eucl_dist_low = np.array([0])
+        eucl_dist_hi = np.array([3**(1/2)])
+        
         joint_angles_low = np.array([-1]*len(self.active_joints))
         joint_angles_high = np.array([1]*len(self.active_joints))
 
         self.observation_space = spaces.Box
-        self.observation_space.low  = np.concatenate((joint_angles_low, cartesian_pose_low))
-        self.observation_space.high = np.concatenate((joint_angles_high, cartesian_pose_high))
+        self.observation_space.low  = np.concatenate((joint_angles_low, cartesian_pose_low, eucl_dist_low))
+        self.observation_space.high = np.concatenate((joint_angles_high, cartesian_pose_high, eucl_dist_hi))
         # self.observation_space.shape = (1, len(self.active_joints)+3)
 
         # Observations: position of joints, mapped to the full range of a joint. Last three vals in array are position
@@ -158,9 +163,12 @@ class ContinuousArmMotionEnvironment(gym.Env):
         return obs, reward, done, {}
 
     def _next_observation(self):
-        e = self.target_pos
-
-        obs = np.zeros(len(self.active_joints) + 3)
+        t = self.target_pos
+        e = self.S.endpoint
+        
+        # Six joint angles, x/y/z of target, x/y/z of end eff, eucledian distance of end and target
+        
+        obs = np.zeros(13)
 
         i = 0
         for joint, angle in enumerate(self.S.angles):
@@ -169,9 +177,30 @@ class ContinuousArmMotionEnvironment(gym.Env):
                 obs[i] = ang_normalized
                 i+=1
 
-        obs[len(self.active_joints):10] = np.array([self.norm(e.x, self.box['x']['Max'], self.box['x']['Min']), 
+        obs[6:8] = np.array([self.norm(t.x, self.box['x']['Max'], self.box['x']['Min']), 
+                                                    self.norm(t.y, self.box['y']['Max'], self.box['y']['Min']),
+                                                    self.norm(t.z, self.box['z']['Max'], self.box['z']['Min'])])
+
+        obs[9:11] = np.array([self.norm(e.x, self.box['x']['Max'], self.box['x']['Min']), 
                                                     self.norm(e.y, self.box['y']['Max'], self.box['y']['Min']),
                                                     self.norm(e.z, self.box['z']['Max'], self.box['z']['Min'])])
+
+
+        obs[12] = self.S.distance_from_target(t)
+
+        # t_mat = np.transpose(np.array([t.x, t.y, t.z]))
+
+        # P = np.zeros(7)
+
+        # P = [
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 1, False)), t_mat)
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 2, False)), t_mat)
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 3, False)), t_mat)
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 4, False)), t_mat)
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 5, False)), t_mat)
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 6, False)), t_mat)
+        #     np.matmul(np.linalg.inv(find_T_i(self.S.sawyer_dh_table, 7, False)), t_mat)
+        # ]
 
         return obs
 
