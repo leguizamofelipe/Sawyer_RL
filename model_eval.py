@@ -19,12 +19,12 @@ model.set_env(env)
 
 # Get baseline for how far off the trained model is
 obs = env.reset()
-
 done = False
 while not done:
     action, _states = model.predict(obs)
     obs, rewards, done, info = env.step(action)
     init_distance = env.S.distance_from_target(target_dict[0])
+print(init_distance)
 
 model.learn(total_timesteps=400, n_eval_episodes = 30)
 
