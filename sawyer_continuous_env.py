@@ -125,7 +125,7 @@ class ContinuousArmMotionEnvironment(gym.Env):
         if not self.valid_pose(self._action_to_angles(action)):
             reward = -5
             obs = self._next_observation()
-            done = self.S.distance_from_target(self.target_pos) < target_tolerance or self.action_count == 50
+            done = self.S.distance_from_target(self.target_pos) < target_tolerance or self.action_count > 50
             self.prev_dist = self.S.distance_from_target(self.target_pos)
             return obs, reward, done, {}
         else:
@@ -221,7 +221,9 @@ class ContinuousArmMotionEnvironment(gym.Env):
                 pickle.dump(self.hist_list, open(os.path.join(self.save_dir, "env_hist_list_autosave.p"), "wb" ))
             else:
                 pickle.dump(self, open(os.path.join(self.save_dir, "env_autosave.p"), "wb" ))
-
+            self.plot_rewards('')
+            plt.savefig(os.path.join(self.save_dir, "rewards.png"))
+            plt.close()
         return self._next_observation()
 
     def plot_rewards(self, added_title):
