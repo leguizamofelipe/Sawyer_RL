@@ -4,11 +4,10 @@ from torch import device
 from sawyer_continuous_env import *
 from stable_baselines3 import PPO
 
-trained_agent = ['best_model/best_model.zip'] 
-target_dicts = [{ 0: Point(0.590,0.734,0.630)}]
+target_dicts = [{ 0: Point(0.683,0.722,0.530)}]
 
 # Load the trained agent
-model = SAC.load('logs\SAC-0.1-0.1-0.1-1649633921\model_after500.zip')
+model = PPO.load('results/PPO-Gazebo-Acc-0.683-0.722-0.53-1649921274\model_after250000.zip')
 
 target_dict = target_dicts[0]
 # Environment initialization

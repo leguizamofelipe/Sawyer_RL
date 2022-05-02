@@ -14,7 +14,7 @@ for target_dict in [{ 0: Point(0.683,0.722,0.530)}, { 0: Point(0.590, 0.734, 0.6
 
     env = ContinuousArmMotionEnvironment(sim_type = 'Gazebo', target_dict=target_dict, env_id=env_id)
 
-    model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda')
+    model = PPO('MlpPolicy', env, verbose = 1, device = 'cuda', )
 
     model.learn(total_timesteps=int(time_steps), n_eval_episodes = 30)
 

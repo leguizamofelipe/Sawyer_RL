@@ -1,8 +1,11 @@
+from distutils.command.build_scripts import first_line_re
 import pandas as pd
 import pickle
 import os
 import numpy as np
 import math
+
+from sympy import false
 from point import Point
 
 def distance(endpoint, target):
@@ -47,16 +50,22 @@ ppo_results = [
     # 'results\PPO-Acc-0.533-0.682-0.719-1649886510',
     # 'results\PPO-Acc-0.683-0.722-0.53-1649884621',
     # 'results\PPO-Acc-0.712-0.558-0.65-1649885261',
+    # 'results\PPO-Gazebo-Acc-0.59-0.734-0.63-1649894756',
+    # 'results\PPO-Gazebo-Acc-0.515-0.525-0.721-1649903718',
+    # 'results\PPO-Gazebo-Acc-0.533-0.682-0.719-1649912170',
+    # 'results\PPO-Gazebo-Acc-0.683-0.722-0.53-1649921274',
+    # 'results\PPO-Gazebo-Acc-0.712-0.558-0.65-1649930631',
 
-    'results\PPO-Gazebo-Acc-0.59-0.734-0.63-1649894756',
-    'results\PPO-Gazebo-Acc-0.515-0.525-0.721-1649903718',
-    'results\PPO-Gazebo-Acc-0.533-0.682-0.719-1649912170',
-    'results\PPO-Gazebo-Acc-0.683-0.722-0.53-1649921274',
-    'results\PPO-Gazebo-Acc-0.712-0.558-0.65-1649930631',
-
+    # 'results\PPO-Sawyer-From-Scratch0.59-0.734-0.63-1649871813',
+    # 'results\PPO-Sawyer-From-Scratch0.683-0.722-0.53-1649711359',
+    # 'results\PPO-Gazebo-From-Scratch-0.515-0.525-0.721-1649948547',
+    'PPO-Gazebo-From-Scratch-10pts-1649709026',
+    'PPO-Gazebo-From-Scratch-10pts-1649790060',
+    'PPO-Gazebo-From-Scratch-50pts-1649708539',
 ]
 
 for file in ppo_results:
+    file = os.path.join('results', file)
     try:
         try:
             env = pickle.load(open(os.path.join(file,'env_autosave.p'), 'rb'))
@@ -69,15 +78,25 @@ for file in ppo_results:
         time_list_since_start = time_list-time_list[0]
         reward_list = [x.total_reward() for x in env]
         distance_list = []
+        timestep_list = []
+        first_loop = True
         for i in range(0, len(env)):
             try:
                 distance_list.append(distance(env[i].endpoint_history[-1], env[i].target))
             except:
                 distance_list.append(distance(Point(0,0,0), env[i].target))
                 print(i)
+            try:
+                if first_loop:
+                    timestep_list.append(len(env[0].endpoint_history))
+                    first_loop = False
+                else:
+                    timestep_list.append(len(env[i].endpoint_history) + timestep_list[i-1])
+            except:
+                pass
         
-        df = pd.DataFrame({'Episode' : ep_list, 'Time' : time_list, 'TimeZeroed' : time_list_since_start, 'Reward' : reward_list, 'Distance' : distance_list})
+        df = pd.DataFrame({'Episode' : ep_list, 'Time' : time_list, 'TimeZeroed' : time_list_since_start, 'Reward' : reward_list, 'Distance' : distance_list, 'Timestep' : timestep_list})
 
         df.to_csv(os.path.join(file, 'results_sum.csv'))
-    except:
-        pass
+    except Exception as e:
+        print(e)
